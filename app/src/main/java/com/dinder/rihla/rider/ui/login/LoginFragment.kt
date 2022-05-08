@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.navigation.fragment.findNavController
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.databinding.LoginFragmentBinding
+import com.dinder.rihla.rider.utils.PhoneNumberFormatter
 import com.dinder.rihla.rider.utils.PhoneNumberValidator
 
 class LoginFragment : RihlaFragment() {
@@ -35,7 +37,7 @@ class LoginFragment : RihlaFragment() {
             if (!validNumber(phoneNumber)) {
                 return@setOnClickListener
             }
-            navigateToVerification(phoneNumber)
+            navigateToVerification(PhoneNumberFormatter.getFullNumber(phoneNumber))
         }
     }
 
@@ -47,6 +49,10 @@ class LoginFragment : RihlaFragment() {
     }
 
     private fun navigateToVerification(phoneNumber: String) {
-        showToast("Navigating to Verification")
+        findNavController().navigate(
+            LoginFragmentDirections.actionLoginFragmentToVerificationFragment(
+                phoneNumber
+            )
+        )
     }
 }
