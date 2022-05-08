@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
+import com.dinder.rihla.rider.common.Constants
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.databinding.VerificationFragmentBinding
 import com.google.firebase.FirebaseException
@@ -49,7 +50,7 @@ class VerificationFragment : RihlaFragment() {
     private fun setUI() {
         binding.verificationCode.addTextChangedListener { code ->
             code?.let {
-                if (code.length == 6) {
+                if (code.length == Constants.VERIFICATION_CODE_LENGTH) {
                     val credential =
                         PhoneAuthProvider.getCredential(verificationID, code.toString())
                     viewModel.onVerificationAttempt(args.phoneNumber, credential)
