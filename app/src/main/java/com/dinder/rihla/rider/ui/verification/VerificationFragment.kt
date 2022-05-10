@@ -62,6 +62,7 @@ class VerificationFragment : RihlaFragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect {
+                    binding.verificationCode.isEnabled = !it.loading
                     binding.verificationProgressBar.isVisible = it.loading
 
                     it.messages.firstOrNull()?.let {
@@ -70,7 +71,7 @@ class VerificationFragment : RihlaFragment() {
                     }
 
                     if (it.navigateToHome) {
-                        showSnackbar("Navigating to home")
+                        navigateToHome()
                     }
 
                     if (it.navigateToSignup) {
@@ -104,6 +105,12 @@ class VerificationFragment : RihlaFragment() {
             }).build()
 
         PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    private fun navigateToHome() {
+        findNavController().navigate(
+            VerificationFragmentDirections.actionVerificationFragmentToHomeFragment()
+        )
     }
 
     private fun navigateToSignup() {

@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.common.RihlaFragment
@@ -56,9 +57,10 @@ class SignupFragment : RihlaFragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
+                    binding.signupNameContainer.editText?.isEnabled = !state.loading
                     binding.signupProgressBar.isVisible = state.loading
 
-                        state.messages.firstOrNull()?.let { message ->
+                    state.messages.firstOrNull()?.let { message ->
                         showSnackbar(message.content)
                         viewModel.userMessageShown(message.id)
                     }
@@ -109,6 +111,6 @@ class SignupFragment : RihlaFragment() {
     }
 
     private fun navigateToHome() {
-        showSnackbar("Navigating to HOME")
+        findNavController().navigate(SignupFragmentDirections.actionSignupFragmentToHomeFragment())
     }
 }

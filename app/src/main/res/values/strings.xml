@@ -10,4 +10,6 @@
     <string name="please_enter_your_full_name">Please enter your full name</string>
     <string name="signup">Signup</string>
     <string name="terms_and_conditions">By signing up you agree to the terms and conditions of Rihla</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
