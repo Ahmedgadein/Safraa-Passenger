@@ -6,4 +6,8 @@
     <string name="please_enter_the_verification_code">Please enter the verification code</string>
     <string name="code">Code</string>
     <string name="verification">Verification</string>
+    <string name="name">Name</string>
+    <string name="please_enter_your_full_name">Please enter your full name</string>
+    <string name="signup">Signup</string>
+    <string name="terms_and_conditions">By signing up you agree to the terms and conditions of Rihla</string>
 </resources>

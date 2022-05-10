@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dinder.rihla.rider.common.Constants
 import com.dinder.rihla.rider.common.RihlaFragment
@@ -73,7 +74,7 @@ class VerificationFragment : RihlaFragment() {
                     }
 
                     if (it.navigateToSignup) {
-                        showSnackbar("Navigating to Signup")
+                        navigateToSignup()
                     }
                 }
             }
@@ -103,5 +104,13 @@ class VerificationFragment : RihlaFragment() {
             }).build()
 
         PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    private fun navigateToSignup() {
+        findNavController().navigate(
+            VerificationFragmentDirections.actionVerificationFragmentToSignupFragment(
+                args.phoneNumber
+            )
+        )
     }
 }
