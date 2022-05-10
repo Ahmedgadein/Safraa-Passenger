@@ -1,7 +1,7 @@
 package com.dinder.rihla.rider.data.model
 
 data class User(
-    val id: String,
+    val id: String? = null,
     val name: String,
     val phoneNumber: String
 ) {
@@ -15,7 +15,7 @@ data class User(
         }
     }
 
-    fun toJson(): Map<String, Any> {
+    fun toJson(): Map<String, Any?> {
         return mapOf(
             "id" to id,
             "name" to name,

@@ -21,5 +21,17 @@
         <argument
             android:name="phoneNumber"
             app:argType="string" />
+        <action
+            android:id="@+id/action_verificationFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.dinder.rihla.rider.ui.signup.SignupFragment"
+        android:label="signup_fragment"
+        tools:layout="@layout/signup_fragment" >
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
     </fragment>
 </navigation>

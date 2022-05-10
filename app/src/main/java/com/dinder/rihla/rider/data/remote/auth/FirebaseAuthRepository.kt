@@ -42,8 +42,18 @@ class FirebaseAuthRepository @Inject constructor(
         emit(Result.Success(auth.currentUser != null))
     }
 
-    override suspend fun register(user: User): Flow<Result<Boolean>> {
-        TODO("Not yet implemented")
+    override suspend fun register(user: User): Flow<Result<Boolean>> = callbackFlow {
+        withContext(ioDispatcher) {
+            trySend(Result.Loading)
+            _ref.add(user.copy(id = auth.currentUser?.uid.toString()).toJson())
+                .addOnSuccessListener {
+                    trySend(Result.Success(true))
+                }
+                .addOnFailureListener {
+                    trySend(Result.Error("signup failed"))
+                }
+        }
+        awaitClose()
     }
 
     override suspend fun login(credential: AuthCredential): Flow<Result<Boolean>> = callbackFlow {
