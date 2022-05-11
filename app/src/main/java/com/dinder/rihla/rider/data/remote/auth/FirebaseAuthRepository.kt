@@ -45,7 +45,7 @@ class FirebaseAuthRepository @Inject constructor(
     override suspend fun register(user: User): Flow<Result<Boolean>> = callbackFlow {
         withContext(ioDispatcher) {
             trySend(Result.Loading)
-            _ref.add(user.copy(id = auth.currentUser?.uid.toString()).toJson())
+            _ref.add(user.toJson())
                 .addOnSuccessListener {
                     trySend(Result.Success(true))
                 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.dinder.rihla.rider.common.Message
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.remote.auth.AuthRepository
+import com.dinder.rihla.rider.data.remote.user.UserRepository
 import com.google.firebase.auth.AuthCredential
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -13,7 +14,10 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class VerificationViewModel @Inject constructor(private val repository: AuthRepository) :
+class VerificationViewModel @Inject constructor(
+    private val authRepo: AuthRepository,
+    private val userRepo: UserRepository
+) :
     ViewModel() {
     private val _state: MutableStateFlow<VerificationUiState> =
         MutableStateFlow(VerificationUiState())
@@ -21,21 +25,23 @@ class VerificationViewModel @Inject constructor(private val repository: AuthRepo
 
     fun onVerificationAttempt(phoneNumber: String, credential: AuthCredential) {
         viewModelScope.launch {
-            repository.isRegistered(phoneNumber).collect { registered ->
+            authRepo.isRegistered(phoneNumber).collect { registered ->
                 when (registered) {
                     Result.Loading -> _state.update { it.copy(loading = true) }
                     is Result.Error -> showUserMessage(registered.message)
                     is Result.Success -> {
-                        repository.login(credential).collect { login ->
-                            when (login) {
-                                Result.Loading -> Unit
-                                is Result.Error -> showUserMessage(login.message)
-                                is Result.Success -> _state.update {
-                                    it.copy(
-                                        loading = false,
-                                        navigateToHome = registered.value && login.value,
-                                        navigateToSignup = !registered.value && login.value
-                                    )
+                        userRepo.user.collect { user ->
+                            authRepo.login(credential).collect { login ->
+                                when (login) {
+                                    Result.Loading -> Unit
+                                    is Result.Error -> showUserMessage(login.message)
+                                    is Result.Success -> _state.update {
+                                        it.copy(
+                                            loading = false,
+                                            navigateToHome = (registered.value && user != null) && login.value,
+                                            navigateToSignup = (!registered.value || user == null) && login.value
+                                        )
+                                    }
                                 }
                             }
                         }

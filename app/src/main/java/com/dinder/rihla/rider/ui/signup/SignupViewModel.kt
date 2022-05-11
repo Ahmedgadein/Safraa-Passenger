@@ -6,6 +6,8 @@ import com.dinder.rihla.rider.common.Message
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.User
 import com.dinder.rihla.rider.data.remote.auth.AuthRepository
+import com.dinder.rihla.rider.data.remote.user.UserRepository
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,17 +18,25 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class SignupViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
+class SignupViewModel @Inject constructor(
+    private val authRepo: AuthRepository,
+    private val userRepo: UserRepository,
+    private val auth: FirebaseAuth
+) : ViewModel() {
     private val _state = MutableStateFlow(SignupUiState())
     val state = _state.asStateFlow()
 
     fun signup(user: User) {
+        val _user = user.copy(id = auth.currentUser?.uid!!)
         viewModelScope.launch {
-            repository.register(user).collect { result ->
+            authRepo.register(_user).collect { result ->
                 when (result) {
                     Result.Loading -> _state.update { it.copy(loading = true) }
                     is Result.Error -> showUserMessage(result.message)
-                    is Result.Success -> _state.update { it.copy(navigateToHome = true) }
+                    is Result.Success -> {
+                        userRepo.add(_user)
+                        _state.update { it.copy(navigateToHome = true) }
+                    }
                 }
             }
         }
