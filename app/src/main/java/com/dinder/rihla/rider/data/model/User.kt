@@ -1,7 +1,12 @@
 package com.dinder.rihla.rider.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class User(
-    val id: String? = null,
+    @PrimaryKey(autoGenerate = false)
+    val id: String = "",
     val name: String,
     val phoneNumber: String
 ) {
