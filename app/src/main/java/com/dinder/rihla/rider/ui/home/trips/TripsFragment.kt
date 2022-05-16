@@ -17,6 +17,7 @@ class TripsFragment : Fragment() {
     private lateinit var viewModel: TripsViewModel
 
     override fun onCreateView(
+
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
