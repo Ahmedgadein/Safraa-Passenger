@@ -25,7 +25,6 @@ import com.dinder.rihla.rider.utils.NameValidator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
 
 @AndroidEntryPoint
 class SignupFragment : RihlaFragment() {

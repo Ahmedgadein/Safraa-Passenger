@@ -38,7 +38,7 @@ object AppModule {
     @Provides
     fun provideAuthRepository(auth: FirebaseAuth, dispatcher: CoroutineDispatcher):
         AuthRepository =
-        FirebaseAuthRepository(auth, dispatcher)
+            FirebaseAuthRepository(auth, dispatcher)
 
     @Provides
     fun provideUserRepository(dispatcher: CoroutineDispatcher, dao: UserDao): UserRepository =
