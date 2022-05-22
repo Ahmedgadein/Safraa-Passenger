@@ -64,6 +64,19 @@
         android:id="@+id/homeFragment"
         android:name="com.dinder.rihla.rider.ui.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_tripDetailFragment"
+            app:destination="@id/tripDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tripDetailFragment"
+        android:name="com.dinder.rihla.rider.ui.trip_detail.TripDetailFragment"
+        android:label="trip_detail_fragment"
+        tools:layout="@layout/trip_detail_fragment" >
+        <argument
+            android:name="tripID"
+            app:argType="long" />
+    </fragment>
 
 </navigation>
