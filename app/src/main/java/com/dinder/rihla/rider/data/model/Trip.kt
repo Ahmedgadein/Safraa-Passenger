@@ -1,7 +1,6 @@
 package com.dinder.rihla.rider.data.model
 
 import com.dinder.rihla.rider.utils.SeatUtils
-import com.dinder.rihlabus.data.model.Seat
 import com.google.firebase.Timestamp
 import java.util.Date
 

@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark_teal">#004d4d</color>
     <color name="gray">#565656</color>
+    <color name="green">#006400</color>
+    <color name="lightGreen">#00D100</color>
+    <color name="orange">#FF8C00</color>
 </resources>

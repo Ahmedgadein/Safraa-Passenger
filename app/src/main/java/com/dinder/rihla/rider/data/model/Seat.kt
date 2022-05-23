@@ -1,4 +1,4 @@
-package com.dinder.rihlabus.data.model
+package com.dinder.rihla.rider.data.model
 
 import com.dinder.rihla.rider.utils.SeatState
 
