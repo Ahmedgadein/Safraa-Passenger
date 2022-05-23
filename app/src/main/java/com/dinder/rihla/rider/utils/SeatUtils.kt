@@ -1,6 +1,7 @@
 package com.dinder.rihla.rider.utils
 
-import com.dinder.rihlabus.data.model.Seat
+import com.dinder.rihla.rider.common.Constants.NUMBER_OF_SEATS
+import com.dinder.rihla.rider.data.model.Seat
 
 enum class SeatState {
     UN_SELECTED,
@@ -10,17 +11,18 @@ enum class SeatState {
 }
 
 object SeatUtils {
-//    val emptySeats: Map<String, SeatState> = (1..NUMBER_OF_SEATS).map {
-//        Pair(
-//            it.toString(),
-//            SeatState.UN_SELECTED
-//        )
-//    }.toList().toMap()
-//
-//    private fun getSelectedSeats(seats: Map<String, SeatState>): List<String> =
-//        seats.filter { it.value == SeatState.SELECTED }.keys.toList()
+    val emptySeats: Map<String, SeatState> = (1..NUMBER_OF_SEATS).map {
+        Pair(
+            it.toString(),
+            SeatState.UN_SELECTED
+        )
+    }.toList().toMap()
 
-//    fun getSelectedSeatsAsUnbooked(seats: Map<String, SeatState>): List<Seat> {
+    fun getSelectedSeats(seats: Map<String, SeatState>): List<Seat> =
+        seats.filter { it.value == SeatState.SELECTED }
+            .map { Seat(number = it.key.toInt(), status = it.value) }
+
+    //    fun getSelectedSeatsAsUnbooked(seats: Map<String, SeatState>): List<Seat> {
 //        val selected = getSelectedSeats(seats)
 //        return selected.map {
 //            Seat(number = it.toInt(), passenger = null, status = SeatState.UNBOOKED)
@@ -33,10 +35,10 @@ object SeatUtils {
 //        seats.filter { it.status == SeatState.BOOKED }
 //            .size.toString()
 //
-//    // Convert List of [Seat] to SeatView state Map
-//    fun getSeatsListAsStateMap(seats: List<Seat>): Map<String, SeatState> = seats.map {
-//        it.number.toString() to it.status
-//    }.toMap()
+    // Convert List of [Seat] to SeatView state Map
+    fun getSeatsListAsStateMap(seats: List<Seat>): Map<String, SeatState> = seats.map {
+        it.number.toString() to it.status
+    }.toMap()
 
     // Convert remote json Map to list of [Seat]
     fun seatsMapToModel(seats: Map<String, Map<String, Any?>>): List<Seat> = seats.map {
@@ -57,12 +59,4 @@ object SeatUtils {
             "status" to it.status
         )
     }.toMap()
-
-//    fun getSeatStateColor(seat: Seat): Int {
-//        return if (seat.isAvailable) {
-//            R.color.teal_200
-//        } else {
-//            R.color.yellow
-//        }
-//    }
 }
