@@ -21,3 +21,8 @@ fun setCompanyLabel(view: TextView, company: Company?) {
         view.text = if (isArabic) it.arabicName else it.name
     }
 }
+
+@BindingAdapter("seats")
+fun setSeatsCount(view: TextView, list: List<String>) {
+    view.text = list.size.toString()
+}

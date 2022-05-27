@@ -7,6 +7,8 @@ import com.dinder.rihla.rider.data.remote.auth.AuthRepository
 import com.dinder.rihla.rider.data.remote.auth.FirebaseAuthRepository
 import com.dinder.rihla.rider.data.remote.destination.DestinationRepository
 import com.dinder.rihla.rider.data.remote.destination.DestinationRepositoryImpl
+import com.dinder.rihla.rider.data.remote.ticket.TicketRepository
+import com.dinder.rihla.rider.data.remote.ticket.TicketRepositoryImpl
 import com.dinder.rihla.rider.data.remote.trip.TripRepository
 import com.dinder.rihla.rider.data.remote.trip.TripRepositoryImpl
 import com.dinder.rihla.rider.data.remote.user.UserRepository
@@ -55,4 +57,8 @@ object AppModule {
     @Provides
     fun provideDestinationRepository(dispatcher: CoroutineDispatcher): DestinationRepository =
         DestinationRepositoryImpl(dispatcher)
+
+    @Provides
+    fun provideTicketRepository(dispatcher: CoroutineDispatcher): TicketRepository =
+        TicketRepositoryImpl(dispatcher)
 }
