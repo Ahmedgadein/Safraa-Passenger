@@ -17,11 +17,13 @@
         <entry key="app/src/main/res/layout/home_fragment.xml" value="0.176" />
         <entry key="app/src/main/res/layout/landing_page_fragment.xml" value="0.3229166666666667" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/seat_item_list.xml" value="0.3229166666666667" />
         <entry key="app/src/main/res/layout/signup_fragment.xml" value="0.3229166666666667" />
+        <entry key="app/src/main/res/layout/ticket_detail_fragment.xml" value="0.264" />
         <entry key="app/src/main/res/layout/ticket_item_list.xml" value="0.264" />
         <entry key="app/src/main/res/layout/tickets_fragment.xml" value="0.2" />
         <entry key="app/src/main/res/layout/trip_detail_fragment.xml" value="0.176" />
-        <entry key="app/src/main/res/layout/trip_item_list.xml" value="0.45863309352517984" />
+        <entry key="app/src/main/res/layout/trip_item_list.xml" value="0.264" />
         <entry key="app/src/main/res/layout/trips_fragment.xml" value="0.2" />
         <entry key="app/src/main/res/layout/verification_fragment.xml" value="0.30520833333333336" />
         <entry key="app/src/main/res/menu/bottom_navigation.xml" value="0.3229166666666667" />

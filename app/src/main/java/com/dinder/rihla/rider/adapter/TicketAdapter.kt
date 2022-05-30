@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dinder.rihla.rider.data.model.Ticket
 import com.dinder.rihla.rider.databinding.TicketItemListBinding
+import com.dinder.rihla.rider.ui.home.HomeFragmentDirections
 
 class TicketAdapter : ListAdapter<Ticket, TicketAdapter.TicketHolder>(TicketDiffCallback()) {
 
@@ -34,6 +35,11 @@ class TicketAdapter : ListAdapter<Ticket, TicketAdapter.TicketHolder>(TicketDiff
             binding.root.setOnClickListener {
                 ticket?.let {
                     binding.root.findNavController()
+                        .navigate(
+                            HomeFragmentDirections.actionHomeFragmentToTicketDetail(
+                                ticketId = it.id!!
+                            )
+                        )
                 }
             }
         }

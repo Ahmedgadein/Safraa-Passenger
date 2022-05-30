@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface TicketRepository {
     suspend fun getTickets(userId: String): Flow<Result<List<Ticket>>>
+    suspend fun getTicket(id: String): Flow<Result<Ticket>>
     suspend fun addTicket(ticket: Ticket): Flow<Result<Unit>>
 }

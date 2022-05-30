@@ -19,6 +19,7 @@ object Collections {
 
 object Fields {
     const val PHONE_NUMBER = "phoneNumber"
+    const val PASSENGER_ID = "passengerId"
     const val SEATS = "seats"
     const val DATE = "date"
     const val ID = "id"
