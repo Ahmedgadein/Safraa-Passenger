@@ -86,6 +86,21 @@ class TripRepositoryImpl @Inject constructor(private val ioDispatcher: Coroutine
         awaitClose()
     }
 
+    override fun getTrip(id: Long): Flow<Result<Trip>> = callbackFlow {
+        withContext(ioDispatcher) {
+            trySend(Result.Loading)
+            _ref.whereEqualTo(Fields.ID, id).limit(1).get()
+                .addOnSuccessListener {
+                    val trip = Trip.fromJson(it.documents.first().data!!)
+                    trySend(Result.Success(trip))
+                }
+                .addOnFailureListener {
+                    trySend(Result.Error("Failed to load trip"))
+                }
+        }
+        awaitClose()
+    }
+
     override fun reserveSeats(tripId: Long, seats: List<Seat>): Flow<Result<Unit>> = callbackFlow {
         withContext(ioDispatcher) {
             trySend(Result.Loading)

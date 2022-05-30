@@ -1,4 +1,4 @@
-package com.dinder.rihla.rider.ui.home.tickets
+package com.dinder.rihla.rider.ui.ticket_detail // ktlint-disable experimental:package-name
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,47 +9,55 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dinder.rihla.rider.adapter.TicketAdapter
+import com.dinder.rihla.rider.adapter.StringItemsAdapter
 import com.dinder.rihla.rider.common.RihlaFragment
-import com.dinder.rihla.rider.databinding.TicketsFragmentBinding
+import com.dinder.rihla.rider.databinding.TicketDetailFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TicketsFragment : RihlaFragment() {
-    private val viewModel: TicketsViewModel by viewModels()
-    private lateinit var binding: TicketsFragmentBinding
+class TicketDetailFragment : RihlaFragment() {
+    private val viewModel: TicketDetailViewModel by viewModels()
+    private val args: TicketDetailFragmentArgs by navArgs()
+    private lateinit var binding: TicketDetailFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = TicketsFragmentBinding.inflate(inflater, container, false)
+        binding = TicketDetailFragmentBinding.inflate(inflater, container, false)
         setUI()
         return binding.root
     }
 
     private fun setUI() {
-        val ticketAdapter = TicketAdapter()
-        binding.ticketsRecyclerView.apply {
-            adapter = ticketAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+        val seatAdapter = StringItemsAdapter()
+
+        binding.seatsRecyclerView.apply {
+            adapter = seatAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getTrip(args.ticketId)
                 viewModel.state.collect {
-                    binding.ticketProgressBar.isVisible = it.loading
+                    binding.ticketDetailProgressBar.isVisible = it.loading
 
                     it.messages.firstOrNull()?.let { message ->
                         showSnackbar(message.content)
                         viewModel.userMessageShown(message.id)
                     }
 
-                    ticketAdapter.submitList(it.tickets)
+                    it.ticket?.let { ticket ->
+                        binding.ticket = ticket
+                        seatAdapter.submitList(ticket.seats)
+                    }
                 }
             }
         }

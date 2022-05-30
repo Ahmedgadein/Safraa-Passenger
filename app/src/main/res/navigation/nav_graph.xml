@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_homeFragment_to_tripDetailFragment"
             app:destination="@id/tripDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_ticketDetail"
+            app:destination="@id/ticketDetail" />
     </fragment>
     <fragment
         android:id="@+id/tripDetailFragment"
@@ -77,6 +80,15 @@
         <argument
             android:name="tripID"
             app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/ticketDetail"
+        android:name="com.dinder.rihla.rider.ui.ticket_detail.TicketDetailFragment"
+        android:label="ticket_detail_fragment"
+        tools:layout="@layout/ticket_detail_fragment" >
+        <argument
+            android:name="ticketId"
+            app:argType="string" />
     </fragment>
 
 </navigation>

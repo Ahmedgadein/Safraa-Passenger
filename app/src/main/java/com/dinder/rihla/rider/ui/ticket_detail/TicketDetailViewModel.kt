@@ -1,10 +1,10 @@
-package com.dinder.rihla.rider.ui.home.tickets
+package com.dinder.rihla.rider.ui.ticket_detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dinder.rihla.rider.common.Message
 import com.dinder.rihla.rider.common.Result
-import com.dinder.rihla.rider.domain.GetTicketsUseCase
+import com.dinder.rihla.rider.data.remote.ticket.TicketRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,24 +15,21 @@ import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class TicketsViewModel @Inject constructor(private val useCase: GetTicketsUseCase) : ViewModel() {
+class TicketDetailViewModel @Inject constructor(private val ticketRepository: TicketRepository) :
+    ViewModel() {
     private val _state = MutableStateFlow(TicketUiState())
     val state = _state.asStateFlow()
 
-    init {
-        loadTickets()
-    }
-
-    private fun loadTickets() {
+    fun getTrip(tripId: String) {
         viewModelScope.launch {
-            useCase.invoke().collect { result ->
+            ticketRepository.getTicket(tripId).collect { result ->
                 when (result) {
                     Result.Loading -> _state.update { it.copy(loading = true) }
                     is Result.Error -> showUserMessage(result.message)
                     is Result.Success -> _state.update {
                         it.copy(
-                            tickets = result.value,
-                            loading = false
+                            loading = false,
+                            ticket = result.value
                         )
                     }
                 }
