@@ -64,19 +64,22 @@
         android:id="@+id/homeFragment"
         android:name="com.dinder.rihla.rider.ui.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" >
+        tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_tripDetailFragment"
             app:destination="@id/tripDetailFragment" />
         <action
             android:id="@+id/action_homeFragment_to_ticketDetail"
             app:destination="@id/ticketDetail" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/tripDetailFragment"
         android:name="com.dinder.rihla.rider.ui.trip_detail.TripDetailFragment"
         android:label="trip_detail_fragment"
-        tools:layout="@layout/trip_detail_fragment" >
+        tools:layout="@layout/trip_detail_fragment">
         <argument
             android:name="tripID"
             app:argType="long" />
@@ -85,10 +88,21 @@
         android:id="@+id/ticketDetail"
         android:name="com.dinder.rihla.rider.ui.ticket_detail.TicketDetailFragment"
         android:label="ticket_detail_fragment"
-        tools:layout="@layout/ticket_detail_fragment" >
+        tools:layout="@layout/ticket_detail_fragment">
         <argument
             android:name="ticketId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.dinder.rihla.rider.ui.settings.SettingsFragment"
+        android:label="settings_fragment"
+        tools:layout="@layout/settings_fragment">
+        <action
+            android:id="@+id/action_settingsFragment_to_landingPageFragment"
+            app:destination="@id/landingPageFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>
