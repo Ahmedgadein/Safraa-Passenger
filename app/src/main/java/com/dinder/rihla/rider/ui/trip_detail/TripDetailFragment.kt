@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.databinding.TripDetailFragmentBinding
 import com.dinder.rihla.rider.utils.SeatUtils
@@ -36,7 +37,7 @@ class TripDetailFragment : RihlaFragment() {
 
     private fun setUI() {
         binding.tripDetailSeatView.setOnSeatSelectedListener { seats ->
-            binding.seatCount.text = "${seats.size} Seats Selected"
+            binding.seatCount.text = resources.getString(R.string.seats_selected, seats.size)
             binding.reserveButton.isEnabled = seats.isNotEmpty()
         }
 

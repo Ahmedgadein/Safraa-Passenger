@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/teal_700"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="Tickets" />
+            app:title="@string/tickets" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ProgressBar

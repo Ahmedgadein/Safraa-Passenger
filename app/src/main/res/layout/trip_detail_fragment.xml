@@ -51,7 +51,7 @@
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Trip Details"
+                    android:text="@string/trip_details"
                     android:textColor="@color/teal_700"
                     android:textSize="28sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -114,7 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:contentDescription="Day"
+                        android:contentDescription="@string/day"
                         android:text='@{trip!= null ? DateTimeUtils.INSTANCE.getFormattedDate(trip.date) : ""}'
                         android:textColor="@color/teal_700" />
 
@@ -122,7 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Day"
+                        android:text="@string/day"
                         android:textSize="11sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -132,7 +132,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:contentDescription="Time"
+                    android:contentDescription="@string/time"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toStartOf="@id/linearLayout4"
                     app:layout_constraintStart_toEndOf="@+id/linearLayout5"
@@ -149,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Time"
+                        android:text="@string/time"
                         android:textSize="11sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -168,7 +168,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:contentDescription="Price"
+                        android:contentDescription="@string/price"
                         android:text='@{trip != null ? trip.price + " SDG" : ""}'
                         android:textColor="@color/teal_700" />
 
@@ -176,7 +176,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Price"
+                        android:text="@string/price"
                         android:textSize="11sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -217,6 +217,6 @@
             android:layout_gravity="bottom|center"
             android:layout_margin="16dp"
             android:gravity="center"
-            android:text="Reserve" />
+            android:text="@string/reserve" />
     </FrameLayout>
 </layout>
