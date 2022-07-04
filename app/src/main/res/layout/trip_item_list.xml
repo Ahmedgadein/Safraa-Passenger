@@ -99,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="DAY"
+                    android:text="@string/day"
                     android:textSize="11sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Time"
+                    android:text="@string/time"
                     android:textSize="11sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -153,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Price"
+                    android:text="@string/price"
                     android:textSize="11sp"
                     android:textStyle="bold" />
             </LinearLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login">تسجيل الدخول</string>
+    <string name="mobile_number">رقم الهاتف</string>
+    <string name="mobile">الهاتف</string>
+    <string name="please_enter_the_verification_code">الرجاء إدخال رمز التحقق</string>
+    <string name="code">الرمز</string>
+    <string name="verification">التحقق</string>
+    <string name="name">الإسم</string>
+    <string name="please_enter_your_full_name">رجاء قم بإدخال إسمك الكامل</string>
+    <string name="signup">تسجيل</string>
+    <string name="terms_and_conditions">By signing up you agree to the terms and conditions of Rihla</string>
+    <string name="no_trips_found">لم يتم العثور على رحلات</string>
+    <string name="from">من</string>
+    <string name="to">إلى</string>
+    <string name="day">اليوم</string>
+    <string name="time">الزمن</string>
+    <string name="price">السعر</string>
+    <string name="trip_details">تفاصيل الرحلة</string>
+    <string name="reserve">حجز</string>
+    <string name="tickets">التذاكر</string>
+    <string name="company">الشركة</string>
+    <string name="seats">مقعد</string>
+    <string name="depature_within">المغادرة خلال</string>
+    <string name="departure">المغادرة</string>
+    <string name="sum">المجموع: </string>
+    <string name="instructions">التوجيهات</string>
+    <string name="instruction_1">1) يجب الحضور قبل 30 دقيقة على الأقل قبل المغادرة</string>
+    <string name="instruction_2">2) التأخر في الحضور قد يعرضك لفقدان حقك في التدكرة</string>
+    <string name="cancel_reservation">إلغاء الحجز</string>
+    <string name="logout">تسجيل خروج</string>
+    <string name="personal_info">المعلومات الشخضية</string>
+    <string name="seats_selected">تم إختيار %1$d مقعد</string>
+</resources>

@@ -4,7 +4,7 @@
 
     <PreferenceCategory
         app:key="personal"
-        app:title="Personal Info">
+        app:title="@string/personal_info">
 
         <Preference
             app:defaultValue="NA"
