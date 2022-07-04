@@ -5,6 +5,7 @@ import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.local.UserDao
 import com.dinder.rihla.rider.data.model.User
+import com.dinder.rihla.rider.utils.ErrorMessages
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class UserRepositoryImpl @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher,
-    private val dao: UserDao
+    private val dao: UserDao,
+    private val errorMessages: ErrorMessages
 ) :
     UserRepository {
     private val _ref = Firebase.firestore.collection(Collections.USERS)
@@ -32,7 +34,7 @@ class UserRepositoryImpl @Inject constructor(
                     trySend(Result.Success(User.fromJson(it.documents[0].data!!)))
                 }
                 .addOnSuccessListener {
-                    trySend(Result.Error("can't find user"))
+                    trySend(Result.Error(errorMessages.couldntFindUser))
                 }
         }
         awaitClose()

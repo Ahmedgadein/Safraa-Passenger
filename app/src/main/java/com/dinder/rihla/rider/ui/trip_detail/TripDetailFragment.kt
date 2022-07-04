@@ -28,7 +28,7 @@ class TripDetailFragment : RihlaFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         binding = TripDetailFragmentBinding.inflate(inflater, container, false)
         setUI()
@@ -69,7 +69,7 @@ class TripDetailFragment : RihlaFragment() {
                     }
 
                     if (it.isReserved) {
-                        showSnackbar("Seats reserved successfully")
+                        showSnackbar(resources.getString(R.string.seats_reserved_successfully))
                         findNavController().navigateUp()
                     }
                 }

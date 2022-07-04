@@ -32,4 +32,18 @@
     <string name="rihla_version_1_0_0" translatable="false">Rihla version 1.0.0</string>
     <string name="personal_info">Personal Info</string>
     <string name="seats_selected">%1$d Seat Selected </string>
+    <!--    Error Messages-->
+    <string name="failed_to_resolve_registration">Failed to resolve registration</string>
+    <string name="signup_failed">Signup failed, please try again</string>
+    <string name="login_failed">Login failed, please try again</string>
+    <string name="loading_destinations_failed">Failed to load destinations, please check your connection</string>
+    <string name="loading_trips_failed">Failed to load trips, please check your connection</string>
+    <string name="loading_tickets_failed">Failed to load tickets, please check your connection</string>
+    <string name="ticket_not_found">Ticket not found</string>
+    <string name="failed_to_save_ticket">Failed to save ticket</string>
+    <string name="trip_not_found">Trip not found</string>
+    <string name="failed_to_load_trip">Failed to load trip</string>
+    <string name="failed_to_reserve_seat">Failed to reserve seat</string>
+    <string name="could_not_find_user">Couldn\'t find user</string>
+    <string name="seats_reserved_successfully">Seat(s) reserved successfully</string>
 </resources>

@@ -3,6 +3,7 @@ package com.dinder.rihla.rider.data.remote.destination
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Destination
+import com.dinder.rihla.rider.utils.ErrorMessages
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,7 +15,10 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class DestinationRepositoryImpl @Inject constructor(private val ioDispatcher: CoroutineDispatcher) :
+class DestinationRepositoryImpl @Inject constructor(
+    private val ioDispatcher: CoroutineDispatcher,
+    private val errorMessages: ErrorMessages
+) :
     DestinationRepository {
     private val _ref = Firebase.firestore.collection(Collections.DESTINATIONS)
 
@@ -27,7 +31,7 @@ class DestinationRepositoryImpl @Inject constructor(private val ioDispatcher: Co
                     trySend(Result.Success(destinations))
                 }
                 .addOnFailureListener {
-                    trySend(Result.Error("Failed to load destinations"))
+                    trySend(Result.Error(errorMessages.loadingDestinationsFailed))
                 }
         }
         awaitClose()

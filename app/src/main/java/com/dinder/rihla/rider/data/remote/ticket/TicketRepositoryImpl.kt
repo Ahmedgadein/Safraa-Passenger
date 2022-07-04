@@ -4,6 +4,7 @@ import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Ticket
+import com.dinder.rihla.rider.utils.ErrorMessages
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,7 +16,10 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class TicketRepositoryImpl @Inject constructor(private val ioDispatcher: CoroutineDispatcher) :
+class TicketRepositoryImpl @Inject constructor(
+    private val ioDispatcher: CoroutineDispatcher,
+    private val errorMessages: ErrorMessages
+) :
     TicketRepository {
     private val _ref = Firebase.firestore.collection(Collections.TICKETS)
 
@@ -29,7 +33,7 @@ class TicketRepositoryImpl @Inject constructor(private val ioDispatcher: Corouti
                     trySend(Result.Success(tickets))
                 }
                 .addOnFailureListener {
-                    trySend(Result.Error("Failed to load tickets"))
+                    trySend(Result.Error(errorMessages.loadingTicketsFailed))
                 }
         }
         awaitClose()
@@ -44,7 +48,7 @@ class TicketRepositoryImpl @Inject constructor(private val ioDispatcher: Corouti
                         val ticket = Ticket.fromJson(it.data!!)
                         trySend(Result.Success(ticket))
                     } else {
-                        trySend(Result.Error("Ticket not found"))
+                        trySend(Result.Error(errorMessages.ticketNotFound))
                     }
                 }
         }
@@ -61,11 +65,11 @@ class TicketRepositoryImpl @Inject constructor(private val ioDispatcher: Corouti
                             trySend(Result.Success(Unit))
                         }
                         .addOnFailureListener {
-                            trySend(Result.Error("Failed to save ticket"))
+                            trySend(Result.Error(errorMessages.failedToSaveTicket))
                         }
                 }
                 .addOnFailureListener {
-                    trySend(Result.Error("Failed to save ticket"))
+                    trySend(Result.Error(errorMessages.failedToSaveTicket))
                 }
         }
         awaitClose()

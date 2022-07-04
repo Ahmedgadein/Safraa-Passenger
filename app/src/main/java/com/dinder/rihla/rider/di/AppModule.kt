@@ -1,6 +1,7 @@
 package com.dinder.rihla.rider.di
 
 import android.content.Context
+import android.content.res.Resources
 import com.dinder.rihla.rider.data.local.UserDao
 import com.dinder.rihla.rider.data.local.db.RihlaDatabase
 import com.dinder.rihla.rider.data.remote.auth.AuthRepository
@@ -13,6 +14,7 @@ import com.dinder.rihla.rider.data.remote.trip.TripRepository
 import com.dinder.rihla.rider.data.remote.trip.TripRepositoryImpl
 import com.dinder.rihla.rider.data.remote.user.UserRepository
 import com.dinder.rihla.rider.data.remote.user.UserRepositoryImpl
+import com.dinder.rihla.rider.utils.ErrorMessages
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -29,6 +31,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 object AppModule {
 
     @Provides
+    fun provideResources(@ApplicationContext context: Context): Resources = context.resources
+
+    @Provides
     fun provideDatabase(@ApplicationContext context: Context): RihlaDatabase =
         RihlaDatabase.getInstance(context)
 
@@ -42,23 +47,40 @@ object AppModule {
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     @Provides
-    fun provideAuthRepository(auth: FirebaseAuth, dispatcher: CoroutineDispatcher):
+    fun provideAuthRepository(
+        auth: FirebaseAuth,
+        dispatcher: CoroutineDispatcher,
+        errorMessages: ErrorMessages
+    ):
         AuthRepository =
-            FirebaseAuthRepository(auth, dispatcher)
+            FirebaseAuthRepository(auth, dispatcher, errorMessages)
 
     @Provides
-    fun provideUserRepository(dispatcher: CoroutineDispatcher, dao: UserDao): UserRepository =
-        UserRepositoryImpl(dispatcher, dao)
+    fun provideUserRepository(
+        dispatcher: CoroutineDispatcher,
+        dao: UserDao,
+        errorMessages: ErrorMessages
+    ): UserRepository =
+        UserRepositoryImpl(dispatcher, dao, errorMessages)
 
     @Provides
-    fun provideTripRepository(dispatcher: CoroutineDispatcher): TripRepository =
-        TripRepositoryImpl(dispatcher)
+    fun provideTripRepository(
+        dispatcher: CoroutineDispatcher,
+        errorMessages: ErrorMessages
+    ): TripRepository =
+        TripRepositoryImpl(dispatcher, errorMessages)
 
     @Provides
-    fun provideDestinationRepository(dispatcher: CoroutineDispatcher): DestinationRepository =
-        DestinationRepositoryImpl(dispatcher)
+    fun provideDestinationRepository(
+        dispatcher: CoroutineDispatcher,
+        errorMessages: ErrorMessages
+    ): DestinationRepository =
+        DestinationRepositoryImpl(dispatcher, errorMessages)
 
     @Provides
-    fun provideTicketRepository(dispatcher: CoroutineDispatcher): TicketRepository =
-        TicketRepositoryImpl(dispatcher)
+    fun provideTicketRepository(
+        dispatcher: CoroutineDispatcher,
+        errorMessages: ErrorMessages
+    ): TicketRepository =
+        TicketRepositoryImpl(dispatcher, errorMessages)
 }

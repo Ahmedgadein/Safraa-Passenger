@@ -4,6 +4,7 @@ import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.User
+import com.dinder.rihla.rider.utils.ErrorMessages
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
@@ -20,7 +21,8 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class FirebaseAuthRepository @Inject constructor(
     private val auth: FirebaseAuth,
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    private val errorMessages: ErrorMessages
 ) : AuthRepository {
     private val _ref = Firebase.firestore.collection(Collections.USERS)
 
@@ -32,7 +34,7 @@ class FirebaseAuthRepository @Inject constructor(
                     trySend(Result.Success(!it.isEmpty))
                 }
                 .addOnFailureListener {
-                    trySend(Result.Error("failed to resolve registration"))
+                    trySend(Result.Error(errorMessages.failedToResolveRegistration))
                 }
         }
         awaitClose()
@@ -50,7 +52,7 @@ class FirebaseAuthRepository @Inject constructor(
                     trySend(Result.Success(true))
                 }
                 .addOnFailureListener {
-                    trySend(Result.Error("signup failed"))
+                    trySend(Result.Error(errorMessages.signupFailed))
                 }
         }
         awaitClose()
@@ -64,7 +66,7 @@ class FirebaseAuthRepository @Inject constructor(
                     trySend(Result.Success(true))
                 }
                 .addOnFailureListener {
-                    trySend(Result.Error("Login Failed"))
+                    trySend(Result.Error(errorMessages.loginFailed))
                 }
         }
         awaitClose()
