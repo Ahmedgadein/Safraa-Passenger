@@ -29,6 +29,20 @@
     <string name="instruction_2">2) التأخر في الحضور قد يعرضك لفقدان حقك في التدكرة</string>
     <string name="cancel_reservation">إلغاء الحجز</string>
     <string name="logout">تسجيل خروج</string>
-    <string name="personal_info">المعلومات الشخضية</string>
+    <string name="personal_info">المعلومات الشخصية</string>
     <string name="seats_selected">تم إختيار %1$d مقعد</string>
+    <!--    Error Messages-->
+    <string name="failed_to_resolve_registration">فشل في التحقق من التسجيل</string>
+    <string name="signup_failed">فشل في التسجيل, حاول مجددا</string>
+    <string name="login_failed">تعذر تسجيل الدخول, حاول مجددا</string>
+    <string name="loading_destinations_failed">تعذر عرض المواقع, تأكد من إتصال الإنترنت</string>
+    <string name="loading_trips_failed">تعذر عرض الرحلات, تأكد من إتصال الإنترنت</string>
+    <string name="loading_tickets_failed">تعذر عرض التذاكر, تأكد من إتصال الإنترنت</string>
+    <string name="ticket_not_found">لم يتم العثور على التذكرة</string>
+    <string name="failed_to_save_ticket">تعذر حفظ التذكرة</string>
+    <string name="trip_not_found">لم يتم العثور على الرحلة</string>
+    <string name="failed_to_load_trip">تعذر عرض الرحلة</string>
+    <string name="failed_to_reserve_seat">تعذر حجز المقعد</string>
+    <string name="could_not_find_user">تعذر إيجاد المستخدم</string>
+    <string name="seats_reserved_successfully">تم حجز المقاعد بنجاح</string>
 </resources>

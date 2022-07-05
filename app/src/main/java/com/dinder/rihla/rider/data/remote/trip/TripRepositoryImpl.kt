@@ -7,6 +7,7 @@ import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Destination
 import com.dinder.rihla.rider.data.model.Seat
 import com.dinder.rihla.rider.data.model.Trip
+import com.dinder.rihla.rider.utils.ErrorMessages
 import com.dinder.rihla.rider.utils.SeatUtils
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
@@ -22,7 +23,10 @@ import java.util.Date
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class TripRepositoryImpl @Inject constructor(private val ioDispatcher: CoroutineDispatcher) :
+class TripRepositoryImpl @Inject constructor(
+    private val ioDispatcher: CoroutineDispatcher,
+    private val errorMessages: ErrorMessages
+) :
     TripRepository {
     private val _ref = Firebase.firestore.collection(Collections.TRIPS)
 
@@ -35,7 +39,7 @@ class TripRepositoryImpl @Inject constructor(private val ioDispatcher: Coroutine
                     trySend(Result.Success(trips))
                 }
                 .addOnFailureListener {
-                    trySend(Result.Error("Failed to load trips"))
+                    trySend(Result.Error(errorMessages.loadingTripsFailed))
                 }
         }
         awaitClose()
@@ -60,7 +64,7 @@ class TripRepositoryImpl @Inject constructor(private val ioDispatcher: Coroutine
                         trySend(Result.Success(trips))
                     }
                     .addOnFailureListener {
-                        trySend(Result.Error("Failed to query trips"))
+                        trySend(Result.Error(errorMessages.loadingTripsFailed))
                     }
             }
             awaitClose()
@@ -71,7 +75,7 @@ class TripRepositoryImpl @Inject constructor(private val ioDispatcher: Coroutine
             trySend(Result.Loading)
             _ref.whereEqualTo(Fields.ID, id).addSnapshotListener { snapshot, error ->
                 if (error != null) {
-                    trySend(Result.Error("Trip observe Error"))
+                    trySend(Result.Error(errorMessages.tripNotFound))
                     return@addSnapshotListener
                 }
 
@@ -79,7 +83,7 @@ class TripRepositoryImpl @Inject constructor(private val ioDispatcher: Coroutine
                     val trip = Trip.fromJson(snapshot.documents.first().data!!)
                     trySend(Result.Success(trip))
                 } else {
-                    trySend(Result.Error("Trip not found"))
+                    trySend(Result.Error(errorMessages.tripNotFound))
                 }
             }
         }
@@ -95,7 +99,7 @@ class TripRepositoryImpl @Inject constructor(private val ioDispatcher: Coroutine
                     trySend(Result.Success(trip))
                 }
                 .addOnFailureListener {
-                    trySend(Result.Error("Failed to load trip"))
+                    trySend(Result.Error(errorMessages.failedToLoadTrip))
                 }
         }
         awaitClose()
@@ -119,11 +123,11 @@ class TripRepositoryImpl @Inject constructor(private val ioDispatcher: Coroutine
                         }
                         .addOnFailureListener {
                             Log.i("UpdateSeatState", "updateSeatState status: Failure")
-                            trySend(Result.Error("Failed to reserve seat"))
+                            trySend(Result.Error(errorMessages.failedToReserveSeat))
                         }
                 }
                 .addOnFailureListener {
-                    trySend(Result.Error("Failed to find trip"))
+                    trySend(Result.Error(errorMessages.tripNotFound))
                 }
         }
         awaitClose()
