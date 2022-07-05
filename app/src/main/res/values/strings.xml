@@ -29,7 +29,7 @@
     <string name="instruction_2">2) Arriving late can get your ticket cancelled</string>
     <string name="cancel_reservation">Cancel Reservation</string>
     <string name="logout">Logout</string>
-    <string name="rihla_version_1_0_0" translatable="false">Rihla version 1.0.0</string>
+    <string name="rihla_version" translatable="false">Rihla version %s</string>
     <string name="personal_info">Personal Info</string>
     <string name="seats_selected">%1$d Seat Selected </string>
     <!--    Error Messages-->
