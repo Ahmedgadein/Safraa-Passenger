@@ -19,6 +19,7 @@
     <string name="trip_details">Trip Details</string>
     <string name="reserve">Reserve</string>
     <string name="tickets">Tickets</string>
+    <string name="trips">Trips</string>
     <string name="company">Company</string>
     <string name="seats">Seats</string>
     <string name="depature_within">Departure within</string>
@@ -43,7 +44,9 @@
     <string name="failed_to_save_ticket">Failed to save ticket</string>
     <string name="trip_not_found">Trip not found</string>
     <string name="failed_to_load_trip">Failed to load trip</string>
+    <string name="failed_to_resolve_app_version">Failed to resolve app version, check your connection</string>
     <string name="failed_to_reserve_seat">Failed to reserve seat</string>
     <string name="could_not_find_user">Couldn\'t find user</string>
     <string name="seats_reserved_successfully">Seat(s) reserved successfully</string>
+    <string name="update_to_continue">Please update your App to continue</string>
 </resources>

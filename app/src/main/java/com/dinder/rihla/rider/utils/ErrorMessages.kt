@@ -30,4 +30,6 @@ class ErrorMessages @Inject constructor(private val resources: Resources) {
     val failedToReserveSeat: String = getResource(R.string.failed_to_reserve_seat)
 
     val couldntFindUser: String = getResource(R.string.could_not_find_user)
+
+    val failedToResolveAppVersion: String = getResource(R.string.failed_to_resolve_app_version)
 }

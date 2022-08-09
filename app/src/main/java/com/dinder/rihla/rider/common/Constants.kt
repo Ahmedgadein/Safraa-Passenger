@@ -12,6 +12,8 @@ object Constants {
 
 object Collections {
     const val DESTINATIONS = "destinations"
+    const val APP_VERSION = "APP_VERSION"
+    const val CONSTANTS = "CONSTANTS"
     const val USERS = "users"
     const val TRIPS = "trips"
     const val TICKETS = "tickets"
@@ -25,4 +27,5 @@ object Fields {
     const val ID = "id"
     const val FROM = "from"
     const val TO = "to"
+    const val VERSION = "version"
 }

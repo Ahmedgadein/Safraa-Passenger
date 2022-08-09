@@ -14,6 +14,8 @@ import com.dinder.rihla.rider.data.remote.trip.TripRepository
 import com.dinder.rihla.rider.data.remote.trip.TripRepositoryImpl
 import com.dinder.rihla.rider.data.remote.user.UserRepository
 import com.dinder.rihla.rider.data.remote.user.UserRepositoryImpl
+import com.dinder.rihla.rider.data.remote.version.AppVersionRepository
+import com.dinder.rihla.rider.data.remote.version.AppVersionRepositoryImpl
 import com.dinder.rihla.rider.utils.ErrorMessages
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
@@ -83,4 +85,11 @@ object AppModule {
         errorMessages: ErrorMessages
     ): TicketRepository =
         TicketRepositoryImpl(dispatcher, errorMessages)
+
+    @Provides
+    fun provideAppVersionRepository(
+        dispatcher: CoroutineDispatcher,
+        errorMessages: ErrorMessages
+    ): AppVersionRepository =
+        AppVersionRepositoryImpl(dispatcher, errorMessages)
 }
