@@ -10,9 +10,14 @@ import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.databinding.LoginFragmentBinding
 import com.dinder.rihla.rider.utils.PhoneNumberFormatter
 import com.dinder.rihla.rider.utils.PhoneNumberValidator
+import com.mixpanel.android.mpmetrics.MixpanelAPI
+import javax.inject.Inject
 
 class LoginFragment : RihlaFragment() {
     lateinit var binding: LoginFragmentBinding
+
+    @Inject
+    lateinit var mixpanel: MixpanelAPI
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +42,7 @@ class LoginFragment : RihlaFragment() {
             if (!validNumber(phoneNumber)) {
                 return@setOnClickListener
             }
+            mixpanel.track("Login Attempt")
             navigateToVerification(PhoneNumberFormatter.getFullNumber(phoneNumber))
         }
     }
