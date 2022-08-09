@@ -93,7 +93,7 @@ object AppModule {
         errorMessages: ErrorMessages
     ): AppVersionRepository =
         AppVersionRepositoryImpl(dispatcher, errorMessages)
-       
+
     @Provides
     fun provideMixpanel(@ApplicationContext context: Context): MixpanelAPI =
         MixpanelAPI.getInstance(context, "244608d9170c936a37d24ef9a7b8eccf")
