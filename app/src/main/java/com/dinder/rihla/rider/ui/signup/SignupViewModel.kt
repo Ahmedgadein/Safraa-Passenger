@@ -8,12 +8,14 @@ import com.dinder.rihla.rider.data.model.User
 import com.dinder.rihla.rider.data.remote.auth.AuthRepository
 import com.dinder.rihla.rider.data.remote.user.UserRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.util.UUID
 import javax.inject.Inject
 
@@ -21,7 +23,8 @@ import javax.inject.Inject
 class SignupViewModel @Inject constructor(
     private val authRepo: AuthRepository,
     private val userRepo: UserRepository,
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
+    private val mixpanel: MixpanelAPI
 ) : ViewModel() {
     private val _state = MutableStateFlow(SignupUiState())
     val state = _state.asStateFlow()
@@ -34,6 +37,13 @@ class SignupViewModel @Inject constructor(
                     Result.Loading -> _state.update { it.copy(loading = true) }
                     is Result.Error -> showUserMessage(result.message)
                     is Result.Success -> {
+                        mixpanel.identify(auth.uid)
+                        val props = JSONObject().apply {
+                            put("Name", _user.name)
+                            put("Phone Number", _user.phoneNumber)
+                        }
+                        mixpanel.people.set(props)
+                        mixpanel.track("Signup Successful")
                         userRepo.add(_user)
                         _state.update { it.copy(navigateToHome = true) }
                     }
