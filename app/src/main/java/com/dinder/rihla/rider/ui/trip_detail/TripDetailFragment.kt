@@ -15,15 +15,21 @@ import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.databinding.TripDetailFragmentBinding
 import com.dinder.rihla.rider.utils.SeatUtils
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TripDetailFragment : RihlaFragment() {
     private val viewModel: TripDetailViewModel by viewModels()
     private val args: TripDetailFragmentArgs by navArgs()
     private lateinit var binding: TripDetailFragmentBinding
+
+    @Inject
+    lateinit var mixpanel: MixpanelAPI
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +49,11 @@ class TripDetailFragment : RihlaFragment() {
 
         binding.reserveButton.setOnClickListener {
             val seats = SeatUtils.getSelectedSeats(binding.tripDetailSeatView.getSeats())
+            val props = JSONObject().apply {
+                put("Seats: ", seats.toString())
+                put("Seats count: ", seats.size)
+            }
+            mixpanel.track("Reservation Attempt", props)
             viewModel.reserveSeats(args.tripID, seats)
         }
 
@@ -70,6 +81,16 @@ class TripDetailFragment : RihlaFragment() {
 
                     if (it.isReserved) {
                         showSnackbar(resources.getString(R.string.seats_reserved_successfully))
+                        val props = JSONObject().apply {
+                            put("From", it.trip?.from?.name)
+                            put("To", it.trip?.to?.name)
+                            put("Price", it.trip?.price)
+                            put("Date", it.trip?.date)
+                            put("Time", it.trip?.time)
+                            put("Trip ID:", args.tripID)
+                        }
+
+                        mixpanel.track("Reservation Successful", props)
                         findNavController().navigateUp()
                     }
                 }

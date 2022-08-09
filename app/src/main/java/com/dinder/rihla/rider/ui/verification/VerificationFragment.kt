@@ -20,10 +20,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class VerificationFragment : RihlaFragment() {
@@ -32,6 +34,9 @@ class VerificationFragment : RihlaFragment() {
     private val args: VerificationFragmentArgs by navArgs()
     private lateinit var binding: VerificationFragmentBinding
     private var verificationID: String = "ID"
+
+    @Inject
+    lateinit var mixpanel: MixpanelAPI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +76,7 @@ class VerificationFragment : RihlaFragment() {
                     }
 
                     if (it.navigateToHome) {
+                        mixpanel.track("Login Successful")
                         navigateToHome()
                     }
 

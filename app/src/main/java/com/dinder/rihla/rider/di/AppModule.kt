@@ -18,6 +18,7 @@ import com.dinder.rihla.rider.data.remote.version.AppVersionRepository
 import com.dinder.rihla.rider.data.remote.version.AppVersionRepositoryImpl
 import com.dinder.rihla.rider.utils.ErrorMessages
 import com.google.firebase.auth.FirebaseAuth
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -92,4 +93,8 @@ object AppModule {
         errorMessages: ErrorMessages
     ): AppVersionRepository =
         AppVersionRepositoryImpl(dispatcher, errorMessages)
+       
+    @Provides
+    fun provideMixpanel(@ApplicationContext context: Context): MixpanelAPI =
+        MixpanelAPI.getInstance(context, "244608d9170c936a37d24ef9a7b8eccf")
 }
