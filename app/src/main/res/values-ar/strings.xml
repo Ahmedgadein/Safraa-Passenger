@@ -19,6 +19,7 @@
     <string name="trip_details">تفاصيل الرحلة</string>
     <string name="reserve">حجز</string>
     <string name="tickets">التذاكر</string>
+    <string name="trips">الرحلات</string>
     <string name="company">الشركة</string>
     <string name="seats">مقعد</string>
     <string name="depature_within">المغادرة خلال</string>
@@ -45,4 +46,6 @@
     <string name="failed_to_reserve_seat">تعذر حجز المقعد</string>
     <string name="could_not_find_user">تعذر إيجاد المستخدم</string>
     <string name="seats_reserved_successfully">تم حجز المقاعد بنجاح</string>
+    <string name="failed_to_resolve_app_version">تعذر الحصول على إصدار التطبيق, تأكد من إتصال الإنترنت</string>
+    <string name="update_to_continue">رجاء قم بتحديث التطبيق للمواصلة</string>
 </resources>

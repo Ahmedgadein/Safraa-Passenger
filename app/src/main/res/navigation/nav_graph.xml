@@ -20,6 +20,9 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_landingPageFragment_to_updateAppFragment"
+            app:destination="@id/updateAppFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -104,5 +107,10 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/updateAppFragment"
+        android:name="com.dinder.rihla.rider.ui.update.UpdateAppFragment"
+        android:label="fragment_update_app"
+        tools:layout="@layout/fragment_update_app" />
 
 </navigation>

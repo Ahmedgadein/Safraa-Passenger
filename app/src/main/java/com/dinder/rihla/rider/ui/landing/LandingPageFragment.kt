@@ -9,8 +9,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.common.RihlaFragment
+import com.dinder.rihla.rider.databinding.LandingPageFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -18,20 +18,31 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LandingPageFragment : RihlaFragment() {
     private val viewModel: LandingPageViewModel by viewModels()
+    private lateinit var binding: LandingPageFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        binding = LandingPageFragmentBinding.inflate(inflater, container, false)
         setUI()
-        return inflater.inflate(R.layout.landing_page_fragment, container, false)
+        return binding.root
     }
 
     private fun setUI() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect {
+                    it.messages.firstOrNull()?.let { message ->
+                        showSnackbar(message.content)
+                        viewModel.userMessageShown(message.id)
+                    }
+
+                    if (it.navigateToUpdate) {
+                        navigateToUpdate()
+                        return@collect
+                    }
                     if (it.navigateToHome) {
                         navigateToHome()
                         return@collect
@@ -55,6 +66,12 @@ class LandingPageFragment : RihlaFragment() {
     private fun navigateToLogin() {
         findNavController().navigate(
             LandingPageFragmentDirections.actionLandingPageFragmentToLoginFragment()
+        )
+    }
+
+    private fun navigateToUpdate() {
+        findNavController().navigate(
+            LandingPageFragmentDirections.actionLandingPageFragmentToUpdateAppFragment()
         )
     }
 }
