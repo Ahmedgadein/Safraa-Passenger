@@ -51,11 +51,10 @@ class DestinationAdapter(
 
     private val nameFilter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            TODO("Not yet implemented")
+            return FilterResults()
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            TODO("Not yet implemented")
         }
 
         override fun convertResultToString(resultValue: Any?): CharSequence {

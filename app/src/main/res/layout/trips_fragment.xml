@@ -72,34 +72,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:hint="@string/from"
                 android:backgroundTint="@color/white"
+                android:focusable="false"
+                android:hint="@string/from"
                 android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
                     android:id="@+id/fromDropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/material_on_surface_emphasis_medium"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    android:textColor="@color/material_on_surface_emphasis_medium" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:hint="@string/to"
                 android:backgroundTint="@color/white"
+                android:focusable="false"
+                android:hint="@string/to"
                 android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
                     android:id="@+id/toDropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/material_on_surface_emphasis_medium"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    android:textColor="@color/material_on_surface_emphasis_medium" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/clearDestinationsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_clear" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
