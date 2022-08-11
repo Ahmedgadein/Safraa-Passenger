@@ -46,6 +46,14 @@ class TripsFragment : RihlaFragment() {
             )
         }
 
+        binding.clearDestinationsButton.setOnClickListener {
+            binding.fromDropdown.text.clear()
+            binding.toDropdown.text.clear()
+            binding.toDropdown.clearFocus()
+            binding.fromDropdown.clearFocus()
+            viewModel.clearDestinations()
+        }
+
         val tripsAdapter = TripAdapter()
         binding.tripsRecyclerView.apply {
             adapter = tripsAdapter

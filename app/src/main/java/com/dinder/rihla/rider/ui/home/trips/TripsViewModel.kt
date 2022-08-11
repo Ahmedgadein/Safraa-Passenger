@@ -72,7 +72,10 @@ class TripsViewModel @Inject constructor(
         queryTrips()
     }
 
-    fun onDestinationChange() {
+    fun clearDestinations() {
+        _state.update {
+            it.copy(toDestination = null, fromDestination = null)
+        }
         queryTrips()
     }
 
