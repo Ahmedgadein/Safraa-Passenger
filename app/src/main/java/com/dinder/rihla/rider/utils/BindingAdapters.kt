@@ -2,18 +2,11 @@ package com.dinder.rihla.rider.utils
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.data.model.Company
 import com.dinder.rihla.rider.data.model.Destination
 import com.dinder.rihla.rider.data.model.Ticket
-import com.dinder.rihla.rider.data.model.Trip
 import java.util.Locale
-
-@BindingAdapter("price")
-fun setPriceLabel(view: TextView, trip: Trip?) {
-    trip?.let {
-        view.text = "${trip.price} SDG"
-    }
-}
 
 @BindingAdapter("destination")
 fun setDestinationLabel(view: TextView, destination: Destination?) {
@@ -40,6 +33,10 @@ fun setSeatsCount(view: TextView, list: List<String>) {
 fun setTicketPriceSum(view: TextView, ticket: Ticket?) {
     ticket?.let {
         val ticketsCount = ticket.seats.size
-        view.text = "${ticketsCount * ticket.trip.price} SDG"
+        val sum = view.context.resources.getString(
+            R.string.price_sdg,
+            (ticketsCount * ticket.trip.price).toString()
+        )
+        view.text = sum
     }
 }

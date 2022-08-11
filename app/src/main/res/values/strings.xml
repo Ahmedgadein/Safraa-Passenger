@@ -33,6 +33,8 @@
     <string name="rihla_version" translatable="false">Rihla version %s</string>
     <string name="personal_info">Personal Info</string>
     <string name="seats_selected">%1$d Seat Selected </string>
+    <string name="price_sdg">%s SDG</string>
+    <string name="settings">Settings</string>
     <!--    Error Messages-->
     <string name="failed_to_resolve_registration">Failed to resolve registration</string>
     <string name="signup_failed">Signup failed, please try again</string>

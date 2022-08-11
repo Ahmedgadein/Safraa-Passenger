@@ -30,7 +30,7 @@ object DateTimeUtils {
         }
 
         return String.format(
-            "%d/%d/%d",
+            "%d-%d-%d",
             calendar.get(Calendar.DAY_OF_MONTH),
             calendar.get(GregorianCalendar.MONTH) + 1, // Calendar.MONTH is month order
             calendar.get(Calendar.YEAR)

@@ -27,9 +27,9 @@
                 android:id="@+id/from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:destination="@{trip.from}"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                app:destination="@{trip.from}"
                 app:layout_constraintEnd_toStartOf="@id/view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -49,9 +49,9 @@
                 android:id="@+id/to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:destination="@{trip.to}"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                app:destination="@{trip.to}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/view"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -70,9 +70,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:company="@{trip.company}"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:company="@{trip.company}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/materialDivider" />
@@ -93,7 +93,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@{DateTimeUtils.INSTANCE.getFormattedDate(trip.date)}"
-                    android:textColor="@color/teal_700" />
+                    android:textColor="@color/teal_700"
+                    android:textSize="21sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -120,7 +121,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@{DateTimeUtils.INSTANCE.getFormattedTime(trip.time)}"
-                    android:textColor="@color/teal_700" />
+                    android:textColor="@color/teal_700"
+                    android:textSize="21sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -146,8 +148,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    app:price="@{trip}"
-                    android:textColor="@color/teal_700" />
+                    android:text="@{@string/price_sdg(trip.price)}"
+                    android:textColor="@color/teal_700"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
