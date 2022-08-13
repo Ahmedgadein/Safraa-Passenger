@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="Settings" />
+                app:title="@string/settings" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

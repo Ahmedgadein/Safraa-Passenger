@@ -71,6 +71,7 @@
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:destination="@{trip.from}"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -93,6 +94,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:destination="@{trip.to}"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -116,7 +118,8 @@
                         android:layout_gravity="center_horizontal"
                         android:contentDescription="@string/day"
                         android:text='@{trip!= null ? DateTimeUtils.INSTANCE.getFormattedDate(trip.date) : ""}'
-                        android:textColor="@color/teal_700" />
+                        android:textColor="@color/teal_700"
+                        android:textSize="21sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -143,7 +146,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text='@{trip != null ?DateTimeUtils.INSTANCE.getFormattedTime(trip.time) : ""}'
-                        android:textColor="@color/teal_700" />
+                        android:textColor="@color/teal_700"
+                        android:textSize="21sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -169,8 +173,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:contentDescription="@string/price"
-                        android:text='@{trip != null ? trip.price + " SDG" : ""}'
-                        android:textColor="@color/teal_700" />
+                        android:text="@{@string/price_sdg(trip.price)}"
+                        android:textColor="@color/teal_700"
+                        android:textSize="21sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -202,7 +207,7 @@
                     android:id="@+id/tripDetailSeatView"
                     android:layout_width="300dp"
                     android:layout_height="600dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/seatCount" />
@@ -211,11 +216,11 @@
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/reserveButton"
-            android:enabled="false"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="16dp"
+            android:enabled="false"
             android:gravity="center"
             android:text="@string/reserve" />
     </FrameLayout>

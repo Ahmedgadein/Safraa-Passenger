@@ -32,6 +32,8 @@
     <string name="logout">تسجيل خروج</string>
     <string name="personal_info">المعلومات الشخصية</string>
     <string name="seats_selected">تم إختيار %1$d مقعد</string>
+    <string name="price_sdg">%s جنيه</string>
+    <string name="settings">الحساب</string>
     <!--    Error Messages-->
     <string name="failed_to_resolve_registration">فشل في التحقق من التسجيل</string>
     <string name="signup_failed">فشل في التسجيل, حاول مجددا</string>

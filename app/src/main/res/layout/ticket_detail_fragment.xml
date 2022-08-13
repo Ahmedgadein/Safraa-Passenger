@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{ticket.passengerName}"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -96,6 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/departure"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/materialDivider4" />
 
@@ -114,6 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/teal_700"
+                        android:textSize="20sp"
                         app:destination='@{ticket.trip.from}' />
 
                     <TextView
@@ -140,7 +142,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text='@{ticket != null ? DateTimeUtils.INSTANCE.getFormattedTime(ticket.trip.time): ""}'
-                        android:textColor="@color/teal_700" />
+                        android:textColor="@color/teal_700"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -166,7 +169,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text='@{ticket != null ? DateTimeUtils.INSTANCE.getFormattedDate(ticket.trip.date): ""}'
-                        android:textColor="@color/teal_700" />
+                        android:textColor="@color/teal_700"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -214,6 +218,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
+                        android:textStyle="bold"
                         android:text="@string/sum" />
 
                     <TextView
@@ -221,6 +226,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/teal_700"
                         android:textStyle="bold"
+                        android:textSize="16sp"
                         app:priceSum="@{ticket}" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
