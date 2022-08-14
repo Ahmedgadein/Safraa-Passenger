@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -11,10 +12,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dinder.rihla.rider.R
+import com.dinder.rihla.rider.adapter.StringItemsAdapter
 import com.dinder.rihla.rider.common.RihlaFragment
+import com.dinder.rihla.rider.data.model.Seat
 import com.dinder.rihla.rider.databinding.TripDetailFragmentBinding
 import com.dinder.rihla.rider.utils.SeatUtils
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -49,12 +55,7 @@ class TripDetailFragment : RihlaFragment() {
 
         binding.reserveButton.setOnClickListener {
             val seats = SeatUtils.getSelectedSeats(binding.tripDetailSeatView.getSeats())
-            val props = JSONObject().apply {
-                put("Seats: ", seats.toString())
-                put("Seats count: ", seats.size)
-            }
-            mixpanel.track("Reservation Attempt", props)
-            viewModel.reserveSeats(args.tripID, seats)
+            showConfirmationBottomSheet(args.tripID, seats)
         }
 
         lifecycleScope.launch {
@@ -96,5 +97,36 @@ class TripDetailFragment : RihlaFragment() {
                 }
             }
         }
+    }
+
+    private fun showConfirmationBottomSheet(tripID: Long, seats: List<Seat>) {
+        // Initialize Bottomsheet Dialog
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(R.layout.confirm_seats_bottomsheet_dialog)
+
+        // Seats RecyclerView
+        val seatAdapter = StringItemsAdapter()
+        bottomSheetDialog.findViewById<RecyclerView>(R.id.confirmSeatsRecyclerView)?.apply {
+            adapter = seatAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        }
+
+        // Submit seats as String list
+        val result = seats.map { it.number.toString() }
+        seatAdapter.submitList(result)
+
+        bottomSheetDialog.findViewById<Button>(R.id.confirmSeatsButton)?.setOnClickListener {
+            // Track event
+            val props = JSONObject().apply {
+                put("Seats: ", result)
+                put("Seats count: ", result.size)
+            }
+            mixpanel.track("Reservation Attempt", props)
+            viewModel.reserveSeats(args.tripID, seats)
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetDialog.show()
     }
 }

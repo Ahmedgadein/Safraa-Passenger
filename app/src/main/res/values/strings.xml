@@ -35,6 +35,9 @@
     <string name="seats_selected">%1$d Seat Selected </string>
     <string name="price_sdg">%s SDG</string>
     <string name="settings">Settings</string>
+    <string name="please_confirm_the_seats_you_want_to_book">Please confirm the seats you want to book</string>
+    <string name="confirm">Confirm</string>
+    <string name="confirm_seats">Confirm Seats</string>
     <!--    Error Messages-->
     <string name="failed_to_resolve_registration">Failed to resolve registration</string>
     <string name="signup_failed">Signup failed, please try again</string>
