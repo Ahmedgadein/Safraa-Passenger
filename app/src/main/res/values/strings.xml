@@ -54,4 +54,5 @@
     <string name="could_not_find_user">Couldn\'t find user</string>
     <string name="seats_reserved_successfully">Seat(s) reserved successfully</string>
     <string name="update_to_continue">Please update your App to continue</string>
+    <string name="no_network">No network, check your connection</string>
 </resources>
