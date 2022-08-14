@@ -22,6 +22,7 @@ import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.data.model.User
 import com.dinder.rihla.rider.databinding.SignupFragmentBinding
 import com.dinder.rihla.rider.utils.NameValidator
+import com.dinder.rihla.rider.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -46,6 +47,10 @@ class SignupFragment : RihlaFragment() {
         setTermsAndConditions()
 
         binding.signupButton.setOnClickListener {
+            if (!NetworkUtils.isNetworkConnected(requireContext())) {
+                showSnackbar(resources.getString(R.string.no_network))
+                return@setOnClickListener
+            }
             val name = binding.signupNameContainer.editText?.text.toString()
             if (!validName(name)) {
                 return@setOnClickListener

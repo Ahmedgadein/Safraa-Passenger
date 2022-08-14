@@ -19,6 +19,7 @@ import com.dinder.rihla.rider.adapter.StringItemsAdapter
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.data.model.Seat
 import com.dinder.rihla.rider.databinding.TripDetailFragmentBinding
+import com.dinder.rihla.rider.utils.NetworkUtils
 import com.dinder.rihla.rider.utils.SeatUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mixpanel.android.mpmetrics.MixpanelAPI
@@ -117,6 +118,11 @@ class TripDetailFragment : RihlaFragment() {
         seatAdapter.submitList(result)
 
         bottomSheetDialog.findViewById<Button>(R.id.confirmSeatsButton)?.setOnClickListener {
+            if (!NetworkUtils.isNetworkConnected(requireContext())) {
+                showToast(resources.getString(R.string.no_network))
+                return@setOnClickListener
+            }
+
             // Track event
             val props = JSONObject().apply {
                 put("Seats: ", result)

@@ -53,4 +53,5 @@
     <string name="seats_reserved_successfully">تم حجز المقاعد بنجاح</string>
     <string name="failed_to_resolve_app_version">تعذر الحصول على إصدار التطبيق, تأكد من إتصال الإنترنت</string>
     <string name="update_to_continue">رجاء قم بتحديث التطبيق للمواصلة</string>
+    <string name="no_network">لا يوجد إتصال إنترنت, تأكد من شبكة الهاتف</string>
 </resources>
