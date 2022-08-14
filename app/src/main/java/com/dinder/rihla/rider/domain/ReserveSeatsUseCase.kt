@@ -21,7 +21,14 @@ class ReserveSeatsUseCase @Inject constructor(
         userRepository.user.collect { user ->
             user?.let {
                 val name = user.name
-                val namedSeats = seats.map { it.copy(passenger = name, status = SeatState.BOOKED) }
+                val phoneNumber = user.phoneNumber
+                val namedSeats = seats.map {
+                    it.copy(
+                        passenger = name,
+                        passengerPhoneNumber = phoneNumber,
+                        status = SeatState.BOOKED
+                    )
+                }
 
                 tripRepository.reserveSeats(tripId, namedSeats).collect { result ->
                     when (result) {

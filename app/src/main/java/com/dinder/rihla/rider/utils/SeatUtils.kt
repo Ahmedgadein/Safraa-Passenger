@@ -56,7 +56,8 @@ object SeatUtils {
     fun seatsModelToMap(seats: List<Seat>): Map<String, Map<String, Any?>> = seats.map {
         it.number.toString() to mapOf(
             "passenger" to it.passenger,
-            "status" to it.status
+            "status" to it.status,
+            "passengerPhoneNumber" to it.passengerPhoneNumber
         )
     }.toMap()
 }
