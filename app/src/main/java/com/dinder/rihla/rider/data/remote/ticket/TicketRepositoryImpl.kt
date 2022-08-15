@@ -5,6 +5,7 @@ import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Ticket
 import com.dinder.rihla.rider.utils.ErrorMessages
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,6 +14,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
+import java.util.Date
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -27,6 +29,7 @@ class TicketRepositoryImpl @Inject constructor(
         withContext(ioDispatcher) {
             trySend(Result.Loading)
             _ref.whereEqualTo(Fields.PASSENGER_ID, userId)
+                .orderBy("createdAt", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener {
                     val tickets = it.documents.map { json -> Ticket.fromJson(json.data!!) }
@@ -60,7 +63,7 @@ class TicketRepositoryImpl @Inject constructor(
             _ref.document().get()
                 .addOnSuccessListener {
                     val id = it.id
-                    it.reference.set(ticket.copy(id = id).toJson())
+                    it.reference.set(ticket.copy(id = id, createdAt = Date()).toJson())
                         .addOnSuccessListener {
                             trySend(Result.Success(Unit))
                         }
