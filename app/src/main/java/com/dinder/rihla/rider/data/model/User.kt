@@ -8,7 +8,8 @@ data class User(
     @PrimaryKey(autoGenerate = false)
     val id: String = "",
     val name: String,
-    val phoneNumber: String
+    val phoneNumber: String,
+    val token: String? = null
 ) {
     companion object {
         fun fromJson(json: Map<String, Any>): User {
@@ -16,6 +17,7 @@ data class User(
                 id = json["id"].toString(),
                 name = json["name"].toString(),
                 phoneNumber = json["phoneNumber"].toString(),
+                token = json["token"] as String? ?: ""
             )
         }
     }
@@ -25,6 +27,7 @@ data class User(
             "id" to id,
             "name" to name,
             "phoneNumber" to phoneNumber,
+            "token" to token
         )
     }
 }

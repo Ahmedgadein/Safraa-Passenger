@@ -10,4 +10,5 @@ interface AuthRepository {
     suspend fun isLoggedIn(): Flow<Result<Boolean>>
     suspend fun register(user: User): Flow<Result<Boolean>>
     suspend fun login(credential: AuthCredential): Flow<Result<Boolean>>
+    suspend fun updateToken(id: String, token: String): Boolean
 }
