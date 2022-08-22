@@ -8,7 +8,10 @@ import com.dinder.rihla.rider.common.Constants.DATABASE_NAME
 import com.dinder.rihla.rider.data.local.UserDao
 import com.dinder.rihla.rider.data.model.User
 
-@Database(entities = [User::class], version = 1)
+@Database(
+    entities = [User::class],
+    version = 1
+)
 abstract class RihlaDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
