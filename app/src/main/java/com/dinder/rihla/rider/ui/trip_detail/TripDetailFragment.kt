@@ -56,7 +56,7 @@ class TripDetailFragment : RihlaFragment() {
 
         binding.reserveButton.setOnClickListener {
             val seats = SeatUtils.getSelectedSeats(binding.tripDetailSeatView.getSeats())
-            showConfirmationBottomSheet(args.tripID, seats)
+            showConfirmationBottomSheet(seats)
         }
 
         lifecycleScope.launch {
@@ -82,7 +82,6 @@ class TripDetailFragment : RihlaFragment() {
                     }
 
                     if (it.isReserved) {
-                        showSnackbar(resources.getString(R.string.seats_reserved_successfully))
                         val props = JSONObject().apply {
                             put("From", it.trip?.from?.name)
                             put("To", it.trip?.to?.name)
@@ -94,13 +93,18 @@ class TripDetailFragment : RihlaFragment() {
 
                         mixpanel.track("Reservation Successful", props)
                         findNavController().navigateUp()
+                        showSuccessfulPrebookingBottomSheet();
                     }
                 }
             }
         }
     }
 
-    private fun showConfirmationBottomSheet(tripID: Long, seats: List<Seat>) {
+    private fun showSuccessfulPrebookingBottomSheet() {
+//        findNavController().na
+    }
+
+    private fun showConfirmationBottomSheet(seats: List<Seat>) {
         // Initialize Bottomsheet Dialog
         val bottomSheetDialog = BottomSheetDialog(requireContext())
         bottomSheetDialog.setContentView(R.layout.confirm_seats_bottomsheet_dialog)

@@ -85,7 +85,7 @@
         tools:layout="@layout/trip_detail_fragment">
         <argument
             android:name="tripID"
-            app:argType="long" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/ticketDetail"
