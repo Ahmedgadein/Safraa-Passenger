@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    Error Messages-->
+    <string name="failed_to_resolve_registration">فشل في التحقق من التسجيل</string>
+    <string name="signup_failed">فشل في التسجيل, حاول مجددا</string>
+    <string name="login_failed">تعذر تسجيل الدخول, حاول مجددا</string>
+    <string name="loading_destinations_failed">تعذر عرض المواقع, تأكد من إتصال الإنترنت</string>
+    <string name="loading_trips_failed">تعذر عرض الرحلات, تأكد من إتصال الإنترنت</string>
+    <string name="loading_tickets_failed">تعذر عرض التذاكر, تأكد من إتصال الإنترنت</string>
+    <string name="ticket_not_found">لم يتم العثور على التذكرة</string>
+    <string name="failed_to_save_ticket">تعذر حفظ التذكرة</string>
+    <string name="trip_not_found">لم يتم العثور على الرحلة</string>
+    <string name="failed_to_load_trip">تعذر عرض الرحلة</string>
+    <string name="failed_to_reserve_seat">تعذر حجز المقعد</string>
+    <string name="could_not_find_user">تعذر إيجاد المستخدم</string>
+    <string name="seats_reserved_successfully">تم حجز المقاعد بنجاح</string>
+    <string name="failed_to_resolve_app_version">تعذر الحصول على إصدار التطبيق, تأكد من إتصال الإنترنت</string>
+    <string name="update_to_continue">رجاء قم بتحديث التطبيق للمواصلة</string>
+    <string name="no_network">لا يوجد إتصال إنترنت, تأكد من شبكة الهاتف</string>
+    <string name="failed_to_load_payment_info">تعذر عرض معلومات الدفع</string>
+    <string name="failed_to_redeem_code">تعذر إستخدام رمز الترويج حاول مجددا</string>
+    <string name="payment_failed">تعذر إجراء الدفع, حاول مجددا</string>
+    <string name="redeem_code_incorrect">هذا الرمز الترويجي غير صحيح</string>
+    <!--    Error Messages-->
+
     <string name="login">تسجيل الدخول</string>
     <string name="mobile_number">رقم الهاتف</string>
     <string name="mobile">الهاتف</string>
@@ -37,21 +60,30 @@
     <string name="please_confirm_the_seats_you_want_to_book">رجاء تأكد من المقاعد التي تود حجزها</string>
     <string name="confirm">تأكيد</string>
     <string name="confirm_seats">تأكيد المقاعد</string>
-    <!--    Error Messages-->
-    <string name="failed_to_resolve_registration">فشل في التحقق من التسجيل</string>
-    <string name="signup_failed">فشل في التسجيل, حاول مجددا</string>
-    <string name="login_failed">تعذر تسجيل الدخول, حاول مجددا</string>
-    <string name="loading_destinations_failed">تعذر عرض المواقع, تأكد من إتصال الإنترنت</string>
-    <string name="loading_trips_failed">تعذر عرض الرحلات, تأكد من إتصال الإنترنت</string>
-    <string name="loading_tickets_failed">تعذر عرض التذاكر, تأكد من إتصال الإنترنت</string>
-    <string name="ticket_not_found">لم يتم العثور على التذكرة</string>
-    <string name="failed_to_save_ticket">تعذر حفظ التذكرة</string>
-    <string name="trip_not_found">لم يتم العثور على الرحلة</string>
-    <string name="failed_to_load_trip">تعذر عرض الرحلة</string>
-    <string name="failed_to_reserve_seat">تعذر حجز المقعد</string>
-    <string name="could_not_find_user">تعذر إيجاد المستخدم</string>
-    <string name="seats_reserved_successfully">تم حجز المقاعد بنجاح</string>
-    <string name="failed_to_resolve_app_version">تعذر الحصول على إصدار التطبيق, تأكد من إتصال الإنترنت</string>
-    <string name="update_to_continue">رجاء قم بتحديث التطبيق للمواصلة</string>
-    <string name="no_network">لا يوجد إتصال إنترنت, تأكد من شبكة الهاتف</string>
+    <string name="prebooking_successful">تم الحجز المبدئي بنجاح</string>
+    <string name="prebook_info_1">1) هذا حجز مبدئي صالح لمدة 30 دقيقة من الأن</string>
+    <string name="prebook_info_2">2) لتأكيد حجزك يجب دفع قيمة التذكرة / التذاكر</string>
+    <string name="prebook_info_3">3) يمكنك الدفع الأن, أو لاحقا في شاشة التذاكر</string>
+    <string name="pay_now">أدفع الأن</string>
+    <string name="later">لاحقا</string>
+    <string name="transaction_details">تفاصيل الفاتورة</string>
+    <string name="amount">المبلغ</string>
+    <string name="use_promo_code">إستخدم رمز ترويجي</string>
+    <string name="use_a_promo_code_to_get_a_discount">إستخدم رمز ترويجي و أحصل على تخفيض</string>
+    <string name="payment_details">تفاصيل الدفع</string>
+    <string name="account_number">رقم حساب بنكك</string>
+    <string name="account_name">حساب بإسم</string>
+    <string name="whatsapp_receipt_number">رقم واتساب للإشعار</string>
+    <string name="paid">تم الدفع</string>
+    <string name="payment">الدفع</string>
+    <string name="copied">تم النسخ بنجاح</string>
+    <string name="retry">حاول مجددا</string>
+    <string name="payment_disclaimer">عند إرسال أي مبلغ تأكد من ظهور إسمك كاملا في الإشعار, أو إرساله في رسالة واتساب لاحقة</string>
+    <string name="payment_confirmation_message">هل قمت بدفع %s إلى %s على حساب بنكك %s و قمت بإرسال إشعار يحتوي على أسمك كاملا على رقم الواتساب %s</string>
+    <string name="confirm_payment">تأكيد الدفع</string>
+    <string name="payment_successful">تم الدفع بنجاح</string>
+    <string name="payment_successful_info">سيتم تأكيد المعاملة المالية من قبل شركة البص. في هذه الأثناء يمكنك متابعة حالة تذكرتك في شاشة التذاكر</string>
+    <string name="redeem">إستخدم</string>
+    <string name="required">مطلوب</string>
+    <string name="code_redeemed">تم إستخدام كود التخفيض بنجاح</string>
 </resources>

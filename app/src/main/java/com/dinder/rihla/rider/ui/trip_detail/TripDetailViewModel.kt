@@ -6,7 +6,6 @@ import com.dinder.rihla.rider.common.Message
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Seat
 import com.dinder.rihla.rider.data.remote.trip.TripRepository
-import com.dinder.rihla.rider.domain.ReserveSeatsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,19 +17,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TripDetailViewModel @Inject constructor(
-    private val repository: TripRepository,
-    private val reserveSeatsUseCase: ReserveSeatsUseCase
+    private val repository: TripRepository
 ) :
     ViewModel() {
 
     private val _state = MutableStateFlow(TripDetailUiState())
     val state = _state.asStateFlow()
 
-    fun getTrip(id: Long) {
+    fun getTrip(id: String) {
         observeTrip(id)
     }
 
-    private fun observeTrip(id: Long) {
+    private fun observeTrip(id: String) {
         viewModelScope.launch {
             repository.observeTrip(id).collect { result ->
                 when (result) {
@@ -47,15 +45,17 @@ class TripDetailViewModel @Inject constructor(
         }
     }
 
-    fun reserveSeats(tripId: Long, seats: List<Seat>) {
+    fun reserveSeats(tripId: String, seats: List<Seat>) {
+        val seats = seats.map { it.number.toString() }
         viewModelScope.launch {
-            reserveSeatsUseCase.invoke(tripId, seats).collect { result ->
+            repository.reserveSeats(tripId, seats).collect { result ->
                 when (result) {
                     Result.Loading -> _state.update { it.copy(loading = true) }
                     is Result.Error -> showUserMessage(result.message)
                     is Result.Success -> _state.update {
                         it.copy(
                             loading = false,
+                            ticketID = result.value,
                             isReserved = true
                         )
                     }

@@ -9,6 +9,7 @@
             type="com.dinder.rihla.rider.data.model.Trip" />
 
         <import type="com.dinder.rihla.rider.utils.DateTimeUtils" />
+        <import type="com.dinder.rihla.rider.utils.PriceUtils" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -148,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="@{@string/price_sdg(trip.price)}"
+                    app:price="@{trip}"
                     android:textColor="@color/teal_700"
                     android:textSize="20sp" />
 

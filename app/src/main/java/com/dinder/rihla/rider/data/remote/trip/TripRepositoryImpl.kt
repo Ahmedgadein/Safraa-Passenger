@@ -5,13 +5,11 @@ import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Destination
-import com.dinder.rihla.rider.data.model.Seat
 import com.dinder.rihla.rider.data.model.Trip
 import com.dinder.rihla.rider.utils.ErrorMessages
-import com.dinder.rihla.rider.utils.SeatUtils
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -70,7 +68,7 @@ class TripRepositoryImpl @Inject constructor(
             awaitClose()
         }
 
-    override fun observeTrip(id: Long): Flow<Result<Trip>> = callbackFlow {
+    override fun observeTrip(id: String): Flow<Result<Trip>> = callbackFlow {
         withContext(ioDispatcher) {
             trySend(Result.Loading)
             _ref.whereEqualTo(Fields.ID, id).addSnapshotListener { snapshot, error ->
@@ -90,7 +88,7 @@ class TripRepositoryImpl @Inject constructor(
         awaitClose()
     }
 
-    override fun getTrip(id: Long): Flow<Result<Trip>> = callbackFlow {
+    override fun getTrip(id: String): Flow<Result<Trip>> = callbackFlow {
         withContext(ioDispatcher) {
             trySend(Result.Loading)
             _ref.whereEqualTo(Fields.ID, id).limit(1).get()
@@ -105,31 +103,37 @@ class TripRepositoryImpl @Inject constructor(
         awaitClose()
     }
 
-    override fun reserveSeats(tripId: Long, seats: List<Seat>): Flow<Result<Unit>> = callbackFlow {
-        withContext(ioDispatcher) {
-            trySend(Result.Loading)
-            _ref.whereEqualTo(Fields.ID, tripId).limit(1).get()
-                .addOnSuccessListener {
-                    _ref.document(it.documents[0].id).set(
-                        mapOf(
-                            Fields.SEATS to
-                                SeatUtils.seatsModelToMap(seats)
-                        ),
-                        SetOptions.merge()
-                    )
-                        .addOnSuccessListener {
-                            Log.i("UpdateSeatState", "updateSeatState status: Successful")
-                            trySend(Result.Success(Unit))
-                        }
-                        .addOnFailureListener {
-                            Log.i("UpdateSeatState", "updateSeatState status: Failure")
+    override fun reserveSeats(tripId: String, seats: List<String>): Flow<Result<String>> =
+        callbackFlow {
+            withContext(ioDispatcher) {
+                trySend(Result.Loading)
+                // Create the arguments to the callable function.
+                val data = mapOf(
+                    "tripId" to tripId,
+                    "seats" to seats
+                )
+
+                Log.e("functions", "$data")
+
+                FirebaseFunctions.getInstance()
+                    .getHttpsCallable("trips-bookSeats")
+                    .call(data)
+                    .addOnSuccessListener {
+                        val result: Map<String, Any> = it.data as Map<String, Any>
+                        val isSuccessful = result["success"] as Boolean
+                        if (isSuccessful) {
+                            val ticketId = (result["data"] as Map<String, String>)["ticketId"]!!
+                            trySend(Result.Success(ticketId))
+                        } else {
                             trySend(Result.Error(errorMessages.failedToReserveSeat))
+                            Log.e("functions", "reserveSeats: not successful")
                         }
-                }
-                .addOnFailureListener {
-                    trySend(Result.Error(errorMessages.tripNotFound))
-                }
+                    }
+                    .addOnFailureListener {
+                        trySend(Result.Error(errorMessages.failedToReserveSeat))
+                        Log.e("functions", "reserveSeats: $it")
+                    }
+            }
+            awaitClose()
         }
-        awaitClose()
-    }
 }

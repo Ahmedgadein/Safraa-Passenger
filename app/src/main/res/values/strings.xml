@@ -1,5 +1,29 @@
 <resources>
+    <!--    Error Messages-->
+    <string name="failed_to_resolve_registration">Failed to resolve registration</string>
+    <string name="signup_failed">Signup failed, please try again</string>
+    <string name="login_failed">Login failed, please try again</string>
+    <string name="loading_destinations_failed">Failed to load destinations, please check your connection</string>
+    <string name="loading_trips_failed">Failed to load trips, please check your connection</string>
+    <string name="loading_tickets_failed">Failed to load tickets, please check your connection</string>
+    <string name="ticket_not_found">Ticket not found</string>
+    <string name="failed_to_save_ticket">Failed to save ticket</string>
+    <string name="trip_not_found">Trip not found</string>
+    <string name="failed_to_load_trip">Failed to load trip</string>
+    <string name="failed_to_resolve_app_version">Failed to resolve app version, check your connection</string>
+    <string name="failed_to_reserve_seat">Failed to reserve seat</string>
+    <string name="could_not_find_user">Couldn\'t find user</string>
+    <string name="seats_reserved_successfully">Seat(s) reserved successfully</string>
+    <string name="update_to_continue">Please update your App to continue</string>
+    <string name="no_network">No network, check your connection</string>
+    <string name="failed_to_load_payment_info">Failed to Load payment Info</string>
+    <string name="failed_to_redeem_code">Failed to redeem Code, try again</string>
+    <string name="payment_failed">Payment Failed, try again</string>
+    <string name="redeem_code_incorrect">Promo code is incorrect</string>
+    <!--    Error Messages-->
+
     <string name="app_name" translatable="false">Safraa</string>
+    <string name="seat_times_price" translatable="false">%s×%s</string>
     <string name="login">Login</string>
     <string name="mobile">Mobile</string>
     <string name="mobile_number">Mobile Number</string>
@@ -38,21 +62,31 @@
     <string name="please_confirm_the_seats_you_want_to_book">Please confirm the seats you want to book</string>
     <string name="confirm">Confirm</string>
     <string name="confirm_seats">Confirm Seats</string>
-    <!--    Error Messages-->
-    <string name="failed_to_resolve_registration">Failed to resolve registration</string>
-    <string name="signup_failed">Signup failed, please try again</string>
-    <string name="login_failed">Login failed, please try again</string>
-    <string name="loading_destinations_failed">Failed to load destinations, please check your connection</string>
-    <string name="loading_trips_failed">Failed to load trips, please check your connection</string>
-    <string name="loading_tickets_failed">Failed to load tickets, please check your connection</string>
-    <string name="ticket_not_found">Ticket not found</string>
-    <string name="failed_to_save_ticket">Failed to save ticket</string>
-    <string name="trip_not_found">Trip not found</string>
-    <string name="failed_to_load_trip">Failed to load trip</string>
-    <string name="failed_to_resolve_app_version">Failed to resolve app version, check your connection</string>
-    <string name="failed_to_reserve_seat">Failed to reserve seat</string>
-    <string name="could_not_find_user">Couldn\'t find user</string>
-    <string name="seats_reserved_successfully">Seat(s) reserved successfully</string>
-    <string name="update_to_continue">Please update your App to continue</string>
-    <string name="no_network">No network, check your connection</string>
+    <string name="prebooking_successful">Prebooking Successful</string>
+    <string name="prebook_info_1">1) This prebooking is valid for 30 minutes</string>
+    <string name="prebook_info_2">2) To confirm your booking please pay the ticket price</string>
+    <string name="prebook_info_3">3) You can pay now or later in \'Tickets\' screen</string>
+    <string name="pay_now">Pay now</string>
+    <string name="later">Later</string>
+    <string name="transaction_details">Transaction details</string>
+    <string name="amount">Amount</string>
+    <string name="use_promo_code">Use promo Code</string>
+    <string name="use_a_promo_code_to_get_a_discount">Use a promo code to get a discount</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="account_number">Account Number</string>
+    <string name="account_name">Account Name</string>
+    <string name="whatsapp_receipt_number">Whatsapp receipt number</string>
+    <string name="paid">Paid</string>
+    <string name="payment">Payment</string>
+    <string name="copied">Copied successfully</string>
+    <string name="retry">Retry</string>
+    <string name="payment_disclaimer">When sending any amount make sure to write your name is visible in the receipt, or send your name in a whatsapp message afterwards</string>
+    <string name="payment_confirmation_message">Have you paid %s to %s in the account number %s and also sent the receipt containing your full name to %s</string>
+    <string name="confirm_payment">Confirm Payment</string>
+    <string name="payment_successful">Payment successful</string>
+    <string name="payment_successful_info">We will inform you when the payment gets confirmed by the bus company, follow the status in the tickets screen</string>
+    <string name="redeem">Redeem</string>
+    <string name="required">Required</string>
+    <string name="code_redeemed">Code redeemed successfully</string>
+
 </resources>

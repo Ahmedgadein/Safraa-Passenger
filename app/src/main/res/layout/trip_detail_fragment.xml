@@ -173,7 +173,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:contentDescription="@string/price"
-                        android:text="@{@string/price_sdg(trip.price)}"
+                        app:price="@{trip}"
                         android:textColor="@color/teal_700"
                         android:textSize="21sp" />
 

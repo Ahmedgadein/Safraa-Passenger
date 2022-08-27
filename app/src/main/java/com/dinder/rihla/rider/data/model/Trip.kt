@@ -5,12 +5,13 @@ import com.google.firebase.Timestamp
 import java.util.Date
 
 data class Trip(
-    val id: Long? = null,
+    val id: String? = null,
     val date: Date,
     val time: Date,
     val company: Company,
     val from: Destination,
     val to: Destination,
+    val rate: Double,
     val price: Int,
     val seats: List<Seat>
 ) {
@@ -28,25 +29,15 @@ data class Trip(
 
     companion object {
         fun fromJson(json: Map<String, Any>) = Trip(
-            id = json["id"] as Long,
+            id = json["id"] as String?,
             date = (json["date"] as Timestamp).toDate(),
             time = (json["time"] as Timestamp).toDate(),
             company = Company.fromJson(json["company"] as Map<String, Any>),
             from = Destination.fromJson(json["from"] as Map<String, Any>),
+            rate = json["rate"] as Double? ?: 0.05,
             to = Destination.fromJson(json["to"] as Map<String, Any>),
             price = json["price"].toString().toInt(),
             seats = SeatUtils.seatsMapToModel(json["seats"] as Map<String, Map<String, Any?>>)
-        )
-
-        fun fromTicketJson(json: Map<String, Any>) = Trip(
-            id = 0L,
-            date = (json["date"] as Timestamp).toDate(),
-            time = (json["time"] as Timestamp).toDate(),
-            company = Company.fromJson(json["company"] as Map<String, Any>),
-            from = Destination.fromJson(json["from"] as Map<String, Any>),
-            to = Destination.fromJson(json["to"] as Map<String, Any>),
-            price = json["price"].toString().toInt(),
-            seats = emptyList()
         )
     }
 }

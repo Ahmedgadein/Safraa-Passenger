@@ -7,7 +7,9 @@ enum class SeatState {
     UN_SELECTED,
     SELECTED,
     UNBOOKED,
-    BOOKED
+    PRE_BOOK,
+    PAYMENT_CONFIRMATION,
+    PAID
 }
 
 object SeatUtils {

@@ -117,21 +117,13 @@ class SeatsView : View {
 
     private fun getSeatColor(seatNumber: Int): Int {
         return when (seats["$seatNumber"]) {
-            SeatState.UNBOOKED -> {
-                resources.getColor(R.color.orange, context.theme)
-            }
+            SeatState.UNBOOKED -> Color.GRAY
 
-            SeatState.UN_SELECTED -> {
-                resources.getColor(R.color.orange, context.theme)
-            }
+            SeatState.UN_SELECTED -> Color.GRAY
 
-            SeatState.SELECTED -> {
-                resources.getColor(R.color.green, context.theme)
-            }
+            SeatState.SELECTED -> resources.getColor(R.color.green, context.theme)
 
-            else -> {
-                Color.GRAY
-            }
+            else -> Color.LTGRAY
         }
     }
 

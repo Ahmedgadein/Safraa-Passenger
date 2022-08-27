@@ -1,5 +1,6 @@
 package com.dinder.rihla.rider.ui.trip_detail // ktlint-disable experimental:package-name
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,9 @@ import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.adapter.StringItemsAdapter
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.data.model.Seat
+import com.dinder.rihla.rider.databinding.PrebookSuccessfulDialogBinding
 import com.dinder.rihla.rider.databinding.TripDetailFragmentBinding
+import com.dinder.rihla.rider.ui.home.HomeFragmentDirections
 import com.dinder.rihla.rider.utils.NetworkUtils
 import com.dinder.rihla.rider.utils.SeatUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -41,7 +44,7 @@ class TripDetailFragment : RihlaFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = TripDetailFragmentBinding.inflate(inflater, container, false)
         setUI()
@@ -56,7 +59,7 @@ class TripDetailFragment : RihlaFragment() {
 
         binding.reserveButton.setOnClickListener {
             val seats = SeatUtils.getSelectedSeats(binding.tripDetailSeatView.getSeats())
-            showConfirmationBottomSheet(args.tripID, seats)
+            showConfirmationBottomSheet(seats)
         }
 
         lifecycleScope.launch {
@@ -82,7 +85,6 @@ class TripDetailFragment : RihlaFragment() {
                     }
 
                     if (it.isReserved) {
-                        showSnackbar(resources.getString(R.string.seats_reserved_successfully))
                         val props = JSONObject().apply {
                             put("From", it.trip?.from?.name)
                             put("To", it.trip?.to?.name)
@@ -93,14 +95,37 @@ class TripDetailFragment : RihlaFragment() {
                         }
 
                         mixpanel.track("Reservation Successful", props)
-                        findNavController().navigateUp()
+                        showSuccessfulPrebookingBottomSheet(it.ticketID)
                     }
                 }
             }
         }
     }
 
-    private fun showConfirmationBottomSheet(tripID: Long, seats: List<Seat>) {
+    private fun showSuccessfulPrebookingBottomSheet(ticketId: String) {
+        val binding = PrebookSuccessfulDialogBinding.inflate(layoutInflater, null, false)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(binding.root)
+            .setCancelable(false)
+            .show()
+        dialog.setCanceledOnTouchOutside(false)
+        binding.payNowButton.setOnClickListener {
+            dialog.dismiss()
+            findNavController().navigateUp()
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToPaymentFragment(
+                    ticketId
+                )
+            )
+        }
+
+        binding.payLaterButton.setOnClickListener {
+            dialog.dismiss()
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun showConfirmationBottomSheet(seats: List<Seat>) {
         // Initialize Bottomsheet Dialog
         val bottomSheetDialog = BottomSheetDialog(requireContext())
         bottomSheetDialog.setContentView(R.layout.confirm_seats_bottomsheet_dialog)
