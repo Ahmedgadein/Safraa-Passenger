@@ -27,9 +27,9 @@
                 android:id="@+id/to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
-                app:destination="@{ticket.trip.to}"
+                destination="@{ticket.to}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:textSize="20sp"
-                    android:text="@{DateTimeUtils.INSTANCE.getFormattedDate(ticket.trip.date)}"
+                    android:text="@{DateTimeUtils.INSTANCE.getFormattedDate(ticket.date)}"
                     android:textColor="@color/teal_700" />
 
                 <TextView
@@ -83,8 +83,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:text="@{DateTimeUtils.INSTANCE.getFormattedTime(ticket.date)}"
                     android:layout_gravity="center_horizontal"
-                    android:text="@{DateTimeUtils.INSTANCE.getFormattedTime(ticket.trip.time)}"
                     android:textColor="@color/teal_700" />
 
                 <TextView
@@ -111,8 +111,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:textSize="20sp"
+                    app:company="@{ticket.company}"
                     android:textColor="@color/teal_700"
-                    app:company="@{ticket.trip.company}" />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -153,6 +154,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="18sp"
                         android:text="@string/seats" />
                 </LinearLayout>
 
@@ -170,13 +172,11 @@
                         android:backgroundTint="@color/teal_700" />
 
                     <TextView
+                        android:text="time to departure"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text='@{"departure within" + DateTimeUtils.INSTANCE.timeSince(ticket.trip.date) }' />
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

@@ -1,9 +1,11 @@
 package com.dinder.rihla.rider.utils
 
 import com.dinder.rihla.rider.common.Constants
+import com.google.firebase.Timestamp
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
+import java.util.Locale
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 
@@ -29,8 +31,9 @@ object DateTimeUtils {
             this.time = date
         }
 
+        val isArabic = Locale.getDefault().language.equals(Locale("ar").language)
         return String.format(
-            "%d-%d-%d",
+            if (isArabic) "%d - %d - %d" else "%d-%d-%d",
             calendar.get(Calendar.DAY_OF_MONTH),
             calendar.get(GregorianCalendar.MONTH) + 1, // Calendar.MONTH is month order
             calendar.get(Calendar.YEAR)
@@ -60,6 +63,15 @@ object DateTimeUtils {
                 "${milliSecondsDifference.inWholeMilliseconds / Constants.MINUTE_MILLISECONDS}" +
                     " Minutes"
             }
+        }
+    }
+
+    fun decodeTimeStamp(timestamp: Any?): Date {
+        return if (timestamp is Timestamp) {
+            (timestamp as Timestamp).toDate()
+        } else {
+            val seconds = (timestamp as Map<String, Int>)["_seconds"]!!
+            Date(seconds * 1000L)
         }
     }
 }

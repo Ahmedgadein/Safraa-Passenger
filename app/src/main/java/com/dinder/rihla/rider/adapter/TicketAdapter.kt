@@ -40,18 +40,18 @@ class TicketAdapter : ListAdapter<Ticket, TicketAdapter.TicketHolder>(TicketDiff
                 ticket?.let {
                     val props = JSONObject().apply {
                         put("Ticket ID", it.id)
-                        put("Trip ID", it.trip.id)
+                        put("Trip ID", it.tripId)
                         put("Seats", it.seats.toString())
-                        put("From", it.trip.from.name)
-                        put("To", it.trip.to.name)
-                        put("Date", it.trip.date)
-                        put("Time", it.trip.time)
+                        put("From", it.from.name)
+                        put("To", it.to.name)
+                        put("Date", it.date)
+                        put("Time", it.time)
                     }
                     mixpanel.track("View Ticket", props)
                     binding.root.findNavController()
                         .navigate(
                             HomeFragmentDirections.actionHomeFragmentToTicketDetail(
-                                ticketId = it.id!!
+                                ticketId = it.id
                             )
                         )
                 }

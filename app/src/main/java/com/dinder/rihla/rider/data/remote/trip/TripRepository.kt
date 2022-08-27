@@ -2,7 +2,6 @@ package com.dinder.rihla.rider.data.remote.trip
 
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Destination
-import com.dinder.rihla.rider.data.model.Seat
 import com.dinder.rihla.rider.data.model.Trip
 import kotlinx.coroutines.flow.Flow
 

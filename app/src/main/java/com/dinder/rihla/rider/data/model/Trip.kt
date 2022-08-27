@@ -11,6 +11,7 @@ data class Trip(
     val company: Company,
     val from: Destination,
     val to: Destination,
+    val rate: Double,
     val price: Int,
     val seats: List<Seat>
 ) {
@@ -33,20 +34,10 @@ data class Trip(
             time = (json["time"] as Timestamp).toDate(),
             company = Company.fromJson(json["company"] as Map<String, Any>),
             from = Destination.fromJson(json["from"] as Map<String, Any>),
+            rate = json["rate"] as Double? ?: 0.05,
             to = Destination.fromJson(json["to"] as Map<String, Any>),
             price = json["price"].toString().toInt(),
             seats = SeatUtils.seatsMapToModel(json["seats"] as Map<String, Map<String, Any?>>)
-        )
-
-        fun fromTicketJson(json: Map<String, Any>) = Trip(
-            id = "",
-            date = (json["date"] as Timestamp).toDate(),
-            time = (json["time"] as Timestamp).toDate(),
-            company = Company.fromJson(json["company"] as Map<String, Any>),
-            from = Destination.fromJson(json["from"] as Map<String, Any>),
-            to = Destination.fromJson(json["to"] as Map<String, Any>),
-            price = json["price"].toString().toInt(),
-            seats = emptyList()
         )
     }
 }

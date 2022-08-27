@@ -10,16 +10,15 @@ import com.dinder.rihla.rider.utils.ErrorMessages
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.functions.FirebaseFunctions
-import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
-import java.util.*
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
+import java.util.Date
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class TripRepositoryImpl @Inject constructor(
@@ -135,30 +134,6 @@ class TripRepositoryImpl @Inject constructor(
                         Log.e("functions", "reserveSeats: $it")
                     }
             }
-//        withContext(ioDispatcher) {
-//            trySend(Result.Loading)
-//            _ref.whereEqualTo(Fields.ID, tripId).limit(1).get()
-//                .addOnSuccessListener {
-//                    _ref.document(it.documents[0].id).set(
-//                        mapOf(
-//                            Fields.SEATS to
-//                                SeatUtils.seatsModelToMap(seats)
-//                        ),
-//                        SetOptions.merge()
-//                    )
-//                        .addOnSuccessListener {
-//                            Log.i("UpdateSeatState", "updateSeatState status: Successful")
-//                            trySend(Result.Success(Unit))
-//                        }
-//                        .addOnFailureListener {
-//                            Log.i("UpdateSeatState", "updateSeatState status: Failure")
-//                            trySend(Result.Error(errorMessages.failedToReserveSeat))
-//                        }
-//                }
-//                .addOnFailureListener {
-//                    trySend(Result.Error(errorMessages.tripNotFound))
-//                }
-//        }
             awaitClose()
         }
 }

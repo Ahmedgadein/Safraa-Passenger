@@ -77,6 +77,9 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
     </fragment>
     <fragment
         android:id="@+id/tripDetailFragment"
@@ -112,5 +115,14 @@
         android:name="com.dinder.rihla.rider.ui.update.UpdateAppFragment"
         android:label="fragment_update_app"
         tools:layout="@layout/fragment_update_app" />
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.dinder.rihla.rider.ui.payment.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <argument
+            android:name="ticketId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>
