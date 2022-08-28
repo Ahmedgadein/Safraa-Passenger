@@ -88,5 +88,13 @@
     <string name="redeem">Redeem</string>
     <string name="required">Required</string>
     <string name="code_redeemed">Code redeemed successfully</string>
-
+    <string name="contact_us">Contact Us</string>
+    <string name="prebook">Prebooked</string>
+    <string name="payment_confirmation">Confirming Payment</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="disproved">Payment disproved</string>
+    <string name="ticket_details">Ticket Details</string>
+    <string name="ticket">Ticket</string>
+    <string name="status">Status</string>
+    <string name="payment_disproved_info">The bus company couldn\'t confirm your payment, if you think there\'s an issue please contact us</string>
 </resources>

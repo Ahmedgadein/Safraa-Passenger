@@ -86,4 +86,13 @@
     <string name="redeem">إستخدم</string>
     <string name="required">مطلوب</string>
     <string name="code_redeemed">تم إستخدام كود التخفيض بنجاح</string>
+    <string name="contact_us">تواصل معنا</string>
+    <string name="prebook">حجز مبدئي</string>
+    <string name="payment_confirmation">بإنتظار تأكيد الدفع</string>
+    <string name="cancelled">ملغية</string>
+    <string name="disproved">لم يتم تأكيد الدفع</string>
+    <string name="ticket_details">تفاصيل التذكرة</string>
+    <string name="ticket">التذكرة</string>
+    <string name="status">الحالة</string>
+    <string name="payment_disproved_info">لم تستطع شركة الباصات من تأكيد عملية الدفع, إذا كنت تعتقد أن هنالك خطأ قم رجاء بالتواصل معنا</string>
 </resources>

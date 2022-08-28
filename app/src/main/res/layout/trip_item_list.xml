@@ -26,11 +26,13 @@
 
             <TextView
                 android:id="@+id/from"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:gravity="start"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:destination="@{trip.from}"
+                app:layout_constraintBottom_toBottomOf="@+id/to"
                 app:layout_constraintEnd_toStartOf="@id/view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +41,7 @@
                 android:id="@+id/view"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="10dp"
                 android:background="@color/teal_700"
                 app:layout_constraintBottom_toBottomOf="@+id/from"
                 app:layout_constraintEnd_toStartOf="@+id/to"
@@ -48,11 +50,13 @@
 
             <TextView
                 android:id="@+id/to"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                android:gravity="end"
                 app:destination="@{trip.to}"
+                app:layout_constraintBottom_toBottomOf="@id/from"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/view"
                 app:layout_constraintTop_toTopOf="parent" />

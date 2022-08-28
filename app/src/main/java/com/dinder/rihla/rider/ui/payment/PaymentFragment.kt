@@ -75,6 +75,7 @@ class PaymentFragment : RihlaFragment() {
                         showSnackbar(getString(R.string.code_redeemed))
                         viewModel.retry(args.ticketId)
                     }
+
                     if (state.loading) {
                         binding.paidButton.hide()
                         binding.paymentLoading.isVisible = true

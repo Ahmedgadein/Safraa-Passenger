@@ -25,7 +25,9 @@ import kotlin.time.ExperimentalTime
 enum class TicketStatus {
     PRE_BOOK,
     PAYMENT_CONFIRMATION,
-    PAID
+    PAID,
+    CANCELLED,
+    DISPROVED
 }
 
 data class Ticket(
