@@ -61,6 +61,27 @@ class TicketRepositoryImpl @Inject constructor(
         awaitClose()
     }
 
+    override suspend fun observeTicket(id: String): Flow<Result<Ticket>> = callbackFlow {
+        withContext(ioDispatcher) {
+            trySend(Result.Loading)
+            _ref.whereEqualTo(Fields.ID, id).addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    trySend(Result.Error(errorMessages.ticketNotFound))
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null && snapshot.documents.isNotEmpty()) {
+                    val ticket = Ticket.fromJson(snapshot.documents.first().data!!)
+                    Log.i("observeTicket", "observeTicket: $ticket")
+                    trySend(Result.Success(ticket))
+                } else {
+                    trySend(Result.Error(errorMessages.ticketNotFound))
+                }
+            }
+        }
+        awaitClose()
+    }
+
     override suspend fun addTicket(ticket: Ticket): Flow<Result<Unit>> = callbackFlow {
         withContext(ioDispatcher) {
             _ref.document().get()
