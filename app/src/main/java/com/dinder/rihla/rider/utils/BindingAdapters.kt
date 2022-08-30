@@ -1,6 +1,7 @@
 package com.dinder.rihla.rider.utils
 
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.data.model.Company
@@ -74,4 +75,10 @@ fun timeToDeparture(view: TextView, ticket: Ticket?) {
     ticket?.let {
         view.text = view.resources.getString(R.string.price_sdg, PriceUtils.getPrice(it))
     }
+}
+
+@BindingAdapter("selected")
+fun radioButtonSelectionBackground(view: ConstraintLayout, selected: Boolean) {
+    val resID = if (selected) R.drawable.radio_button_selected else R.drawable.radio_button_normal
+    view.background = view.resources.getDrawable(resID, view.context.theme)
 }

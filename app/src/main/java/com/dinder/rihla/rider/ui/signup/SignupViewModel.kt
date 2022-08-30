@@ -45,7 +45,7 @@ class SignupViewModel @Inject constructor(
                         mixpanel.people.set(props)
                         mixpanel.track("Signup Successful")
                         userRepo.add(_user)
-                        _state.update { it.copy(navigateToHome = true) }
+                        _state.update { it.copy(navigateToHome = true, user = _user) }
                     }
                 }
             }

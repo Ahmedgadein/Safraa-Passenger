@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dinder.rihla.rider.common.Constants
 import com.dinder.rihla.rider.common.RihlaFragment
+import com.dinder.rihla.rider.data.model.Role
+import com.dinder.rihla.rider.data.model.User
 import com.dinder.rihla.rider.databinding.VerificationFragmentBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -46,7 +48,7 @@ class VerificationFragment : RihlaFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = VerificationFragmentBinding.inflate(inflater, container, false)
         setUI()
@@ -77,7 +79,7 @@ class VerificationFragment : RihlaFragment() {
 
                     if (it.navigateToHome) {
                         mixpanel.track("Login Successful")
-                        navigateToHome()
+                        navigateToHome(it.user)
                     }
 
                     if (it.navigateToSignup) {
@@ -100,7 +102,7 @@ class VerificationFragment : RihlaFragment() {
 
                 override fun onCodeSent(
                     verificationId: String,
-                    token: PhoneAuthProvider.ForceResendingToken
+                    token: PhoneAuthProvider.ForceResendingToken,
                 ) {
                     super.onCodeSent(verificationId, token)
                     verificationID = verificationId
@@ -113,10 +115,13 @@ class VerificationFragment : RihlaFragment() {
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    private fun navigateToHome() {
-        findNavController().navigate(
-            VerificationFragmentDirections.actionVerificationFragmentToHomeFragment()
-        )
+    private fun navigateToHome(user: User?) {
+        user?.let {
+            val direction = if (user.role == Role.PASSENGER)
+                VerificationFragmentDirections.actionVerificationFragmentToHomeFragment()
+            else VerificationFragmentDirections.actionVerificationFragmentToAgentHomeFragment()
+            findNavController().navigate(direction)
+        }
     }
 
     private fun navigateToSignup() {

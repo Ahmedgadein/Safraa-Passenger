@@ -97,4 +97,10 @@
     <string name="ticket">Ticket</string>
     <string name="status">Status</string>
     <string name="payment_disproved_info">The bus company couldn\'t confirm your payment, if you think there\'s an issue please contact us</string>
+    <string name="passenger">Passenger</string>
+    <string name="traveler_info">Book a bus seat anywhere, anytime</string>
+    <string name="agent">Agent</string>
+    <string name="agent_ingo">Market tickets and get commissions</string>
+    <string name="account_type">Account type</string>
+    <string name="account_type_info">Select the type of account you wish to register with</string>
 </resources>

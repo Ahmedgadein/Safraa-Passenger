@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_landingPageFragment_to_updateAppFragment"
             app:destination="@id/updateAppFragment" />
+        <action
+            android:id="@+id/action_landingPageFragment_to_agentHomeFragment"
+            app:destination="@id/agentHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -48,6 +51,9 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_verificationFragment_to_agentHomeFragment"
+            app:destination="@id/agentHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -62,6 +68,9 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signupFragment_to_agentHomeFragment"
+            app:destination="@id/agentHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -127,5 +136,10 @@
             android:name="ticketId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/agentHomeFragment"
+        android:name="com.dinder.rihla.rider.ui.agent.home.AgentHomeFragment"
+        android:label="agent_home_fragment"
+        tools:layout="@layout/agent_home_fragment" />
 
 </navigation>

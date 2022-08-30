@@ -1,17 +1,17 @@
 package com.dinder.rihla.rider.data.local.db
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.* // ktlint-disable no-wildcard-imports
 import com.dinder.rihla.rider.common.Constants.DATABASE_NAME
 import com.dinder.rihla.rider.data.local.UserDao
 import com.dinder.rihla.rider.data.model.User
 
 @Database(
     entities = [User::class],
-    version = 1
+    version = 2,
+    autoMigrations = [AutoMigration(from = 1, to = 2)]
 )
+@TypeConverters(Converters::class)
 abstract class RihlaDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
