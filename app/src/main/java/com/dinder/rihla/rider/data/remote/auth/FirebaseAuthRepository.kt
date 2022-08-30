@@ -26,7 +26,7 @@ import javax.inject.Inject
 class FirebaseAuthRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val ioDispatcher: CoroutineDispatcher,
-    private val errorMessages: ErrorMessages
+    private val errorMessages: ErrorMessages,
 ) : AuthRepository {
     private val _ref = Firebase.firestore.collection(Collections.USERS)
 

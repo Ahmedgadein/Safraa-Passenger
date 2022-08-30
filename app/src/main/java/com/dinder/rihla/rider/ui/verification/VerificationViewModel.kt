@@ -43,7 +43,8 @@ class VerificationViewModel @Inject constructor(
                                         it.copy(
                                             loading = false,
                                             navigateToHome = (registered.value && user != null) && login.value,
-                                            navigateToSignup = (!registered.value || user == null) && login.value
+                                            navigateToSignup = (!registered.value || user == null) && login.value,
+                                            user = user
                                         )
                                     }
                                 }

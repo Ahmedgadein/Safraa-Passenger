@@ -44,7 +44,8 @@ class LandingPageViewModel @Inject constructor(
                                                 navigateToHome = loggedIn.value && user != null &&
                                                     !shouldUpdate.value,
                                                 navigateToLogin = !loggedIn.value || user == null &&
-                                                    !shouldUpdate.value
+                                                    !shouldUpdate.value,
+                                                user = user
                                             )
                                         }
                                     }

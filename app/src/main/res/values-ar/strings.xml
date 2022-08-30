@@ -32,7 +32,7 @@
     <string name="name">الإسم</string>
     <string name="please_enter_your_full_name">رجاء قم بإدخال إسمك الكامل</string>
     <string name="signup">تسجيل</string>
-    <string name="terms_and_conditions">By signing up you agree to the terms and conditions of Rihla</string>
+    <string name="terms_and_conditions">بالتسجيل توافق على الشروط و الأحكام الخاصىة برحلة</string>
     <string name="no_trips_found">لم يتم العثور على رحلات</string>
     <string name="from">من</string>
     <string name="to">إلى</string>
@@ -95,4 +95,10 @@
     <string name="ticket">التذكرة</string>
     <string name="status">الحالة</string>
     <string name="payment_disproved_info">لم تستطع شركة الباصات من تأكيد عملية الدفع, إذا كنت تعتقد أن هنالك خطأ قم رجاء بالتواصل معنا</string>
+    <string name="passenger">مسافر</string>
+    <string name="traveler_info">أحجز تذكرتك, من أي مكان و في أي زمان</string>
+    <string name="agent">وكيل</string>
+    <string name="agent_ingo">قم بتسويق التذاكر و أحصل على عمولة</string>
+    <string name="account_type">نوع الحساب</string>
+    <string name="account_type_info">إختر نوع الحساب الذي تود التسجيل به</string>
 </resources>
