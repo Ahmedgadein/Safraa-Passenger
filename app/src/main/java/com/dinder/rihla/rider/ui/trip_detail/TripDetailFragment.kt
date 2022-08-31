@@ -89,8 +89,7 @@ class TripDetailFragment : RihlaFragment() {
                             put("From", it.trip?.from?.name)
                             put("To", it.trip?.to?.name)
                             put("Price", it.trip?.price)
-                            put("Date", it.trip?.date)
-                            put("Time", it.trip?.time)
+                            put("Departure", it.trip?.departure)
                             put("Trip ID:", args.tripID)
                         }
 

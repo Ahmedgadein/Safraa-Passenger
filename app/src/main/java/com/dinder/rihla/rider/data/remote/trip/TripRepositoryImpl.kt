@@ -31,7 +31,7 @@ class TripRepositoryImpl @Inject constructor(
     override fun getTrips(): Flow<Result<List<Trip>>> = callbackFlow {
         withContext(ioDispatcher) {
             trySend(Result.Loading)
-            _ref.whereGreaterThanOrEqualTo(Fields.DATE, Date()).get()
+            _ref.whereGreaterThanOrEqualTo(Fields.DEPARTURE, Date()).get()
                 .addOnSuccessListener {
                     val trips = it.documents.map { doc -> Trip.fromJson(doc.data!!) }
                     trySend(Result.Success(trips))
@@ -48,7 +48,7 @@ class TripRepositoryImpl @Inject constructor(
             withContext(ioDispatcher) {
                 trySend(Result.Loading)
 
-                var query: Query = _ref.whereGreaterThanOrEqualTo(Fields.DATE, Date())
+                var query: Query = _ref.whereGreaterThanOrEqualTo(Fields.DEPARTURE, Date())
                 from?.let {
                     query = query.whereEqualTo(Fields.FROM, from.toJson())
                 }

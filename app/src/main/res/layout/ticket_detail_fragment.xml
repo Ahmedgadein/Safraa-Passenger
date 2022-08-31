@@ -174,7 +174,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text='@{ticket.date != null ? DateTimeUtils.INSTANCE.getFormattedDate(ticket.date) : ""}'
+                        android:text='@{ticket != null ? DateTimeUtils.INSTANCE.getFormattedDate(ticket.departure) : ""}'
                         android:textColor="@color/teal_700"
                         android:textSize="21sp" />
                 </LinearLayout>
@@ -200,7 +200,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text='@{ticket.date != null ? DateTimeUtils.INSTANCE.getFormattedTime(ticket.time) : ""}'
+                        android:text='@{ticket != null ? DateTimeUtils.INSTANCE.getFormattedTime(ticket.departure) : ""}'
                         android:textColor="@color/teal_700"
                         android:textSize="21sp" />
                 </LinearLayout>

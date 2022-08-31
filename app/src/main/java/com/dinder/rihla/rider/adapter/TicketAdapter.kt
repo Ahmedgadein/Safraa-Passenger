@@ -44,8 +44,7 @@ class TicketAdapter : ListAdapter<Ticket, TicketAdapter.TicketHolder>(TicketDiff
                         put("Seats", it.seats.toString())
                         put("From", it.from.name)
                         put("To", it.to.name)
-                        put("Date", it.date)
-                        put("Time", it.time)
+                        put("Departure", it.departure)
                     }
                     mixpanel.track("View Ticket", props)
                     binding.root.findNavController()

@@ -43,8 +43,7 @@ class TripAdapter() : ListAdapter<Trip, TripAdapter.TripHolder>(TripDiffCallback
                         put("Seats", it.seats.toString())
                         put("From", it.from.name)
                         put("To", it.to.name)
-                        put("Date", it.date)
-                        put("Time", it.time)
+                        put("Departure", it.departure)
                         put("Price", it.price)
                     }
                     mixpanel.track("View trip", props)
