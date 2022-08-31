@@ -34,8 +34,7 @@ data class Ticket(
     val id: String,
     val tripId: String,
     val company: Company,
-    val time: Date,
-    val date: Date,
+    val departure: Date,
     val from: Destination,
     val to: Destination,
     val promoCode: String?,
@@ -74,8 +73,7 @@ data class Ticket(
                 price = json["price"].toString().toInt(),
                 status = TicketStatus.valueOf(json["status"] as String),
                 createdAt = DateTimeUtils.decodeTimeStamp(json["createdAt"]),
-                date = DateTimeUtils.decodeTimeStamp(json["date"]),
-                time = DateTimeUtils.decodeTimeStamp(json["time"]),
+                departure = DateTimeUtils.decodeTimeStamp(json["departure"]),
                 seats = json["seats"] as List<String>
             )
         }

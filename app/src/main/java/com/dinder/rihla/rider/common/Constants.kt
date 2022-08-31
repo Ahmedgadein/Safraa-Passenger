@@ -23,7 +23,7 @@ object Fields {
     const val PHONE_NUMBER = "phoneNumber"
     const val PASSENGER_ID = "passengerId"
     const val SEATS = "seats"
-    const val DATE = "date"
+    const val DEPARTURE = "departure"
     const val ID = "id"
     const val FROM = "from"
     const val TO = "to"

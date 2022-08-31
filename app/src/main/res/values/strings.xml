@@ -23,7 +23,7 @@
     <!--    Error Messages-->
 
     <string name="app_name" translatable="false">Safraa</string>
-    <string name="seat_times_price" translatable="false">%s×%s</string>
+    <string name="seat_times_price" translatable="false">%1$s×%2$s</string>
     <string name="login">Login</string>
     <string name="mobile">Mobile</string>
     <string name="mobile_number">Mobile Number</string>
@@ -81,7 +81,7 @@
     <string name="copied">Copied successfully</string>
     <string name="retry">Retry</string>
     <string name="payment_disclaimer">When sending any amount make sure to write your name is visible in the receipt, or send your name in a whatsapp message afterwards</string>
-    <string name="payment_confirmation_message">Have you paid %s to %s in the account number %s and also sent the receipt containing your full name to %s</string>
+    <string name="payment_confirmation_message">Have you paid %1$s to %2$s in the account number %3$s and also sent the receipt containing your full name to %4$s</string>
     <string name="confirm_payment">Confirm Payment</string>
     <string name="payment_successful">Payment successful</string>
     <string name="payment_successful_info">We will inform you when the payment gets confirmed by the bus company, follow the status in the tickets screen</string>
