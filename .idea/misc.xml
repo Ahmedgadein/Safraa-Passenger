@@ -9,11 +9,16 @@
         <entry key="app/src/main/res/drawable/radio_button_selector.xml" value="0.232" />
         <entry key="app/src/main/res/layout/agent_home_fragment.xml" value="0.32135416666666666" />
         <entry key="app/src/main/res/layout/agent_radio_button.xml" value="0.32135416666666666" />
+        <entry key="app/src/main/res/layout/agent_trip_item_list.xml" value="0.3203125" />
+        <entry key="app/src/main/res/layout/agent_trips_fragment.xml" value="0.4" />
+        <entry key="app/src/main/res/layout/balance_fragment.xml" value="0.2" />
         <entry key="app/src/main/res/layout/confirm_payment_bottomsheet_dialog.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/confirm_seats_bottomsheet_dialog.xml" value="0.32135416666666666" />
+        <entry key="app/src/main/res/layout/credit_fragment.xml" value="0.2" />
         <entry key="app/src/main/res/layout/destination_item.xml" value="0.1484375" />
         <entry key="app/src/main/res/layout/fragment_payment.xml" value="0.4" />
         <entry key="app/src/main/res/layout/hi.xml" value="0.21388888888888888" />
+        <entry key="app/src/main/res/layout/home_fragment.xml" value="0.32135416666666666" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.32135416666666666" />
         <entry key="app/src/main/res/layout/passenger_radio_button.xml" value="0.4" />
         <entry key="app/src/main/res/layout/payment_successful_dialog.xml" value="0.32135416666666666" />
@@ -22,12 +27,16 @@
         <entry key="app/src/main/res/layout/prebook_successful_dialog.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/radio_button_content.xml" value="0.537109375" />
         <entry key="app/src/main/res/layout/redeem_promo_code_bottomsheet_dialog.xml" value="0.32135416666666666" />
+        <entry key="app/src/main/res/layout/settings_fragment.xml" value="0.18229166666666666" />
         <entry key="app/src/main/res/layout/signup_fragment.xml" value="0.32135416666666666" />
         <entry key="app/src/main/res/layout/ticket_detail_fragment.xml" value="0.3589420654911839" />
         <entry key="app/src/main/res/layout/ticket_item_list.xml" value="0.264" />
+        <entry key="app/src/main/res/layout/transactions_fragment.xml" value="0.303125" />
         <entry key="app/src/main/res/layout/trip_detail_fragment.xml" value="0.32135416666666666" />
         <entry key="app/src/main/res/layout/trip_item_list.xml" value="0.32135416666666666" />
         <entry key="app/src/main/res/layout/trips_fragment.xml" value="0.32135416666666666" />
+        <entry key="app/src/main/res/menu/agent_bottom_navigation.xml" value="0.32135416666666666" />
+        <entry key="app/src/main/res/menu/bottom_navigation.xml" value="0.32135416666666666" />
       </map>
     </option>
   </component>

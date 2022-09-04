@@ -21,6 +21,7 @@
     <string name="failed_to_redeem_code">تعذر إستخدام رمز الترويج حاول مجددا</string>
     <string name="payment_failed">تعذر إجراء الدفع, حاول مجددا</string>
     <string name="redeem_code_incorrect">هذا الرمز الترويجي غير صحيح</string>
+    <string name="failed_to_load_balance">تعذر عرض الرصيد</string>
     <!--    Error Messages-->
 
     <string name="login">تسجيل الدخول</string>
@@ -101,4 +102,10 @@
     <string name="agent_ingo">قم بتسويق التذاكر و أحصل على عمولة</string>
     <string name="account_type">نوع الحساب</string>
     <string name="account_type_info">إختر نوع الحساب الذي تود التسجيل به</string>
+    <string name="credit">الرصيد</string>
+    <string name="commission">العمولة</string>
+    <string name="promo_code">الرمز الترويجي</string>
+    <string name="current_balance">الرصيد الحالي</string>
+    <string name="withdraw">سحب</string>
+    <string name="transactions">المعاملات السابقة</string>
 </resources>

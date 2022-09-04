@@ -12,6 +12,7 @@ data class Trip(
     val to: Destination,
     val rate: Double,
     val price: Int,
+    val agentRate: Double = 0.0,
     val seats: List<Seat>
 ) {
 

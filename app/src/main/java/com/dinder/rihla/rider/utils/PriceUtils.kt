@@ -13,6 +13,10 @@ object PriceUtils {
     }
 
     fun getPrice(trip: Trip): String =
-        (trip.price * (1 + trip.rate!!)).roundToInt()
+        (trip.price * (1 + trip.rate)).roundToInt()
             .toString()
+
+    fun getCommission(trip: Trip): String = (trip.price * trip.rate)
+        .roundToInt()
+        .toString()
 }

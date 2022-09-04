@@ -17,6 +17,8 @@ object Collections {
     const val USERS = "users"
     const val TRIPS = "trips"
     const val TICKETS = "tickets"
+    const val RATES = "RATES"
+    const val WALLET = "wallet"
 }
 
 object Fields {
@@ -28,4 +30,5 @@ object Fields {
     const val FROM = "from"
     const val TO = "to"
     const val VERSION = "version"
+    const val AGENT = "AGENT"
 }

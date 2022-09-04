@@ -5,28 +5,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.dinder.rihla.rider.R
+import com.dinder.rihla.rider.databinding.AgentHomeFragmentBinding
+import com.dinder.rihla.rider.ui.agent.credit.CreditFragment
+import com.dinder.rihla.rider.ui.agent.trips.AgentTripsFragment
 
 class AgentHomeFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = AgentHomeFragment()
-    }
-
-    private lateinit var viewModel: AgentHomeViewModel
+    private lateinit var binding: AgentHomeFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.agent_home_fragment, container, false)
+    ): View {
+        binding = AgentHomeFragmentBinding.inflate(inflater, container, false)
+        setUI()
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AgentHomeViewModel::class.java)
-        // TODO: Use the ViewModel
+    private fun setUI() {
+        binding.viewpager.adapter = object : FragmentStateAdapter(this) {
+            override fun getItemCount(): Int = 2
+
+            override fun createFragment(position: Int): Fragment {
+                return when (position) {
+                    0 -> AgentTripsFragment()
+                    else -> CreditFragment()
+                }
+            }
+        }
+        binding.viewpager.isUserInputEnabled = false
+
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.trips -> setFragment(0)
+                R.id.credit -> setFragment(1)
+            }
+            true
+        }
+    }
+
+    private fun setFragment(position: Int) {
+        binding.viewpager.currentItem = position
     }
 }
