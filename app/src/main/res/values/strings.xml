@@ -21,6 +21,7 @@
     <string name="payment_failed">Payment Failed, try again</string>
     <string name="redeem_code_incorrect">Promo code is incorrect</string>
     <string name="failed_to_load_balance">Failed to load balance</string>
+    <string name="failed_to_load_transactions">Failed to load balance</string>
     <!--    Error Messages-->
 
     <string name="app_name" translatable="false">Safraa</string>
@@ -107,9 +108,8 @@
     <string name="credit">Credit</string>
     <string name="commission">Comission</string>
     <string name="promo_code">Promo Code</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="current_balance">Current Balance</string>
     <string name="withdraw">Withdraw</string>
     <string name="transactions">Transactions</string>
+    <string name="booked_ticket">Booked Seat</string>
 </resources>

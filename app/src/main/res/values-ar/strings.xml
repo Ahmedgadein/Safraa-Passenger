@@ -22,6 +22,7 @@
     <string name="payment_failed">تعذر إجراء الدفع, حاول مجددا</string>
     <string name="redeem_code_incorrect">هذا الرمز الترويجي غير صحيح</string>
     <string name="failed_to_load_balance">تعذر عرض الرصيد</string>
+    <string name="failed_to_load_transactions">تعذر عرض المعاملات السابقة</string>
     <!--    Error Messages-->
 
     <string name="login">تسجيل الدخول</string>
@@ -108,4 +109,5 @@
     <string name="current_balance">الرصيد الحالي</string>
     <string name="withdraw">سحب</string>
     <string name="transactions">المعاملات السابقة</string>
+    <string name="booked_ticket">تذكرة محجوزة</string>
 </resources>

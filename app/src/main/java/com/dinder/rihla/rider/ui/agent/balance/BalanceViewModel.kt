@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,11 +35,14 @@ class BalanceViewModel @Inject constructor(
                     walletRepo.getBalance(user.id).collect { result ->
                         when (result) {
                             Result.Loading -> _state.update { it.copy(loading = true) }
-                            is Result.Error -> _state.update {
-                                it.copy(
-                                    loading = false,
-                                    error = true
-                                )
+                            is Result.Error -> {
+                                showUserMessage(result.message)
+                                _state.update {
+                                    it.copy(
+                                        loading = false,
+                                        error = true
+                                    )
+                                }
                             }
                             is Result.Success -> _state.update {
                                 it.copy(

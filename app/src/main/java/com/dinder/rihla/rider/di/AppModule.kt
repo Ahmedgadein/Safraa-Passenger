@@ -60,7 +60,7 @@ object AppModule {
         errorMessages: ErrorMessages,
     ):
         AuthRepository =
-        FirebaseAuthRepository(auth, dispatcher, errorMessages)
+            FirebaseAuthRepository(auth, dispatcher, errorMessages)
 
     @Provides
     fun provideUserRepository(

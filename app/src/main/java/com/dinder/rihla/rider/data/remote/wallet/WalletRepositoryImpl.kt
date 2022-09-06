@@ -3,6 +3,7 @@ package com.dinder.rihla.rider.data.remote.wallet
 import android.util.Log
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Result
+import com.dinder.rihla.rider.data.model.Transaction
 import com.dinder.rihla.rider.utils.ErrorMessages
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -37,6 +38,24 @@ class WalletRepositoryImpl @Inject constructor(
                 .addOnFailureListener {
                     Log.e("WalletRepo", "getBalance: FAILED", it)
                     trySend(Result.Error("TODO: message"))
+                }
+        }
+        awaitClose()
+    }
+
+    override fun getTransactions(userId: String): Flow<Result<List<Transaction>>> = callbackFlow {
+        withContext(ioDispatcher) {
+            trySend(Result.Loading)
+            _ref.document(userId)
+                .collection(Collections.TRANSACTIONS)
+                .get()
+                .addOnSuccessListener {
+                    val transactions = it.documents.map { Transaction.fromJson(it.data!!) }
+                    Log.i("WalletRepo", "transactions SUCCESS: $transactions")
+                    trySend(Result.Success(transactions))
+                }
+                .addOnFailureListener {
+                    Log.e("WalletRepo", "transactions: FAILED", it)
                 }
         }
         awaitClose()

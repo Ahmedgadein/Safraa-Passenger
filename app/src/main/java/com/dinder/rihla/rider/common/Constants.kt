@@ -19,6 +19,7 @@ object Collections {
     const val TICKETS = "tickets"
     const val RATES = "RATES"
     const val WALLET = "wallet"
+    const val TRANSACTIONS = "transactions"
 }
 
 object Fields {
