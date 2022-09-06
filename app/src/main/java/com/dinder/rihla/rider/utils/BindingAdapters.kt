@@ -70,6 +70,13 @@ fun setTripPrice(view: TextView, trip: Trip?) {
     }
 }
 
+@BindingAdapter("commission")
+fun setTripCommision(view: TextView, trip: Trip?) {
+    trip?.let {
+        view.text = view.resources.getString(R.string.price_sdg, PriceUtils.getCommission(it))
+    }
+}
+
 @BindingAdapter("departure")
 fun timeToDeparture(view: TextView, ticket: Ticket?) {
     ticket?.let {

@@ -20,6 +20,8 @@
     <string name="failed_to_redeem_code">Failed to redeem Code, try again</string>
     <string name="payment_failed">Payment Failed, try again</string>
     <string name="redeem_code_incorrect">Promo code is incorrect</string>
+    <string name="failed_to_load_balance">Failed to load balance</string>
+    <string name="failed_to_load_transactions">Failed to load balance</string>
     <!--    Error Messages-->
 
     <string name="app_name" translatable="false">Safraa</string>
@@ -103,4 +105,11 @@
     <string name="agent_ingo">Market tickets and get commissions</string>
     <string name="account_type">Account type</string>
     <string name="account_type_info">Select the type of account you wish to register with</string>
+    <string name="credit">Credit</string>
+    <string name="commission">Comission</string>
+    <string name="promo_code">Promo Code</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="transactions">Transactions</string>
+    <string name="booked_ticket">Booked Seat</string>
 </resources>

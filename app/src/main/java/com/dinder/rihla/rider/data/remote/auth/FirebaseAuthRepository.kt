@@ -53,7 +53,7 @@ class FirebaseAuthRepository @Inject constructor(
             trySend(Result.Loading)
             FirebaseMessaging.getInstance().token
                 .addOnSuccessListener { token ->
-                    _ref.add(user.copy(token = token).toJson())
+                    _ref.document(auth.currentUser?.uid!!).set(user.copy(token = token).toJson())
                         .addOnSuccessListener {
                             trySend(Result.Success(true))
                         }

@@ -8,6 +8,8 @@ import com.dinder.rihla.rider.data.remote.auth.AuthRepository
 import com.dinder.rihla.rider.data.remote.auth.FirebaseAuthRepository
 import com.dinder.rihla.rider.data.remote.destination.DestinationRepository
 import com.dinder.rihla.rider.data.remote.destination.DestinationRepositoryImpl
+import com.dinder.rihla.rider.data.remote.rates.RateRepository
+import com.dinder.rihla.rider.data.remote.rates.RateRepositoryImpl
 import com.dinder.rihla.rider.data.remote.ticket.TicketRepository
 import com.dinder.rihla.rider.data.remote.ticket.TicketRepositoryImpl
 import com.dinder.rihla.rider.data.remote.trip.TripRepository
@@ -16,6 +18,8 @@ import com.dinder.rihla.rider.data.remote.user.UserRepository
 import com.dinder.rihla.rider.data.remote.user.UserRepositoryImpl
 import com.dinder.rihla.rider.data.remote.version.AppVersionRepository
 import com.dinder.rihla.rider.data.remote.version.AppVersionRepositoryImpl
+import com.dinder.rihla.rider.data.remote.wallet.WalletRepository
+import com.dinder.rihla.rider.data.remote.wallet.WalletRepositoryImpl
 import com.dinder.rihla.rider.utils.ErrorMessages
 import com.google.firebase.auth.FirebaseAuth
 import com.mixpanel.android.mpmetrics.MixpanelAPI
@@ -53,7 +57,7 @@ object AppModule {
     fun provideAuthRepository(
         auth: FirebaseAuth,
         dispatcher: CoroutineDispatcher,
-        errorMessages: ErrorMessages
+        errorMessages: ErrorMessages,
     ):
         AuthRepository =
             FirebaseAuthRepository(auth, dispatcher, errorMessages)
@@ -62,39 +66,52 @@ object AppModule {
     fun provideUserRepository(
         dispatcher: CoroutineDispatcher,
         dao: UserDao,
-        errorMessages: ErrorMessages
+        errorMessages: ErrorMessages,
     ): UserRepository =
         UserRepositoryImpl(dispatcher, dao, errorMessages)
 
     @Provides
     fun provideTripRepository(
         dispatcher: CoroutineDispatcher,
-        errorMessages: ErrorMessages
+        errorMessages: ErrorMessages,
     ): TripRepository =
         TripRepositoryImpl(dispatcher, errorMessages)
 
     @Provides
     fun provideDestinationRepository(
         dispatcher: CoroutineDispatcher,
-        errorMessages: ErrorMessages
+        errorMessages: ErrorMessages,
     ): DestinationRepository =
         DestinationRepositoryImpl(dispatcher, errorMessages)
 
     @Provides
     fun provideTicketRepository(
         dispatcher: CoroutineDispatcher,
-        errorMessages: ErrorMessages
+        errorMessages: ErrorMessages,
     ): TicketRepository =
         TicketRepositoryImpl(dispatcher, errorMessages)
 
     @Provides
     fun provideAppVersionRepository(
         dispatcher: CoroutineDispatcher,
-        errorMessages: ErrorMessages
+        errorMessages: ErrorMessages,
     ): AppVersionRepository =
         AppVersionRepositoryImpl(dispatcher, errorMessages)
 
     @Provides
     fun provideMixpanel(@ApplicationContext context: Context): MixpanelAPI =
         MixpanelAPI.getInstance(context, "244608d9170c936a37d24ef9a7b8eccf")
+
+    @Provides
+    fun provideRatesRepository(
+        dispatcher: CoroutineDispatcher,
+    ): RateRepository =
+        RateRepositoryImpl(dispatcher)
+
+    @Provides
+    fun provideWalletRepository(
+        dispatcher: CoroutineDispatcher,
+        errorMessages: ErrorMessages,
+    ): WalletRepository =
+        WalletRepositoryImpl(dispatcher, errorMessages)
 }
