@@ -13,11 +13,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.adapter.AgentTripAdapter
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.databinding.AgentTripsFragmentBinding
+import com.dinder.rihla.rider.ui.agent.home.AgentHomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -43,6 +45,12 @@ class AgentTripsFragment : RihlaFragment() {
         binding.tripsRecyclerView.apply {
             adapter = tripsAdapter
             layoutManager = LinearLayoutManager(context)
+        }
+
+        binding.settingsButton.setOnClickListener {
+            findNavController().navigate(
+                AgentHomeFragmentDirections.actionAgentHomeFragmentToSettingsFragment()
+            )
         }
 
         lifecycleScope.launch {

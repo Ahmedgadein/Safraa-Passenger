@@ -30,7 +30,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="@string/trips" />
+                app:title="@string/trips">
+                <ImageView
+                    android:id="@+id/settingsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:src="@drawable/avatarr"/>
+            </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
