@@ -140,6 +140,10 @@
         android:id="@+id/agentHomeFragment"
         android:name="com.dinder.rihla.rider.ui.agent.home.AgentHomeFragment"
         android:label="agent_home_fragment"
-        tools:layout="@layout/agent_home_fragment" />
+        tools:layout="@layout/agent_home_fragment" >
+        <action
+            android:id="@+id/action_agentHomeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
 
 </navigation>
