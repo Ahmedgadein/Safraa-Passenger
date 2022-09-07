@@ -1,10 +1,14 @@
 package com.dinder.rihla.rider
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.preference.PreferenceManager
+import com.dinder.rihla.rider.utils.ContextWrapper
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -50,4 +54,12 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 //    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(newBase!!)
+        val language = preferences.getString("language", "ar")
+        var newLocale = Locale(language)
+        val context: Context = ContextWrapper.wrap(newBase, newLocale)
+        super.attachBaseContext(context)
+    }
 }

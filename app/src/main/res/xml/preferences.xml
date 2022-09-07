@@ -3,6 +3,7 @@
     app:isPreferenceVisible="false">
 
     <PreferenceCategory
+        app:allowDividerBelow="true"
         app:key="personal"
         app:title="@string/personal_info">
 
@@ -16,4 +17,14 @@
             app:key="phone"
             app:title="@string/mobile_number" />
     </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="personal">
+        <Preference
+            app:defaultValue="en"
+            app:icon="@drawable/ic_language"
+            app:key="language"
+            app:title="@string/language" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
