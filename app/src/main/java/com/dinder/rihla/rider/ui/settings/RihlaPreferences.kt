@@ -48,9 +48,21 @@ class RihlaPreferences : PreferenceFragmentCompat() {
                             apply()
                         }
                         displayPreferences()
+                        setClickListeners()
                     }
                 }
             }
+        }
+    }
+
+    private fun setClickListeners() {
+        findPreference<Preference>("language")?.setOnPreferenceClickListener {
+            val currentLanguage = preferences.getString("language", "ar")
+            preferences.edit().apply {
+                putString("language", if (currentLanguage == "ar") "en" else "ar")
+            }.commit()
+            activity?.recreate()
+            true
         }
     }
 
@@ -60,6 +72,16 @@ class RihlaPreferences : PreferenceFragmentCompat() {
 
         findPreference<Preference>("phone")?.summary =
             preferences.getString("phone", "NA")
+
+        findPreference<Preference>("language")?.summary =
+            getLanguage(preferences.getString("language", "ar"))
+    }
+
+    private fun getLanguage(language: String?): String {
+        return when (language) {
+            "ar" -> "عربي"
+            else -> "English"
+        }
     }
 
     private fun showSnackbar(message: String) {

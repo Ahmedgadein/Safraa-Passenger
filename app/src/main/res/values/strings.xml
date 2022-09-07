@@ -112,4 +112,5 @@
     <string name="withdraw">Withdraw</string>
     <string name="transactions">Transactions</string>
     <string name="booked_ticket">Booked Seat</string>
+    <string name="language">Language</string>
 </resources>
