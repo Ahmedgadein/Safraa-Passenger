@@ -18,6 +18,9 @@ data class User(
     val role: Role,
     val phoneNumber: String,
     val token: String? = null,
+    // read-only field
+    @ColumnInfo(defaultValue = "1")
+    val active: Boolean = true,
 ) {
     companion object {
         fun fromJson(json: Map<String, Any>): User {
@@ -26,7 +29,8 @@ data class User(
                 name = json["name"].toString(),
                 role = Role.valueOf(json["role"].toString()),
                 phoneNumber = json["phoneNumber"].toString(),
-                token = json["token"] as String? ?: ""
+                token = json["token"] as String? ?: "",
+                active = json["active"] as Boolean? ?: true
             )
         }
     }

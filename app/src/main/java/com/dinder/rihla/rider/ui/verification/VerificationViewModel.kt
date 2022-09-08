@@ -1,5 +1,6 @@
 package com.dinder.rihla.rider.ui.verification
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dinder.rihla.rider.common.Message
@@ -7,6 +8,7 @@ import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.remote.auth.AuthRepository
 import com.dinder.rihla.rider.data.remote.user.UserRepository
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class VerificationViewModel @Inject constructor(
     private val authRepo: AuthRepository,
-    private val userRepo: UserRepository
+    private val userRepo: UserRepository,
+    private val auth: FirebaseAuth,
 ) :
     ViewModel() {
     private val _state: MutableStateFlow<VerificationUiState> =
@@ -39,13 +42,42 @@ class VerificationViewModel @Inject constructor(
                                 when (login) {
                                     Result.Loading -> Unit
                                     is Result.Error -> showUserMessage(login.message)
-                                    is Result.Success -> _state.update {
-                                        it.copy(
-                                            loading = false,
-                                            navigateToHome = (registered.value && user != null) && login.value,
-                                            navigateToSignup = (!registered.value || user == null) && login.value,
-                                            user = user
-                                        )
+                                    is Result.Success -> {
+
+                                        // Re-installation
+                                        if (registered.value && login.value && user == null) {
+                                            val id = auth.currentUser?.uid!!
+                                            Log.i(
+                                                "verificationViewModel",
+                                                "onVerificationAttempt ID: $id"
+                                            )
+                                            userRepo.get(id)
+                                                .collect { userDoc ->
+                                                    when (userDoc) {
+                                                        Result.Loading -> Unit
+                                                        is Result.Error -> showUserMessage(userDoc.message)
+                                                        is Result.Success -> {
+                                                            _state.update {
+                                                                it.copy(
+                                                                    loading = false,
+                                                                    navigateToHome = true,
+                                                                    user = userDoc.value
+                                                                )
+                                                            }
+                                                            userRepo.add(userDoc.value)
+                                                        }
+                                                    }
+                                                }
+                                        } else {
+                                            _state.update {
+                                                it.copy(
+                                                    loading = false,
+                                                    navigateToHome = (registered.value && user != null) && login.value,
+                                                    navigateToSignup = (!registered.value || user == null) && login.value,
+                                                    user = user
+                                                )
+                                            }
+                                        }
                                     }
                                 }
                             }
