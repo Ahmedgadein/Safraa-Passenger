@@ -30,6 +30,6 @@ object Fields {
     const val ID = "id"
     const val FROM = "from"
     const val TO = "to"
-    const val VERSION = "version"
+    const val VERSION = "passenger"
     const val AGENT = "AGENT"
 }

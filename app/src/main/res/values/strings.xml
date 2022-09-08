@@ -116,4 +116,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="account_deactivated_info">Your account has been deactivated, if you think there\'s a mistake please contact us</string>
+    <string name="update">Update</string>
 </resources>
