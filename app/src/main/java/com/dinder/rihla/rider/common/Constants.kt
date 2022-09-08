@@ -31,5 +31,6 @@ object Fields {
     const val FROM = "from"
     const val TO = "to"
     const val VERSION = "passenger"
+    const val UPDATE_REQUIRED = "passenger_require_update"
     const val AGENT = "AGENT"
 }

@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class UpdateAppUseCase @Inject constructor(
     private val repository: AppVersionRepository,
-    private val resources: Resources
+    private val resources: Resources,
 ) {
     suspend operator fun invoke(): Flow<Result<Boolean>> = flow {
         repository.get().collect { version ->
@@ -20,7 +20,8 @@ class UpdateAppUseCase @Inject constructor(
                 is Result.Error -> emit(Result.Error(version.message))
                 is Result.Success -> {
                     val currentVersion = resources.getString(R.string.app_version)
-                    val shouldUpdateApp = version.value != currentVersion
+                    val shouldUpdateApp =
+                        version.value.version != currentVersion && version.value.updateRequired
                     emit(Result.Success(shouldUpdateApp))
                 }
             }
