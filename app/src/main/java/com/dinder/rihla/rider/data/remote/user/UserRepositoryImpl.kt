@@ -1,7 +1,7 @@
 package com.dinder.rihla.rider.data.remote.user
 
+import android.util.Log
 import com.dinder.rihla.rider.common.Collections
-import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.local.UserDao
 import com.dinder.rihla.rider.data.model.User
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher,
     private val dao: UserDao,
-    private val errorMessages: ErrorMessages
+    private val errorMessages: ErrorMessages,
 ) :
     UserRepository {
     private val _ref = Firebase.firestore.collection(Collections.USERS)
@@ -29,11 +29,14 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun get(id: String): Flow<Result<User>> = callbackFlow {
         withContext(ioDispatcher) {
             trySend(Result.Loading)
-            _ref.whereEqualTo(Fields.ID, id).limit(1).get()
+            _ref.document(id)
+                .get()
                 .addOnSuccessListener {
-                    trySend(Result.Success(User.fromJson(it.documents[0].data!!)))
+                    trySend(Result.Success(User.fromJson(it.data!!)))
+                    Log.i("verificationViewModel", "get User Success:")
                 }
-                .addOnSuccessListener {
+                .addOnFailureListener {
+                    Log.i("verificationViewModel", "get User Error:", it)
                     trySend(Result.Error(errorMessages.couldntFindUser))
                 }
         }
