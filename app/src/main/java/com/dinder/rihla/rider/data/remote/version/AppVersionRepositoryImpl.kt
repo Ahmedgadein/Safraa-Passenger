@@ -3,6 +3,7 @@ package com.dinder.rihla.rider.data.remote.version
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result
+import com.dinder.rihla.rider.data.model.UpdateApp
 import com.dinder.rihla.rider.utils.ErrorMessages
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -22,12 +23,12 @@ class AppVersionRepositoryImpl @Inject constructor(
 
     private val _ref = Firebase.firestore.collection(Collections.CONSTANTS)
 
-    override fun get(): Flow<Result<String>> = callbackFlow {
+    override fun get(): Flow<Result<UpdateApp>> = callbackFlow {
         withContext(ioDispatcher) {
             trySend(Result.Loading)
             _ref.document(Collections.APP_VERSION).get()
                 .addOnSuccessListener {
-                    trySend(Result.Success(it.data!![Fields.VERSION].toString()))
+                    trySend(Result.Success(UpdateApp.fromJson(it.data!!)))
                 }
                 .addOnFailureListener {
                     trySend(Result.Error(errorMessages.failedToResolveAppVersion))
