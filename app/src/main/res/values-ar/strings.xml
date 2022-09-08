@@ -112,4 +112,5 @@
     <string name="booked_ticket">تذكرة محجوزة</string>
     <string name="language">اللغة</string>
     <string name="account_deactivated_info">لقد تم نعطيل حسابك, إذا كنت تعتقد أن هنالك خطأ رجاء تواصل معنا</string>
+    <string name="update">تحديث</string>
 </resources>
