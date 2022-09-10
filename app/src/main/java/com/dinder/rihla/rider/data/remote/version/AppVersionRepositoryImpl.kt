@@ -1,7 +1,6 @@
 package com.dinder.rihla.rider.data.remote.version
 
 import com.dinder.rihla.rider.common.Collections
-import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.UpdateApp
 import com.dinder.rihla.rider.utils.ErrorMessages

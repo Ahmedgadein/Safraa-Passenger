@@ -48,7 +48,7 @@
     <string name="trips">Trips</string>
     <string name="company">Company</string>
     <string name="seats">Seats</string>
-    <string name="depature_within">Departure within</string>
+    <string name="departure_within">Departure within %s</string>
     <string name="departure">Departure</string>
     <string name="sum">Sum: </string>
     <string name="instructions">Instructions</string>
@@ -113,8 +113,7 @@
     <string name="transactions">Transactions</string>
     <string name="booked_ticket">Booked Seat</string>
     <string name="language">Language</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="account_deactivated_info">Your account has been deactivated, if you think there\'s a mistake please contact us</string>
     <string name="update">Update</string>
+    <string name="past_ticket">Past Ticket</string>
 </resources>

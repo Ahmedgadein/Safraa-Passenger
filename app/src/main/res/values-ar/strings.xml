@@ -47,7 +47,7 @@
     <string name="trips">الرحلات</string>
     <string name="company">الشركة</string>
     <string name="seats">مقعد</string>
-    <string name="depature_within">المغادرة خلال</string>
+    <string name="departure_within">المغادرة خلال %s</string>
     <string name="departure">المغادرة</string>
     <string name="sum">المجموع: </string>
     <string name="instructions">التوجيهات</string>
@@ -113,4 +113,5 @@
     <string name="language">اللغة</string>
     <string name="account_deactivated_info">لقد تم نعطيل حسابك, إذا كنت تعتقد أن هنالك خطأ رجاء تواصل معنا</string>
     <string name="update">تحديث</string>
+    <string name="past_ticket">تذكرة فائتة</string>
 </resources>
