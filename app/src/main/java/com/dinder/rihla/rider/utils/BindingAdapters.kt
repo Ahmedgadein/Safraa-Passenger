@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalTime::class)
+
 package com.dinder.rihla.rider.utils
 
 import android.widget.TextView
@@ -11,6 +13,7 @@ import com.dinder.rihla.rider.data.model.Ticket
 import com.dinder.rihla.rider.data.model.Trip
 import java.util.Locale
 import kotlin.math.roundToInt
+import kotlin.time.ExperimentalTime
 
 @BindingAdapter("destination")
 fun setDestinationLabel(view: TextView, destination: Destination?) {
@@ -80,7 +83,17 @@ fun setTripCommision(view: TextView, trip: Trip?) {
 @BindingAdapter("departure")
 fun timeToDeparture(view: TextView, ticket: Ticket?) {
     ticket?.let {
-        view.text = view.resources.getString(R.string.price_sdg, PriceUtils.getPrice(it))
+        val departureTime = DateTimeUtils.departureWithin(it.departure, view.resources)
+        if (departureTime == view.resources.getText(R.string.past_ticket).toString()) {
+            view.setTextColor(
+                view.resources.getColor(
+                    android.R.color.holo_red_light, view.context.theme
+                ),
+            )
+            view.text = departureTime
+        } else {
+            view.text = view.resources.getString(R.string.departure_within, departureTime)
+        }
     }
 }
 
