@@ -3,6 +3,7 @@ package com.dinder.rihla.rider.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import org.jetbrains.annotations.NotNull
 
 enum class Role {
     PASSENGER,
@@ -18,9 +19,11 @@ data class User(
     val role: Role,
     val phoneNumber: String,
     val token: String? = null,
-    // read-only field
+    // read-only fields
     @ColumnInfo(defaultValue = "1")
     val active: Boolean = true,
+    @ColumnInfo(name = "points", defaultValue = "0", typeAffinity = ColumnInfo.INTEGER)
+    val points: Int = 0
 ) {
     companion object {
         fun fromJson(json: Map<String, Any>): User {
@@ -30,7 +33,8 @@ data class User(
                 role = Role.valueOf(json["role"].toString()),
                 phoneNumber = json["phoneNumber"].toString(),
                 token = json["token"] as String? ?: "",
-                active = json["active"] as Boolean? ?: true
+                active = json["active"] as Boolean? ?: true,
+                points = json["points"].toString().toIntOrNull() ?: 0
             )
         }
     }

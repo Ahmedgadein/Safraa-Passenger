@@ -4,11 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.preference.PreferenceManager
 import com.dinder.rihla.rider.utils.ContextWrapper
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -60,6 +61,16 @@ class MainActivity : AppCompatActivity() {
         val language = preferences.getString("language", "ar")
         var newLocale = Locale(language)
         val context: Context = ContextWrapper.wrap(newBase, newLocale)
-        super.attachBaseContext(context)
+
+        val mode =
+            if (preferences.getBoolean(
+                    "night_mode",
+                    false
+                )
+            ) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        AppCompatDelegate.setDefaultNightMode(mode)
+        super.attachBaseContext(
+            context
+        )
     }
 }

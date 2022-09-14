@@ -2,6 +2,7 @@ package com.dinder.rihla.rider.ui.settings
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -9,7 +10,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import androidx.preference.SwitchPreference
 import com.dinder.rihla.rider.R
+import com.dinder.rihla.rider.data.model.Role
+import com.dinder.rihla.rider.data.model.User
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -24,7 +28,7 @@ class RihlaPreferences : PreferenceFragmentCompat() {
         super.onCreate(savedInstanceState)
         preferences =
             PreferenceManager.getDefaultSharedPreferences(activity!!.baseContext)
-        displayPreferences()
+        displayPreferences(null)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -47,7 +51,7 @@ class RihlaPreferences : PreferenceFragmentCompat() {
                             putString("phone", it.phoneNumber)
                             apply()
                         }
-                        displayPreferences()
+                        displayPreferences(it)
                         setClickListeners()
                     }
                 }
@@ -64,9 +68,21 @@ class RihlaPreferences : PreferenceFragmentCompat() {
             activity?.recreate()
             true
         }
+
+        findPreference<SwitchPreference>("night_mode")?.setOnPreferenceChangeListener { preference, night ->
+            val mode =
+                if (night as Boolean) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            AppCompatDelegate.setDefaultNightMode(mode)
+            true
+        }
+
+        findPreference<Preference>("terms_and_conditions")?.setOnPreferenceClickListener {
+            showSnackbar("Terms And Conditions")
+            true
+        }
     }
 
-    private fun displayPreferences() {
+    private fun displayPreferences(user: User?) {
         findPreference<Preference>("name")?.summary =
             preferences.getString("name", "NA")
 
@@ -75,6 +91,13 @@ class RihlaPreferences : PreferenceFragmentCompat() {
 
         findPreference<Preference>("language")?.summary =
             getLanguage(preferences.getString("language", "ar"))
+
+        if (user?.role == Role.PASSENGER) {
+            findPreference<Preference>("points")?.apply {
+                isVisible = true
+                summary = user.points.toString()
+            }
+        }
     }
 
     private fun getLanguage(language: String?): String {

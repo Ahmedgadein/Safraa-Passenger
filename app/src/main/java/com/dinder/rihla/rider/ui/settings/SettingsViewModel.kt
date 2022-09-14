@@ -3,6 +3,7 @@ package com.dinder.rihla.rider.ui.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dinder.rihla.rider.common.Message
+import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.remote.user.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,13 +12,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.UUID
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val repository: UserRepository,
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
 ) : ViewModel() {
     private val _state = MutableStateFlow(SettingsUiState())
     val state = _state.asStateFlow()
@@ -28,9 +29,11 @@ class SettingsViewModel @Inject constructor(
 
     fun getUser() {
         viewModelScope.launch {
-            repository.user.collect { result ->
-                result?.let { user ->
-                    _state.update { it.copy(user = user) }
+            repository.get(auth.currentUser?.uid!!).collect { result ->
+                when (result) {
+                    Result.Loading -> Unit
+                    is Result.Error -> showUserMessage(result.message)
+                    is Result.Success -> _state.update { it.copy(user = result.value) }
                 }
             }
         }
