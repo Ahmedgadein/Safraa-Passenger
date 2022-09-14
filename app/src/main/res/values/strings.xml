@@ -116,4 +116,7 @@
     <string name="account_deactivated_info">Your account has been deactivated, if you think there\'s a mistake please contact us</string>
     <string name="update">Update</string>
     <string name="past_ticket">Past Ticket</string>
+    <string name="terms_and_conditions_label">Terms and Conditions</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="points">Points</string>
 </resources>

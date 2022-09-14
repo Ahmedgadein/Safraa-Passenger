@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "3fb6be21697fd217ea7872be4db42ca7",
+    "identityHash": "99497ccce331b96c6279cbd8dcc96e22",
     "entities": [
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `role` TEXT NOT NULL DEFAULT 'PASSENGER', `phoneNumber` TEXT NOT NULL, `token` TEXT, `active` INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `role` TEXT NOT NULL DEFAULT 'PASSENGER', `phoneNumber` TEXT NOT NULL, `token` TEXT, `active` INTEGER NOT NULL DEFAULT 1, `points` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -45,6 +45,13 @@
             "affinity": "INTEGER",
             "notNull": true,
             "defaultValue": "1"
+          },
+          {
+            "fieldPath": "points",
+            "columnName": "points",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
           }
         ],
         "primaryKey": {
@@ -60,7 +67,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3fb6be21697fd217ea7872be4db42ca7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '99497ccce331b96c6279cbd8dcc96e22')"
     ]
   }
 }

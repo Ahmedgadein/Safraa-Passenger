@@ -16,15 +16,32 @@
             app:defaultValue="NA"
             app:key="phone"
             app:title="@string/mobile_number" />
+
+        <Preference
+            app:defaultValue="NA"
+            app:isPreferenceVisible="false"
+            app:key="points"
+            app:icon="@drawable/ic_points"
+            app:title="@string/points" />
     </PreferenceCategory>
 
-    <PreferenceCategory
-        app:key="personal">
+    <PreferenceCategory app:key="settings">
         <Preference
             app:defaultValue="en"
             app:icon="@drawable/ic_language"
             app:key="language"
             app:title="@string/language" />
+
+        <SwitchPreference
+            app:defaultValue="false"
+            app:icon="@drawable/ic_night_mode"
+            app:key="night_mode"
+            app:title="@string/night_mode" />
+
+        <Preference
+            app:icon="@drawable/ic_terms_and_conditions"
+            app:key="terms_and_conditions"
+            app:title="@string/terms_and_conditions_label" />
     </PreferenceCategory>
 
 </PreferenceScreen>

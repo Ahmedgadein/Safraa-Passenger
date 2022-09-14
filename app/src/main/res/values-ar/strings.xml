@@ -114,4 +114,7 @@
     <string name="account_deactivated_info">لقد تم نعطيل حسابك, إذا كنت تعتقد أن هنالك خطأ رجاء تواصل معنا</string>
     <string name="update">تحديث</string>
     <string name="past_ticket">تذكرة فائتة</string>
+    <string name="terms_and_conditions_label">الشروط و الأحكام</string>
+    <string name="night_mode">الوضع الليلي</string>
+    <string name="points">النقاط</string>
 </resources>
