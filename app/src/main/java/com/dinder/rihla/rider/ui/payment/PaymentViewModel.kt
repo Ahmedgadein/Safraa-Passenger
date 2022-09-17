@@ -9,12 +9,14 @@ import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Ticket
 import com.dinder.rihla.rider.data.remote.ticket.TicketRepository
 import com.dinder.rihla.rider.utils.PriceUtils
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.util.UUID
 import javax.inject.Inject
 
@@ -22,6 +24,7 @@ import javax.inject.Inject
 class PaymentViewModel @Inject constructor(
     private val repository: TicketRepository,
     private val resources: Resources,
+    private val mixpanel: MixpanelAPI,
 ) : ViewModel() {
     private val _state = MutableStateFlow(PaymentUiState())
     val state = _state.asStateFlow()
@@ -55,7 +58,16 @@ class PaymentViewModel @Inject constructor(
                 when (result) {
                     Result.Loading -> _state.update { it.copy(loading = true) }
                     is Result.Error -> showUserMessage(resources.getString(R.string.payment_failed))
-                    is Result.Success -> _state.update { it.copy(loading = false, paid = true) }
+                    is Result.Success -> {
+                        _state.update { it.copy(loading = false, paid = true) }
+                        val props = JSONObject().apply {
+                            put("Amount", amount)
+                            put("Ticket ID", ticket.id)
+                            put("Seats", ticket.seats)
+                            put("Seats Count", ticket.seats.size)
+                        }
+                        mixpanel.track("Payment", props)
+                    }
                 }
             }
         }
@@ -75,6 +87,10 @@ class PaymentViewModel @Inject constructor(
                                     codeRedeemSuccessful = true
                                 )
                             }
+                            val props = JSONObject().apply {
+                                put("Code", code)
+                            }
+                            mixpanel.track("Redeem PromoCode Successful", props)
                         } else {
                             _state.update { it.copy(loading = false) }
                             showUserMessage(resources.getString(R.string.redeem_code_incorrect))

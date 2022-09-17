@@ -24,16 +24,21 @@ import com.dinder.rihla.rider.data.model.User
 import com.dinder.rihla.rider.databinding.SignupFragmentBinding
 import com.dinder.rihla.rider.utils.NameValidator
 import com.dinder.rihla.rider.utils.NetworkUtils
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignupFragment : RihlaFragment() {
     private val viewModel: SignupViewModel by viewModels()
     private val args: SignupFragmentArgs by navArgs()
     private lateinit var binding: SignupFragmentBinding
+
+    @Inject
+    lateinit var mixpanel: MixpanelAPI
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,6 +64,7 @@ class SignupFragment : RihlaFragment() {
             if (!validName(name)) {
                 return@setOnClickListener
             }
+            mixpanel.track("Signup Attempt")
             viewModel.signup(
                 User(
                     phoneNumber = args.phoneNumber,

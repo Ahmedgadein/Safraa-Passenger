@@ -6,18 +6,21 @@ import com.dinder.rihla.rider.common.Message
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Seat
 import com.dinder.rihla.rider.data.remote.trip.TripRepository
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class TripDetailViewModel @Inject constructor(
-    private val repository: TripRepository
+    private val repository: TripRepository,
+    private val mixpanel: MixpanelAPI,
 ) :
     ViewModel() {
 
@@ -52,12 +55,20 @@ class TripDetailViewModel @Inject constructor(
                 when (result) {
                     Result.Loading -> _state.update { it.copy(loading = true) }
                     is Result.Error -> showUserMessage(result.message)
-                    is Result.Success -> _state.update {
-                        it.copy(
-                            loading = false,
-                            ticketID = result.value,
-                            isReserved = true
-                        )
+                    is Result.Success -> {
+                        val props = JSONObject().apply {
+                            put("Seats: ", seats)
+                            put("Seats count: ", seats.size)
+                            put("Trip ID: ", tripId)
+                        }
+                        mixpanel.track("Reservation Successful", props)
+                        _state.update {
+                            it.copy(
+                                loading = false,
+                                ticketID = result.value,
+                                isReserved = true
+                            )
+                        }
                     }
                 }
             }

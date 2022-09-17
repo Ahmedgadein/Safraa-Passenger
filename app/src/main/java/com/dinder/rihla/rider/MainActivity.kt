@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.preference.PreferenceManager
 import com.dinder.rihla.rider.utils.ContextWrapper
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -23,6 +25,9 @@ class MainActivity : AppCompatActivity() {
             // TODO: Inform user that that your app will not show notifications.
         }
     }
+
+    @Inject
+    lateinit var mixpanel: MixpanelAPI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,5 +77,10 @@ class MainActivity : AppCompatActivity() {
         super.attachBaseContext(
             context
         )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mixpanel.flush()
     }
 }

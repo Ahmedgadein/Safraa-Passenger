@@ -20,15 +20,20 @@ import com.dinder.rihla.rider.adapter.AgentTripAdapter
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.databinding.AgentTripsFragmentBinding
 import com.dinder.rihla.rider.ui.agent.home.AgentHomeFragmentDirections
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AgentTripsFragment : RihlaFragment() {
 
     private val viewModel: AgentTripsViewModel by viewModels()
     private lateinit var binding: AgentTripsFragmentBinding
+
+    @Inject
+    lateinit var mixpanel: MixpanelAPI
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +43,11 @@ class AgentTripsFragment : RihlaFragment() {
         binding = AgentTripsFragmentBinding.inflate(inflater, container, false)
         setUI()
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mixpanel.track("Agent View Trips")
     }
 
     private fun setUI() {
@@ -80,6 +90,7 @@ class AgentTripsFragment : RihlaFragment() {
 
             val shareIntent = Intent.createChooser(sendIntent, null)
             startActivity(shareIntent)
+            mixpanel.track("Agent Share PromoCode")
         }
     }
 
@@ -94,6 +105,7 @@ class AgentTripsFragment : RihlaFragment() {
             )
             clipBoard.setPrimaryClip(clipData)
             showSnackbar(resources.getString(R.string.copied))
+            mixpanel.track("Agent Copy PromoCode")
         }
     }
 

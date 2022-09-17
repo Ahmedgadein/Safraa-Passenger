@@ -11,14 +11,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.databinding.BalanceFragmentBinding
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class BalanceFragment : RihlaFragment() {
     private val viewModel: BalanceViewModel by viewModels()
     private lateinit var binding: BalanceFragmentBinding
+
+    @Inject
+    lateinit var mixpanel: MixpanelAPI
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,9 +35,15 @@ class BalanceFragment : RihlaFragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mixpanel.track("Agent View Balance")
+    }
+
     private fun setUI() {
         binding.withdrawButton.setOnClickListener {
-            TODO()
+            // TODO: Redirect to Whatsapp
+            mixpanel.track("Agent Withdraw Balance")
         }
 
         binding.retryButton.setOnClickListener {
