@@ -20,23 +20,34 @@ import javax.inject.Inject
 class LandingPageViewModel @Inject constructor(
     private val authRepo: AuthRepository,
     private val userRepo: UserRepository,
-    private val updateAppUseCase: UpdateAppUseCase
+    private val updateAppUseCase: UpdateAppUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow(LandingUiState())
     val state = _state.asStateFlow()
 
     init {
+        load()
+    }
+
+    private fun load() {
+        _state.update { it.copy(loading = true) }
         viewModelScope.launch {
             authRepo.isLoggedIn().collect { loggedIn ->
                 when (loggedIn) {
-                    Result.Loading -> Unit
-                    is Result.Error -> Unit
+                    Result.Loading -> _state.update { it.copy(loading = true) }
+                    is Result.Error -> {
+                        showUserMessage(loggedIn.message)
+                        _state.update { it.copy(error = true, loading = false) }
+                    }
                     is Result.Success -> {
                         userRepo.user.collect { user ->
                             updateAppUseCase().collect { shouldUpdate ->
                                 when (shouldUpdate) {
                                     Result.Loading -> Unit
-                                    is Result.Error -> showUserMessage(shouldUpdate.message)
+                                    is Result.Error -> {
+                                        showUserMessage(shouldUpdate.message)
+                                        _state.update { it.copy(error = true, loading = false) }
+                                    }
                                     is Result.Success -> {
                                         _state.update { state ->
                                             state.copy(
@@ -45,7 +56,8 @@ class LandingPageViewModel @Inject constructor(
                                                     !shouldUpdate.value,
                                                 navigateToLogin = !loggedIn.value || user == null &&
                                                     !shouldUpdate.value,
-                                                user = user
+                                                user = user,
+                                                loading = false
                                             )
                                         }
                                     }
@@ -56,6 +68,11 @@ class LandingPageViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun retry() {
+        _state.update { it.copy(error = false, loading = false) }
+        load()
     }
 
     private fun showUserMessage(content: String) {

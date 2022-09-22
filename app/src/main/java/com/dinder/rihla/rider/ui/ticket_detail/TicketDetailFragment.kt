@@ -187,6 +187,7 @@ class TicketDetailFragment : RihlaFragment() {
 
     private fun setStatus(state: TicketUiState) {
         binding.status.text = mapStatusLabel(state.ticket?.status!!)
+        binding.status.setTextColor(mapStatusLabelColor(state.ticket.status))
     }
 
     private fun mapStatusLabel(status: TicketStatus): CharSequence {
@@ -196,6 +197,22 @@ class TicketDetailFragment : RihlaFragment() {
             TicketStatus.PAID -> getString(R.string.paid)
             TicketStatus.CANCELLED -> getString(R.string.cancelled)
             TicketStatus.DISPROVED -> getString(R.string.disproved)
+        }
+    }
+
+    private fun mapStatusLabelColor(status: TicketStatus): Int {
+        return when (status) {
+            TicketStatus.PRE_BOOK -> resources.getColor(R.color.teal_700, context?.theme)
+            TicketStatus.PAYMENT_CONFIRMATION -> resources.getColor(R.color.orange, context?.theme)
+            TicketStatus.PAID -> resources.getColor(R.color.green, context?.theme)
+            TicketStatus.CANCELLED -> resources.getColor(
+                android.R.color.holo_red_dark,
+                context?.theme
+            )
+            TicketStatus.DISPROVED -> resources.getColor(
+                android.R.color.holo_red_dark,
+                context?.theme
+            )
         }
     }
 

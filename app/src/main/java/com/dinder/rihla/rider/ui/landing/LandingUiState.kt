@@ -4,6 +4,8 @@ import com.dinder.rihla.rider.common.Message
 import com.dinder.rihla.rider.data.model.User
 
 data class LandingUiState(
+    val loading: Boolean = false,
+    val error: Boolean = false,
     val navigateToHome: Boolean = false,
     val navigateToLogin: Boolean = false,
     val navigateToUpdate: Boolean = false,
