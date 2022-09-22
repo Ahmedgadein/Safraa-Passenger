@@ -151,6 +151,7 @@ class TripDetailFragment : RihlaFragment() {
             val props = JSONObject().apply {
                 put("Seats: ", result)
                 put("Seats count: ", result.size)
+                put("Trip ID: ", args.tripID)
             }
             mixpanel.track("Reservation Attempt", props)
             viewModel.reserveSeats(args.tripID, seats)

@@ -13,14 +13,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dinder.rihla.rider.adapter.TransactionAdapter
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.databinding.TransactionsFragmentBinding
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TransactionsFragment : RihlaFragment() {
     private val viewModel: TransactionsViewModel by viewModels()
     private lateinit var binding: TransactionsFragmentBinding
+
+    @Inject
+    lateinit var mixpanel: MixpanelAPI
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +35,11 @@ class TransactionsFragment : RihlaFragment() {
         binding = TransactionsFragmentBinding.inflate(inflater, container, false)
         setUI()
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mixpanel.track("Agent View Transactions")
     }
 
     private fun setUI() {

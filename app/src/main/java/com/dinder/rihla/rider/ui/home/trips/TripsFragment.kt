@@ -18,15 +18,21 @@ import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.data.model.Destination
 import com.dinder.rihla.rider.databinding.TripsFragmentBinding
 import com.dinder.rihla.rider.ui.home.HomeFragmentDirections
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TripsFragment : RihlaFragment() {
 
     private val viewModel: TripsViewModel by viewModels()
     private lateinit var binding: TripsFragmentBinding
+
+    @Inject
+    lateinit var mixpanel: MixpanelAPI
 
     override fun onCreateView(
 
@@ -52,6 +58,7 @@ class TripsFragment : RihlaFragment() {
             binding.toDropdown.clearFocus()
             binding.fromDropdown.clearFocus()
             viewModel.clearDestinations()
+            mixpanel.track("Clear Destinations")
         }
 
         val tripsAdapter = TripAdapter()
@@ -91,6 +98,10 @@ class TripsFragment : RihlaFragment() {
                 position
             )
             viewModel.onDestinationUpdate(from = location)
+            val props = JSONObject().apply {
+                put("Selected Destination", location.name)
+            }
+            mixpanel.track("From Destination Change", props)
         }
 
         binding.toDropdown.setAdapter(adapter)
@@ -99,6 +110,10 @@ class TripsFragment : RihlaFragment() {
                 position
             )
             viewModel.onDestinationUpdate(to = location)
+            val props = JSONObject().apply {
+                put("Selected Destination", location.name)
+            }
+            mixpanel.track("To Destination Change", props)
         }
     }
 }

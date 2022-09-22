@@ -22,9 +22,12 @@ import com.dinder.rihla.rider.databinding.RedeemPromoCodeBottomsheetDialogBindin
 import com.dinder.rihla.rider.databinding.TicketDetailFragmentBinding
 import com.dinder.rihla.rider.utils.NetworkUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
@@ -32,6 +35,9 @@ class TicketDetailFragment : RihlaFragment() {
     private val viewModel: TicketDetailViewModel by viewModels()
     private val args: TicketDetailFragmentArgs by navArgs()
     private lateinit var binding: TicketDetailFragmentBinding
+
+    @Inject
+    lateinit var mixpanel: MixpanelAPI
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -134,6 +140,10 @@ class TicketDetailFragment : RihlaFragment() {
                 dialogBinding.promoCodeContainer.helperText = null
                 bottomSheetDialog.dismiss()
                 viewModel.redeemCode(args.ticketId, code)
+                val props = JSONObject().apply {
+                    put("Code", code)
+                }
+                mixpanel.track("Redeem PromoCode Attempt", props)
             }
         }
     }

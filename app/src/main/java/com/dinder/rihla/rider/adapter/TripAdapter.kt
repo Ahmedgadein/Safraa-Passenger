@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dinder.rihla.rider.data.model.Trip
 import com.dinder.rihla.rider.databinding.TripItemListBinding
 import com.dinder.rihla.rider.ui.home.HomeFragmentDirections
+import com.dinder.rihla.rider.utils.PriceUtils
 import com.mixpanel.android.mpmetrics.MixpanelAPI
 import org.json.JSONObject
 
@@ -44,9 +45,9 @@ class TripAdapter() : ListAdapter<Trip, TripAdapter.TripHolder>(TripDiffCallback
                         put("From", it.from.name)
                         put("To", it.to.name)
                         put("Departure", it.departure)
-                        put("Price", it.price)
+                        put("Price", PriceUtils.getPrice(it))
                     }
-                    mixpanel.track("View trip", props)
+                    mixpanel.track("View Trip", props)
                     binding.root.findNavController().navigate(
                         HomeFragmentDirections.actionHomeFragmentToTripDetailFragment(
                             tripID = it.id!!

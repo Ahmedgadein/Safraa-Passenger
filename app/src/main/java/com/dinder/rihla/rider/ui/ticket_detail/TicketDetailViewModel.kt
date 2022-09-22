@@ -7,12 +7,14 @@ import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.common.Message
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.remote.ticket.TicketRepository
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.util.UUID
 import javax.inject.Inject
 
@@ -20,6 +22,7 @@ import javax.inject.Inject
 class TicketDetailViewModel @Inject constructor(
     private val ticketRepository: TicketRepository,
     private val resources: Resources,
+    private val mixpanel: MixpanelAPI
 ) :
     ViewModel() {
     private val _state = MutableStateFlow(TicketUiState())
@@ -55,6 +58,10 @@ class TicketDetailViewModel @Inject constructor(
                                     loading = false,
                                 )
                             }
+                            val props = JSONObject().apply {
+                                put("Code", code)
+                            }
+                            mixpanel.track("Redeem PromoCode Successful", props)
                         } else {
                             _state.update { it.copy(loading = false) }
                             showUserMessage(resources.getString(R.string.redeem_code_incorrect))

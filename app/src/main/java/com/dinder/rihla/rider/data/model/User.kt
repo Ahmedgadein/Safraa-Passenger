@@ -3,7 +3,6 @@ package com.dinder.rihla.rider.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.jetbrains.annotations.NotNull
 
 enum class Role {
     PASSENGER,
