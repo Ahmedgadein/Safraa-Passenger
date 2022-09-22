@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -35,24 +36,41 @@ class LandingPageFragment : RihlaFragment() {
     private fun setUI() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect {
-                    it.messages.firstOrNull()?.let { message ->
+                viewModel.state.collect { state ->
+                    state.messages.firstOrNull()?.let { message ->
                         showSnackbar(message.content)
                         viewModel.userMessageShown(message.id)
                     }
 
-                    if (it.navigateToUpdate) {
-                        navigateToUpdate()
-                        return@collect
-                    }
-                    if (it.navigateToHome) {
-                        navigateToHome(it.user)
+                    if (state.loading) {
+                        binding.loading.isVisible = true
+                        binding.error.isVisible = false
                         return@collect
                     }
 
-                    if (it.navigateToLogin) {
-                        navigateToLogin()
+                    if (state.error) {
+                        binding.loading.isVisible = false
+                        binding.error.isVisible = true
                         return@collect
+                    }
+
+                    if (!state.loading && !state.error) {
+                        binding.loading.isVisible = false
+                        binding.error.isVisible = false
+
+                        if (state.navigateToUpdate) {
+                            navigateToUpdate()
+                            return@collect
+                        }
+                        if (state.navigateToHome) {
+                            navigateToHome(state.user)
+                            return@collect
+                        }
+
+                        if (state.navigateToLogin) {
+                            navigateToLogin()
+                            return@collect
+                        }
                     }
                 }
             }

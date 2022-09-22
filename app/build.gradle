@@ -37,9 +37,11 @@ android {
             versionNameSuffix ".debug"
             resValue "string", "app_version",
                     "${defaultConfig.versionName}${versionNameSuffix}"
+            manifestPlaceholders = [applicationName: "dbg:Safraa"]
         }
         release {
             resValue "string", "app_version", "${defaultConfig.versionName}"
+            manifestPlaceholders = [applicationName: "Safraa"]
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

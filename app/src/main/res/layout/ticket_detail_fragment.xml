@@ -31,6 +31,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/teal_700"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:title="@string/ticket" />
         </com.google.android.material.appbar.AppBarLayout>
