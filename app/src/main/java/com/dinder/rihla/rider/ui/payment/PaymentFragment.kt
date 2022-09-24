@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -108,7 +110,7 @@ class PaymentFragment : RihlaFragment() {
                         setBasePrice(state.paymentInfo?.ticket)
                         setDiscountPrice(state.paymentInfo?.ticket)
                         setPaymentAccountInfo(state.paymentInfo)
-                        setCopyButtons(state.paymentInfo)
+                        setButtons(state.paymentInfo)
                         setPaidButton(state.paymentInfo)
                         setPromoCode(state.paymentInfo)
                         setRetryButton()
@@ -204,7 +206,7 @@ class PaymentFragment : RihlaFragment() {
         dialog.show()
     }
 
-    private fun setCopyButtons(paymentInfo: PaymentInfo?) {
+    private fun setButtons(paymentInfo: PaymentInfo?) {
         val clipBoard =
             requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
@@ -217,13 +219,8 @@ class PaymentFragment : RihlaFragment() {
             showSnackbar(resources.getString(R.string.copied))
         }
 
-        binding.copyPhoneNumber.setOnClickListener {
-            val clipData = ClipData.newPlainText(
-                resources.getString(R.string.account_number),
-                paymentInfo?.billingWhatsappNumber
-            )
-            clipBoard.setPrimaryClip(clipData)
-            showSnackbar(resources.getString(R.string.copied))
+        binding.whatsappPhoneNumber.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/249117427796")))
         }
     }
 
