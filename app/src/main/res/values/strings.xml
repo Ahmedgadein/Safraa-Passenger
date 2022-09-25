@@ -120,4 +120,7 @@
     <string name="night_mode">Night Mode</string>
     <string name="points">Points</string>
     <string name="cannot_change_account_disclaimer">Disclaimer: account type cannot be changed after this point</string>
+    <string name="should_be_9_numbers">Should be 9 numbers</string>
+    <string name="invalid_number">Invalid number</string>
+    <string name="fullname_required">Full name required</string>
 </resources>

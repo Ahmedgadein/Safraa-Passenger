@@ -155,7 +155,7 @@ class SignupFragment : RihlaFragment() {
     }
 
     private fun validName(name: String): Boolean {
-        val error = NameValidator.validate(name)
+        val error = NameValidator.validate(name, requireContext())
         binding.signupNameContainer.helperText = error
         return error == null
     }
