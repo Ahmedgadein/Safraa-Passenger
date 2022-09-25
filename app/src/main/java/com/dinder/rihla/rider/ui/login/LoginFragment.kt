@@ -37,7 +37,7 @@ class LoginFragment : RihlaFragment() {
         binding.loginPhoneNumberContainer.editText?.addTextChangedListener {
             it?.let {
                 binding.loginPhoneNumberContainer.helperText =
-                    PhoneNumberValidator.validate(it.toString())
+                    PhoneNumberValidator.validate(it.toString(), requireContext())
             }
         }
 
@@ -57,7 +57,7 @@ class LoginFragment : RihlaFragment() {
 
     private fun validNumber(number: String): Boolean {
         with(binding.loginPhoneNumberContainer) {
-            helperText = PhoneNumberValidator.validate(number)
+            helperText = PhoneNumberValidator.validate(number, requireContext())
             return helperText == null
         }
     }
