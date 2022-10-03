@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/avatarr.xml" value="0.162" />
         <entry key="app/src/main/res/drawable/ic_baseline_content_copy_24.xml" value="0.239" />
         <entry key="app/src/main/res/drawable/ic_copy.xml" value="0.2155" />
         <entry key="app/src/main/res/drawable/ic_language.xml" value="0.1915" />

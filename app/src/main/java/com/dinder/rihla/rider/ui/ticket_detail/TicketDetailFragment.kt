@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.adapter.StringItemsAdapter
 import com.dinder.rihla.rider.common.RihlaFragment
+import com.dinder.rihla.rider.common.color
 import com.dinder.rihla.rider.data.model.Ticket
 import com.dinder.rihla.rider.data.model.TicketStatus
 import com.dinder.rihla.rider.databinding.RedeemPromoCodeBottomsheetDialogBinding
@@ -202,17 +203,13 @@ class TicketDetailFragment : RihlaFragment() {
 
     private fun mapStatusLabelColor(status: TicketStatus): Int {
         return when (status) {
-            TicketStatus.PRE_BOOK -> resources.getColor(R.color.teal_700, context?.theme)
-            TicketStatus.PAYMENT_CONFIRMATION -> resources.getColor(R.color.orange, context?.theme)
-            TicketStatus.PAID -> resources.getColor(R.color.green, context?.theme)
-            TicketStatus.CANCELLED -> resources.getColor(
-                android.R.color.holo_red_dark,
-                context?.theme
-            )
-            TicketStatus.DISPROVED -> resources.getColor(
-                android.R.color.holo_red_dark,
-                context?.theme
-            )
+            TicketStatus.PRE_BOOK -> requireContext().color(R.color.teal_700)
+            TicketStatus.PAYMENT_CONFIRMATION -> requireContext().color(R.color.orange)
+            TicketStatus.PAID -> requireContext().color(R.color.green)
+            TicketStatus.CANCELLED ->
+                requireContext().color(android.R.color.holo_red_dark)
+            TicketStatus.DISPROVED ->
+                requireContext().color(android.R.color.holo_red_dark)
         }
     }
 

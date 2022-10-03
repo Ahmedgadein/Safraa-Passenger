@@ -4,8 +4,10 @@ package com.dinder.rihla.rider.utils
 
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import com.dinder.rihla.rider.R
+import com.dinder.rihla.rider.common.color
 import com.dinder.rihla.rider.data.model.Company
 import com.dinder.rihla.rider.data.model.Destination
 import com.dinder.rihla.rider.data.model.PaymentInfo
@@ -57,15 +59,6 @@ fun setPaymentConfirmationMessage(view: TextView, paymentInfo: PaymentInfo?) {
     }
 }
 
-@BindingAdapter("priceSum")
-fun setTicketPriceSum(view: TextView, ticket: Ticket?) {
-    ticket?.let {
-        val ticketsCount = ticket.seats.size
-        val sum = ""
-        view.text = sum
-    }
-}
-
 @BindingAdapter("price")
 fun setTripPrice(view: TextView, trip: Trip?) {
     trip?.let {
@@ -86,9 +79,7 @@ fun timeToDeparture(view: TextView, ticket: Ticket?) {
         val departureTime = DateTimeUtils.departureWithin(it.departure, view.resources)
         if (departureTime == view.resources.getText(R.string.past_ticket).toString()) {
             view.setTextColor(
-                view.resources.getColor(
-                    android.R.color.holo_red_light, view.context.theme
-                ),
+                view.context.color(android.R.color.holo_red_light)
             )
             view.text = departureTime
         } else {
@@ -100,5 +91,5 @@ fun timeToDeparture(view: TextView, ticket: Ticket?) {
 @BindingAdapter("selected")
 fun radioButtonSelectionBackground(view: ConstraintLayout, selected: Boolean) {
     val resID = if (selected) R.drawable.radio_button_selected else R.drawable.radio_button_normal
-    view.background = view.resources.getDrawable(resID, view.context.theme)
+    view.background = ResourcesCompat.getDrawable(view.context.resources, resID, view.context.theme)
 }
