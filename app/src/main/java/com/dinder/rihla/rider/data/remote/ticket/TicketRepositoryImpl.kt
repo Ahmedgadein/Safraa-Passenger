@@ -17,7 +17,6 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
-import java.util.Date
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -28,33 +27,22 @@ class TicketRepositoryImpl @Inject constructor(
     TicketRepository {
     private val _ref = Firebase.firestore.collection(Collections.TICKETS)
 
-    override suspend fun getTickets(userId: String): Flow<Result<List<Ticket>>> = callbackFlow {
+    override suspend fun observeTickets(userId: String): Flow<Result<List<Ticket>>> = callbackFlow {
         withContext(ioDispatcher) {
             trySend(Result.Loading)
             _ref.whereEqualTo(Fields.PASSENGER_ID, userId)
                 .orderBy("createdAt", Query.Direction.DESCENDING)
-                .get()
-                .addOnSuccessListener {
-                    val tickets = it.documents.map { json -> Ticket.fromJson(json.data!!) }
-                    trySend(Result.Success(tickets))
-                }
-                .addOnFailureListener {
-                    trySend(Result.Error(errorMessages.loadingTicketsFailed))
-                }
-        }
-        awaitClose()
-    }
+                .addSnapshotListener { snapshot, error ->
 
-    override suspend fun getTicket(id: String): Flow<Result<Ticket>> = callbackFlow {
-        withContext(ioDispatcher) {
-            trySend(Result.Loading)
-            _ref.document(id).get()
-                .addOnSuccessListener {
-                    if (it.exists()) {
-                        val ticket = Ticket.fromJson(it.data!!)
-                        trySend(Result.Success(ticket))
-                    } else {
-                        trySend(Result.Error(errorMessages.ticketNotFound))
+                    if (error != null) {
+                        trySend(Result.Error(errorMessages.loadingTicketsFailed))
+                        return@addSnapshotListener
+                    }
+
+                    if (snapshot != null) {
+                        val tickets =
+                            snapshot.documents.map { json -> Ticket.fromJson(json.data!!) }
+                        trySend(Result.Success(tickets))
                     }
                 }
         }
@@ -78,26 +66,6 @@ class TicketRepositoryImpl @Inject constructor(
                     trySend(Result.Error(errorMessages.ticketNotFound))
                 }
             }
-        }
-        awaitClose()
-    }
-
-    override suspend fun addTicket(ticket: Ticket): Flow<Result<Unit>> = callbackFlow {
-        withContext(ioDispatcher) {
-            _ref.document().get()
-                .addOnSuccessListener {
-                    val id = it.id
-                    it.reference.set(ticket.copy(id = id, createdAt = Date()).toJson())
-                        .addOnSuccessListener {
-                            trySend(Result.Success(Unit))
-                        }
-                        .addOnFailureListener {
-                            trySend(Result.Error(errorMessages.failedToSaveTicket))
-                        }
-                }
-                .addOnFailureListener {
-                    trySend(Result.Error(errorMessages.failedToSaveTicket))
-                }
         }
         awaitClose()
     }
