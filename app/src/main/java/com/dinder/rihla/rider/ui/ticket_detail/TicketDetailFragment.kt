@@ -1,6 +1,8 @@
 package com.dinder.rihla.rider.ui.ticket_detail // ktlint-disable experimental:package-name
 
+import android.content.Intent
 import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -106,7 +108,7 @@ class TicketDetailFragment : RihlaFragment() {
     }
 
     private fun setPromoCode(ticket: Ticket) {
-        if (!ticket.promoCode.isNullOrEmpty()) {
+        if (!ticket.promoCode.isNullOrEmpty() || ticket.status != TicketStatus.PRE_BOOK) {
             binding.promoCodeButtonAndText.isVisible = false
             return
         }
@@ -245,7 +247,7 @@ class TicketDetailFragment : RihlaFragment() {
                 )
             }
             TicketStatus.DISPROVED -> View.OnClickListener {
-                // TODO: Enable contact via whatsapp
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/249117427796")))
             }
             else -> null
         }
