@@ -38,7 +38,7 @@ class TripsFragment : RihlaFragment() {
 
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = TripsFragmentBinding.inflate(inflater, container, false)
         setUI()
@@ -69,23 +69,28 @@ class TripsFragment : RihlaFragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect {
-                    binding.tripsProgressBar.isVisible = it.loading
-                    binding.noTripsFound.isVisible = !it.loading && it.trips.isNullOrEmpty()
+                viewModel.state.collect { state ->
+                    binding.tripsProgressBar.isVisible = state.loading
+                    binding.noTripsFound.isVisible = !state.loading && state.trips.isNullOrEmpty()
 
-                    it.messages.firstOrNull()?.let {
+                    state.messages.firstOrNull()?.let {
                         showSnackbar(it.content)
                         viewModel.userMessageShown(it.id)
                     }
 
-                    tripsAdapter.submitList(it.trips)
-                    setDestinations(it.destinations)
+                    tripsAdapter.submitList(state.trips)
+
+                    val from = state.destinations.filterNot { it == state.toDestination }
+                    setFromDestinations(from)
+
+                    val to = state.destinations.filterNot { it == state.fromDestination }
+                    setToDestinations(to)
                 }
             }
         }
     }
 
-    private fun setDestinations(destinations: List<Destination>) {
+    private fun setFromDestinations(destinations: List<Destination>) {
         val adapter = DestinationAdapter(
             requireContext(),
             R.layout.destination_item,
@@ -103,6 +108,14 @@ class TripsFragment : RihlaFragment() {
             }
             mixpanel.track("From Destination Change", props)
         }
+    }
+
+    private fun setToDestinations(destinations: List<Destination>) {
+        val adapter = DestinationAdapter(
+            requireContext(),
+            R.layout.destination_item,
+            destinations.toMutableList()
+        )
 
         binding.toDropdown.setAdapter(adapter)
         binding.toDropdown.setOnItemClickListener { _, _, position, _ ->
