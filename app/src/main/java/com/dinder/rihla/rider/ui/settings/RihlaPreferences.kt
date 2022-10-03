@@ -1,6 +1,8 @@
 package com.dinder.rihla.rider.ui.settings
 
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
@@ -14,6 +16,8 @@ import androidx.preference.SwitchPreference
 import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.data.model.Role
 import com.dinder.rihla.rider.data.model.User
+import com.dinder.rihla.rider.databinding.ContactOptionsBottomsheetDialogBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -80,6 +84,11 @@ class RihlaPreferences : PreferenceFragmentCompat() {
             showSnackbar("Terms And Conditions")
             true
         }
+
+        findPreference<Preference>("contact_us")?.setOnPreferenceClickListener {
+            showContactBottomSheet()
+            true
+        }
     }
 
     private fun displayPreferences(user: User?) {
@@ -110,5 +119,23 @@ class RihlaPreferences : PreferenceFragmentCompat() {
     private fun showSnackbar(message: String) {
         Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT)
             .show()
+    }
+
+    private fun showContactBottomSheet() {
+        val dialogBinding =
+            ContactOptionsBottomsheetDialogBinding.inflate(layoutInflater, null, false)
+
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(dialogBinding.root)
+        bottomSheetDialog.show()
+
+        dialogBinding.whatsapp.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/249117427796")))
+        }
+
+        dialogBinding.phoneCall.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:+249117427796"))
+            startActivity(intent)
+        }
     }
 }
