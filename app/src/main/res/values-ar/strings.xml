@@ -121,4 +121,7 @@
     <string name="should_be_9_numbers">رقم غير مكتمل</string>
     <string name="invalid_number">رقم غير صحيح</string>
     <string name="fullname_required">مطلوب إسم كامل</string>
+    <string name="contact_options">خيارات التواصل</string>
+    <string name="whatsapp">واتساب</string>
+    <string name="phone_call">مكالمة هاتفية</string>
 </resources>

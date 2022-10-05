@@ -42,6 +42,11 @@
             app:icon="@drawable/ic_terms_and_conditions"
             app:key="terms_and_conditions"
             app:title="@string/terms_and_conditions_label" />
+
+        <Preference
+            app:icon="@drawable/ic_agent"
+            app:key="contact_us"
+            app:title="@string/contact_us" />
     </PreferenceCategory>
 
 </PreferenceScreen>

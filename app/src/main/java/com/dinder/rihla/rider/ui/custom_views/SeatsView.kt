@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.common.Constants.NUMBER_OF_SEATS_ROWS
+import com.dinder.rihla.rider.common.color
 import com.dinder.rihla.rider.data.model.Seat
 import com.dinder.rihla.rider.data.model.SquareBound
 import com.dinder.rihla.rider.utils.SeatState
@@ -121,7 +122,7 @@ class SeatsView : View {
 
             SeatState.UN_SELECTED -> Color.GRAY
 
-            SeatState.SELECTED -> resources.getColor(R.color.green, context.theme)
+            SeatState.SELECTED -> context.color(R.color.teal_700)
 
             else -> Color.LTGRAY
         }
