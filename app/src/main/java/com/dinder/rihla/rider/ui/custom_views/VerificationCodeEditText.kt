@@ -1,4 +1,4 @@
-package com.dinder.rihlabus.ui.custom_views
+package com.dinder.rihla.rider.ui.custom_views
 
 import android.R
 import android.content.Context

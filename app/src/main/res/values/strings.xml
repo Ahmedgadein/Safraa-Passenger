@@ -56,7 +56,7 @@
     <string name="instruction_2">2) Arriving late can get your ticket cancelled</string>
     <string name="cancel_reservation">Cancel Reservation</string>
     <string name="logout">Logout</string>
-    <string name="rihla_version" translatable="false">Rihla version %s</string>
+    <string name="safraa_version" translatable="false">Safraa version %s</string>
     <string name="personal_info">Personal Info</string>
     <string name="seats_selected">%1$d Seat Selected </string>
     <string name="price_sdg">%s SDG</string>
@@ -123,4 +123,7 @@
     <string name="should_be_9_numbers">Should be 9 numbers</string>
     <string name="invalid_number">Invalid number</string>
     <string name="fullname_required">Full name required</string>
+    <string name="contact_options">Contact Options</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="phone_call">Phone Call</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.dinder.rihla.rider.ui.ticket_detail // ktlint-disable experimental:package-name
 
+import android.content.Intent
 import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.adapter.StringItemsAdapter
 import com.dinder.rihla.rider.common.RihlaFragment
+import com.dinder.rihla.rider.common.color
 import com.dinder.rihla.rider.data.model.Ticket
 import com.dinder.rihla.rider.data.model.TicketStatus
 import com.dinder.rihla.rider.databinding.RedeemPromoCodeBottomsheetDialogBinding
@@ -105,7 +108,7 @@ class TicketDetailFragment : RihlaFragment() {
     }
 
     private fun setPromoCode(ticket: Ticket) {
-        if (!ticket.promoCode.isNullOrEmpty()) {
+        if (!ticket.promoCode.isNullOrEmpty() || ticket.status != TicketStatus.PRE_BOOK) {
             binding.promoCodeButtonAndText.isVisible = false
             return
         }
@@ -202,17 +205,13 @@ class TicketDetailFragment : RihlaFragment() {
 
     private fun mapStatusLabelColor(status: TicketStatus): Int {
         return when (status) {
-            TicketStatus.PRE_BOOK -> resources.getColor(R.color.teal_700, context?.theme)
-            TicketStatus.PAYMENT_CONFIRMATION -> resources.getColor(R.color.orange, context?.theme)
-            TicketStatus.PAID -> resources.getColor(R.color.green, context?.theme)
-            TicketStatus.CANCELLED -> resources.getColor(
-                android.R.color.holo_red_dark,
-                context?.theme
-            )
-            TicketStatus.DISPROVED -> resources.getColor(
-                android.R.color.holo_red_dark,
-                context?.theme
-            )
+            TicketStatus.PRE_BOOK -> requireContext().color(R.color.teal_700)
+            TicketStatus.PAYMENT_CONFIRMATION -> requireContext().color(R.color.orange)
+            TicketStatus.PAID -> requireContext().color(R.color.green)
+            TicketStatus.CANCELLED ->
+                requireContext().color(android.R.color.holo_red_dark)
+            TicketStatus.DISPROVED ->
+                requireContext().color(android.R.color.holo_red_dark)
         }
     }
 
@@ -248,7 +247,7 @@ class TicketDetailFragment : RihlaFragment() {
                 )
             }
             TicketStatus.DISPROVED -> View.OnClickListener {
-                // TODO: Enable contact via whatsapp
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/249117427796")))
             }
             else -> null
         }

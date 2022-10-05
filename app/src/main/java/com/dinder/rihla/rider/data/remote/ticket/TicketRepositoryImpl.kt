@@ -1,6 +1,5 @@
 package com.dinder.rihla.rider.data.remote.ticket
 
-import android.util.Log
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result
@@ -18,7 +17,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.util.Date
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -29,35 +27,24 @@ class TicketRepositoryImpl @Inject constructor(
     TicketRepository {
     private val _ref = Firebase.firestore.collection(Collections.TICKETS)
 
-    override suspend fun getTickets(userId: String): Flow<Result<List<Ticket>>> = callbackFlow {
+    override suspend fun observeTickets(userId: String): Flow<Result<List<Ticket>>> = callbackFlow {
         withContext(ioDispatcher) {
             trySend(Result.Loading)
             _ref.whereEqualTo(Fields.PASSENGER_ID, userId)
                 .orderBy("createdAt", Query.Direction.DESCENDING)
-                .get()
-                .addOnSuccessListener {
-                    val tickets = it.documents.map { json -> Ticket.fromJson(json.data!!) }
-                    trySend(Result.Success(tickets))
-                    Timber.i("Got tickets: ", tickets)
-                }
-                .addOnFailureListener {
-                    trySend(Result.Error(errorMessages.loadingTicketsFailed))
-                    Timber.e("FAILED to get tickets: ", it)
-                }
-        }
-        awaitClose()
-    }
+                .addSnapshotListener { snapshot, error ->
 
-    override suspend fun getTicket(id: String): Flow<Result<Ticket>> = callbackFlow {
-        withContext(ioDispatcher) {
-            trySend(Result.Loading)
-            _ref.document(id).get()
-                .addOnSuccessListener {
-                    if (it.exists()) {
-                        val ticket = Ticket.fromJson(it.data!!)
-                        trySend(Result.Success(ticket))
-                    } else {
-                        trySend(Result.Error(errorMessages.ticketNotFound))
+                    if (error != null) {
+                        trySend(Result.Error(errorMessages.loadingTicketsFailed))
+                        Timber.e("Observing ticketS error: ", error)
+                        return@addSnapshotListener
+                    }
+
+                    if (snapshot != null) {
+                        val tickets =
+                            snapshot.documents.map { json -> Ticket.fromJson(json.data!!) }
+                        trySend(Result.Success(tickets))
+                        Timber.i("Observing ticketS: ", tickets)
                     }
                 }
         }
@@ -70,6 +57,7 @@ class TicketRepositoryImpl @Inject constructor(
             _ref.whereEqualTo(Fields.ID, id).addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     trySend(Result.Error(errorMessages.ticketNotFound))
+                    Timber.e("Observing ticket error: ", error)
                     return@addSnapshotListener
                 }
 
@@ -82,26 +70,6 @@ class TicketRepositoryImpl @Inject constructor(
                     Timber.e("Observe empty ticket Error: ", snapshot)
                 }
             }
-        }
-        awaitClose()
-    }
-
-    override suspend fun addTicket(ticket: Ticket): Flow<Result<Unit>> = callbackFlow {
-        withContext(ioDispatcher) {
-            _ref.document().get()
-                .addOnSuccessListener {
-                    val id = it.id
-                    it.reference.set(ticket.copy(id = id, createdAt = Date()).toJson())
-                        .addOnSuccessListener {
-                            trySend(Result.Success(Unit))
-                        }
-                        .addOnFailureListener {
-                            trySend(Result.Error(errorMessages.failedToSaveTicket))
-                        }
-                }
-                .addOnFailureListener {
-                    trySend(Result.Error(errorMessages.failedToSaveTicket))
-                }
         }
         awaitClose()
     }

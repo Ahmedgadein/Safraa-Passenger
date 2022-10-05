@@ -1,6 +1,5 @@
 package com.dinder.rihla.rider.data.remote.trip
 
-import android.util.Log
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result

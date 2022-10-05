@@ -16,7 +16,7 @@ class GetTicketsUseCase @Inject constructor(
     operator fun invoke(): Flow<Result<List<Ticket>>> = flow {
         userRepository.user.collect { user ->
             user?.let {
-                ticketRepository.getTickets(userId = user.id).collect { result ->
+                ticketRepository.observeTickets(userId = user.id).collect { result ->
                     when (result) {
                         Result.Loading -> emit(Result.Loading)
                         is Result.Error -> emit(Result.Error(result.message))

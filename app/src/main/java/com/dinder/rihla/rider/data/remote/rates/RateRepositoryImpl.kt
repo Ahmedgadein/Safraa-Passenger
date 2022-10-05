@@ -1,6 +1,5 @@
 package com.dinder.rihla.rider.data.remote.rates
 
-import android.util.Log
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Rates
