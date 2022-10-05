@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -36,9 +37,11 @@ class FirebaseAuthRepository @Inject constructor(
             _ref.whereEqualTo(Fields.PHONE_NUMBER, phoneNumber).get()
                 .addOnSuccessListener {
                     trySend(Result.Success(!it.isEmpty))
+                    Timber.i("isUser Registered: ${!it.isEmpty}")
                 }
                 .addOnFailureListener {
                     trySend(Result.Error(errorMessages.failedToResolveRegistration))
+                    Timber.e("isRegistered ERROR: ", it)
                 }
         }
         awaitClose()
@@ -55,14 +58,17 @@ class FirebaseAuthRepository @Inject constructor(
                 .addOnSuccessListener { token ->
                     _ref.document(auth.currentUser?.uid!!).set(user.copy(token = token).toJson())
                         .addOnSuccessListener {
+                            Timber.i("User registration successful")
                             trySend(Result.Success(true))
                         }
                         .addOnFailureListener {
                             trySend(Result.Error(errorMessages.signupFailed))
+                            Timber.e("User registration FAILED: ", it)
                         }
                 }
                 .addOnFailureListener {
                     trySend(Result.Error(errorMessages.signupFailed))
+                    Timber.e("User registration FAILED: ", it)
                 }
         }
         awaitClose()
@@ -74,9 +80,11 @@ class FirebaseAuthRepository @Inject constructor(
             auth.signInWithCredential(credential)
                 .addOnSuccessListener {
                     trySend(Result.Success(true))
+                    Timber.i("User Login Successful")
                 }
                 .addOnFailureListener {
                     trySend(Result.Error(errorMessages.loginFailed))
+                    Timber.e("User login FAILED: ", it)
                 }
         }
         awaitClose()

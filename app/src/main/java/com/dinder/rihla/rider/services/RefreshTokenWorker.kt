@@ -1,7 +1,6 @@
 package com.dinder.rihla.rider.services
 
 import android.content.Context
-import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -13,6 +12,7 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 @HiltWorker
 class RefreshTokenWorker @AssistedInject constructor(
@@ -30,13 +30,16 @@ class RefreshTokenWorker @AssistedInject constructor(
             return@withContext try {
                 val token = FirebaseMessaging.getInstance().token.await()
                 val tokenUpdated = repository.updateToken(id, token)
+                Timber.i("Updating token: $token")
                 if (!tokenUpdated) {
+                    Timber.e("Updating token failed, token: $token")
                     Result.Retry()
                 } else {
+                    Timber.i("Updating token successful, token: $token")
                     Result.Success()
                 }
             } catch (e: Exception) {
-                Log.e("Token", e.toString())
+                Timber.e("Updating token failed: ", e)
                 Result.Retry()
             }
         }

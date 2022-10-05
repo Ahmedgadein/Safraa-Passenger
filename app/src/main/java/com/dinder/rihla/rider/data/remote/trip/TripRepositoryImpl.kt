@@ -1,6 +1,5 @@
 package com.dinder.rihla.rider.data.remote.trip
 
-import android.util.Log
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result
@@ -17,6 +16,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject
 
@@ -35,9 +35,11 @@ class TripRepositoryImpl @Inject constructor(
                 .addOnSuccessListener {
                     val trips = it.documents.map { doc -> Trip.fromJson(doc.data!!) }
                     trySend(Result.Success(trips))
+                    Timber.i("Got trips SUCCESS")
                 }
                 .addOnFailureListener {
                     trySend(Result.Error(errorMessages.loadingTripsFailed))
+                    Timber.e("FAILED to get trips", it)
                 }
         }
         awaitClose()
@@ -60,9 +62,11 @@ class TripRepositoryImpl @Inject constructor(
                     .addOnSuccessListener {
                         val trips = it.documents.map { json -> Trip.fromJson(json.data!!) }
                         trySend(Result.Success(trips))
+                        Timber.i("Query trips SUCCESS")
                     }
                     .addOnFailureListener {
                         trySend(Result.Error(errorMessages.loadingTripsFailed))
+                        Timber.e("FAILED to query trips: ", it)
                     }
             }
             awaitClose()
@@ -80,8 +84,10 @@ class TripRepositoryImpl @Inject constructor(
                 if (snapshot != null && snapshot.documents.isNotEmpty()) {
                     val trip = Trip.fromJson(snapshot.documents.first().data!!)
                     trySend(Result.Success(trip))
+                    Timber.i("Observing trip: $trip")
                 } else {
                     trySend(Result.Error(errorMessages.tripNotFound))
+                    Timber.e("Observing empty trip")
                 }
             }
         }
@@ -113,8 +119,6 @@ class TripRepositoryImpl @Inject constructor(
                     "seats" to seats
                 )
 
-                Log.e("functions", "$data")
-
                 FirebaseFunctions.getInstance()
                     .getHttpsCallable("trips-bookSeats")
                     .call(data)
@@ -124,14 +128,15 @@ class TripRepositoryImpl @Inject constructor(
                         if (isSuccessful) {
                             val ticketId = (result["data"] as Map<String, String>)["ticketId"]!!
                             trySend(Result.Success(ticketId))
+                            Timber.i("Reserved seats SUCCESS")
                         } else {
                             trySend(Result.Error(errorMessages.failedToReserveSeat))
-                            Log.e("functions", "reserveSeats: not successful")
+                            Timber.e("FAILED to reserve seats")
                         }
                     }
                     .addOnFailureListener {
                         trySend(Result.Error(errorMessages.failedToReserveSeat))
-                        Log.e("functions", "reserveSeats: $it")
+                        Timber.e("FAILED to reserve seats: ", it)
                     }
             }
             awaitClose()

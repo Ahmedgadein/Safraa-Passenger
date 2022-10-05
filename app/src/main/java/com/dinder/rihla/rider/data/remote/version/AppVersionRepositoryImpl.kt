@@ -12,6 +12,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -27,10 +28,13 @@ class AppVersionRepositoryImpl @Inject constructor(
             trySend(Result.Loading)
             _ref.document(Collections.APP_VERSION).get()
                 .addOnSuccessListener {
-                    trySend(Result.Success(UpdateApp.fromJson(it.data!!)))
+                    val version = UpdateApp.fromJson(it.data!!)
+                    trySend(Result.Success(version))
+                    Timber.i("Got app version info: $version")
                 }
                 .addOnFailureListener {
                     trySend(Result.Error(errorMessages.failedToResolveAppVersion))
+                    Timber.e("FAILED to get app version", it)
                 }
         }
         awaitClose()

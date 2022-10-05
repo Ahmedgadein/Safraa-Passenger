@@ -5,12 +5,12 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.dinder.rihla.rider.MainActivity
 import com.dinder.rihla.rider.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import timber.log.Timber
 
 class RihlaFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
@@ -19,7 +19,7 @@ class RihlaFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        Log.d("notification", "onMessageReceived: " + message.data["message"])
+        Timber.i("notification, onMessageReceived: " + message.data["message"])
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)

@@ -1,6 +1,5 @@
 package com.dinder.rihla.rider.data.remote.rates
 
-import android.util.Log
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Rates
@@ -12,6 +11,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -28,15 +28,15 @@ class RateRepositoryImpl @Inject constructor(private val ioDispatcher: Coroutine
                     if (it.exists()) {
                         val rates = Rates.fromJson(it.data!!)
                         trySend(Result.Success(rates))
-                        Log.i("RateRepositoryImpl", "getRates: SUCCESS: $rates")
+                        Timber.i("getRates: SUCCESS: $rates")
                     } else {
                         trySend(Result.Error("Failed to load rate"))
-                        Log.e("RateRepositoryImpl", "getRates: FAILED")
+                        Timber.e("Couldn't find rates: ", it)
                     }
                 }
                 .addOnFailureListener {
                     trySend(Result.Error("Failed to load rate"))
-                    Log.e("RateRepositoryImpl", "getRates: FAILED")
+                    Timber.e("FAILED to get rates: ", it)
                 }
         }
         awaitClose()

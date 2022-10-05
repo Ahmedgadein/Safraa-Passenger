@@ -1,6 +1,5 @@
 package com.dinder.rihla.rider.data.remote.ticket
 
-import android.util.Log
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Fields
 import com.dinder.rihla.rider.common.Result
@@ -17,6 +16,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -36,6 +36,7 @@ class TicketRepositoryImpl @Inject constructor(
 
                     if (error != null) {
                         trySend(Result.Error(errorMessages.loadingTicketsFailed))
+                        Timber.e("Observing ticketS error: ", error)
                         return@addSnapshotListener
                     }
 
@@ -43,6 +44,7 @@ class TicketRepositoryImpl @Inject constructor(
                         val tickets =
                             snapshot.documents.map { json -> Ticket.fromJson(json.data!!) }
                         trySend(Result.Success(tickets))
+                        Timber.i("Observing ticketS: ", tickets)
                     }
                 }
         }
@@ -55,15 +57,17 @@ class TicketRepositoryImpl @Inject constructor(
             _ref.whereEqualTo(Fields.ID, id).addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     trySend(Result.Error(errorMessages.ticketNotFound))
+                    Timber.e("Observing ticket error: ", error)
                     return@addSnapshotListener
                 }
 
                 if (snapshot != null && snapshot.documents.isNotEmpty()) {
                     val ticket = Ticket.fromJson(snapshot.documents.first().data!!)
-                    Log.i("observeTicket", "observeTicket: $ticket")
                     trySend(Result.Success(ticket))
+                    Timber.i("Observing ticket: ", ticket)
                 } else {
                     trySend(Result.Error(errorMessages.ticketNotFound))
+                    Timber.e("Observe empty ticket Error: ", snapshot)
                 }
             }
         }
@@ -86,19 +90,18 @@ class TicketRepositoryImpl @Inject constructor(
                         val result: Map<String, Any> = it.data as Map<String, Any>
                         val isSuccessful = result["success"] as Boolean
                         if (isSuccessful) {
-                            Log.i("PAYMENT", "getPaymentInfo: ${result["data"]}")
                             val paymentInfo =
                                 PaymentInfo.fromJson(result["data"] as Map<String, String>)
-                            Log.i("PAYMENT", "getPaymentInfo: ${result["data"]}")
                             trySend(Result.Success(paymentInfo))
+                            Timber.i("Got payment data: ", result)
                         } else {
                             trySend(Result.Error(errorMessages.failedToReserveSeat))
-                            Log.e("paymentInfo", "getPaymentInfo: FAILED")
+                            Timber.e("Failed to get payment data: ", result)
                         }
                     }
                     .addOnFailureListener {
                         trySend(Result.Error(errorMessages.failedToReserveSeat))
-                        Log.e("paymentInfo", "getPaymentInfo: FAILED", it)
+                        Timber.e("FAILED to get payment data: ", it)
                     }
             }
             awaitClose()
@@ -126,12 +129,12 @@ class TicketRepositoryImpl @Inject constructor(
                 .addOnSuccessListener {
                     val result: Map<String, Any> = it.data as Map<String, Any>
                     val isSuccessful = result["success"] as Boolean
-                    Log.e("pay", "payment: SUCCESS")
                     trySend(Result.Success(isSuccessful))
+                    Timber.i("Payment SUCCESSFUL")
                 }
                 .addOnFailureListener {
                     trySend(Result.Error(errorMessages.failedToReserveSeat))
-                    Log.e("pay", "getPaymentInfo: FAILED", it)
+                    Timber.e("Payment FAILURE: ", it)
                 }
         }
         awaitClose()
@@ -153,12 +156,12 @@ class TicketRepositoryImpl @Inject constructor(
                     .addOnSuccessListener {
                         val result: Map<String, Any> = it.data as Map<String, Any>
                         val isSuccessful = result["success"] as Boolean
-                        Log.e("redeemCode", "redeemCode: SUCCESS")
                         trySend(Result.Success(isSuccessful))
+                        Timber.i("Redeem code: $code SUCCESSFUL")
                     }
                     .addOnFailureListener {
                         trySend(Result.Error(errorMessages.failedToReserveSeat))
-                        Log.e("redeemCode", "redeemCode: FAILED", it)
+                        Timber.e("Redeem code: $code FAILED")
                     }
             }
             awaitClose()
