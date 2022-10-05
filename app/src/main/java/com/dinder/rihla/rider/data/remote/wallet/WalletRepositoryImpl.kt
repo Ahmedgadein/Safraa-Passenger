@@ -1,6 +1,5 @@
 package com.dinder.rihla.rider.data.remote.wallet
 
-import android.util.Log
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Transaction
@@ -13,6 +12,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -28,16 +28,17 @@ class WalletRepositoryImpl @Inject constructor(
             _ref.document(userId).get()
                 .addOnSuccessListener {
                     if (it.exists()) {
-                        Log.i("WalletRepo", "getBalance: SUCCESS")
-                        trySend(Result.Success(it.data!!["amount"].toString().toDouble()))
+                        val amount = it.data!!["amount"].toString().toDouble()
+                        trySend(Result.Success(amount))
+                        Timber.i("getBalance Successful, balance: $amount")
                     } else {
-                        Log.e("WalletRepo", "getBalance: FAILED")
                         trySend(Result.Error("TODO: message"))
+                        Timber.e("FAILED to get balance")
                     }
                 }
                 .addOnFailureListener {
-                    Log.e("WalletRepo", "getBalance: FAILED", it)
                     trySend(Result.Error("TODO: message"))
+                    Timber.e("FAILED to get balance: ", it)
                 }
         }
         awaitClose()
@@ -51,11 +52,12 @@ class WalletRepositoryImpl @Inject constructor(
                 .get()
                 .addOnSuccessListener {
                     val transactions = it.documents.map { Transaction.fromJson(it.data!!) }
-                    Log.i("WalletRepo", "transactions SUCCESS: $transactions")
                     trySend(Result.Success(transactions))
+                    Timber.i("Got transactions successfully: $transactions")
                 }
                 .addOnFailureListener {
-                    Log.e("WalletRepo", "transactions: FAILED", it)
+                    trySend(Result.Error("//TODO: Message"))
+                    Timber.e("FAILED to get transactions: ", it)
                 }
         }
         awaitClose()

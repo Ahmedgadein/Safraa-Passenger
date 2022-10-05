@@ -1,6 +1,5 @@
 package com.dinder.rihla.rider.data.remote.user
 
-import android.util.Log
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.local.UserDao
@@ -15,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -32,12 +32,13 @@ class UserRepositoryImpl @Inject constructor(
             _ref.document(id)
                 .get()
                 .addOnSuccessListener {
-                    trySend(Result.Success(User.fromJson(it.data!!)))
-                    Log.i("verificationViewModel", "get User Success:")
+                    val user = User.fromJson(it.data!!)
+                    trySend(Result.Success(user))
+                    Timber.i("Got user: $user")
                 }
                 .addOnFailureListener {
-                    Log.i("verificationViewModel", "get User Error:", it)
                     trySend(Result.Error(errorMessages.couldntFindUser))
+                    Timber.e("FAILED to get user")
                 }
         }
         awaitClose()
@@ -46,6 +47,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun add(user: User) {
         withContext(ioDispatcher) {
             dao.insert(user)
+            Timber.i("Added user: $user")
         }
     }
 
@@ -53,6 +55,7 @@ class UserRepositoryImpl @Inject constructor(
         withContext(ioDispatcher) {
             val user = dao.getUser()
             send(user)
+            Timber.i("Got user: $user")
         }
     }
 }
