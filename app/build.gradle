@@ -11,7 +11,7 @@ plugins {
 
 def versionMajor = 1
 def versionMinor = 0
-def versionPatch = 1
+def versionPatch = 2
 
 android {
     compileSdk 32
@@ -30,6 +30,7 @@ android {
                                       "$projectDir/schemas".toString()]
             }
         }
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {
@@ -40,6 +41,7 @@ android {
             manifestPlaceholders = [applicationName: "dbg:Safraa"]
         }
         release {
+            applicationIdSuffix ".release"
             resValue "string", "app_version", "${defaultConfig.versionName}"
             manifestPlaceholders = [applicationName: "Safraa"]
             minifyEnabled false
