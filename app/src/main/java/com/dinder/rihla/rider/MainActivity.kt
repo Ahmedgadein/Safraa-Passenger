@@ -63,8 +63,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context?) {
         val preferences = PreferenceManager.getDefaultSharedPreferences(newBase!!)
-        val language = preferences.getString("language", "ar")
-        var newLocale = Locale(language)
+        val language = preferences.getString("language", null) ?: "en"
+        val newLocale = Locale(language)
         val context: Context = ContextWrapper.wrap(newBase, newLocale)
 
         val mode =

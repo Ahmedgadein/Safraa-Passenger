@@ -35,7 +35,7 @@
         <entry key="app/src/main/res/layout/hi.xml" value="0.21388888888888888" />
         <entry key="app/src/main/res/layout/home_fragment.xml" value="0.32135416666666666" />
         <entry key="app/src/main/res/layout/landing_page_fragment.xml" value="0.3401360544217687" />
-        <entry key="app/src/main/res/layout/login_fragment.xml" value="0.32135416666666666" />
+        <entry key="app/src/main/res/layout/login_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/passenger_radio_button.xml" value="0.4" />
         <entry key="app/src/main/res/layout/payment_successful_dialog.xml" value="0.32135416666666666" />
         <entry key="app/src/main/res/layout/pre_book_sucessful_bottomsheet_dialog.xml" value="0.3203125" />
