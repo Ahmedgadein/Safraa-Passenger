@@ -14,6 +14,20 @@ def versionMinor = 0
 def versionPatch = 2
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/home/ahmed/Documents/keystore/upload-keystore.jks')
+            storePassword 'Sudan2468!'
+            keyAlias 'upload'
+            keyPassword 'Sudan2468!'
+        }
+        release {
+            storeFile file('/home/ahmed/Documents/keystore/upload-keystore.jks')
+            storePassword 'Sudan2468!'
+            keyAlias 'upload'
+            keyPassword 'Sudan2468!'
+        }
+    }
     compileSdk 32
 
     defaultConfig {
@@ -30,7 +44,6 @@ android {
                                       "$projectDir/schemas".toString()]
             }
         }
-        signingConfig signingConfigs.debug
     }
 
     buildTypes {
@@ -39,6 +52,7 @@ android {
             resValue "string", "app_version",
                     "${defaultConfig.versionName}${versionNameSuffix}"
             manifestPlaceholders = [applicationName: "dbg:Safraa"]
+            signingConfig signingConfigs.debug
         }
         release {
             applicationIdSuffix ".release"
@@ -46,6 +60,7 @@ android {
             manifestPlaceholders = [applicationName: "Safraa"]
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
