@@ -2,8 +2,8 @@
 
 package com.dinder.rihla.rider.utils
 
+import android.view.View
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import com.dinder.rihla.rider.R
@@ -89,7 +89,7 @@ fun timeToDeparture(view: TextView, ticket: Ticket?) {
 }
 
 @BindingAdapter("selected")
-fun radioButtonSelectionBackground(view: ConstraintLayout, selected: Boolean) {
+fun radioButtonSelectionBackground(view: View, selected: Boolean) {
     val resID = if (selected) R.drawable.radio_button_selected else R.drawable.radio_button_normal
     view.background = ResourcesCompat.getDrawable(view.context.resources, resID, view.context.theme)
 }

@@ -68,6 +68,7 @@ class RihlaPreferences : PreferenceFragmentCompat() {
             val currentLanguage = preferences.getString("language", "ar")
             preferences.edit().apply {
                 putString("language", if (currentLanguage == "ar") "en" else "ar")
+                apply()
             }.commit()
             activity?.recreate()
             true
@@ -76,6 +77,10 @@ class RihlaPreferences : PreferenceFragmentCompat() {
         findPreference<SwitchPreference>("night_mode")?.setOnPreferenceChangeListener { preference, night ->
             val mode =
                 if (night as Boolean) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            preferences.edit().apply {
+                putBoolean("night_mode", night)
+                apply()
+            }.commit()
             AppCompatDelegate.setDefaultNightMode(mode)
             true
         }

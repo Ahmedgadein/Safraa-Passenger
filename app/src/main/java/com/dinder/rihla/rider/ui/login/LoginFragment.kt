@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.databinding.LoginFragmentBinding
@@ -26,7 +28,7 @@ class LoginFragment : RihlaFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = LoginFragmentBinding.inflate(inflater, container, false)
         setUI()
@@ -53,6 +55,29 @@ class LoginFragment : RihlaFragment() {
             mixpanel.track("Login Attempt")
             navigateToVerification(PhoneNumberFormatter.getFullNumber(phoneNumber))
         }
+
+        val preferences =
+            PreferenceManager.getDefaultSharedPreferences(requireContext().applicationContext)
+        val language = preferences.getString("language", null) ?: "en"
+
+        setBackground(binding.english, language == "en")
+        setBackground(binding.arabic, language == "ar")
+
+        binding.english.setOnClickListener {
+            preferences.edit().apply {
+                putString("language", "en")
+                apply()
+            }.commit()
+            activity?.recreate()
+        }
+
+        binding.arabic.setOnClickListener {
+            preferences.edit().apply {
+                putString("language", "ar")
+                apply()
+            }.commit()
+            activity?.recreate()
+        }
     }
 
     private fun validNumber(number: String): Boolean {
@@ -69,4 +94,9 @@ class LoginFragment : RihlaFragment() {
             )
         )
     }
+}
+
+fun setBackground(view: View, selected: Boolean) {
+    val resID = if (selected) R.drawable.radio_button_selected else R.drawable.radio_button_normal
+    view.background = ResourcesCompat.getDrawable(view.context.resources, resID, view.context.theme)
 }
