@@ -124,4 +124,5 @@
     <string name="contact_options">خيارات التواصل</string>
     <string name="whatsapp">واتساب</string>
     <string name="phone_call">مكالمة هاتفية</string>
+    <string name="withdraw_credit_whatsapp_link">"https://wa.me/249117427796?text=سحب%20رصيد%20من%20حساب:%20"</string>
 </resources>

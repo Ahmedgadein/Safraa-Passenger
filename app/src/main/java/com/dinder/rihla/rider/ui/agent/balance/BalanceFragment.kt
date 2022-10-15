@@ -1,5 +1,7 @@
 package com.dinder.rihla.rider.ui.agent.balance
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.preference.PreferenceManager
+import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.databinding.BalanceFragmentBinding
 import com.mixpanel.android.mpmetrics.MixpanelAPI
@@ -42,8 +46,15 @@ class BalanceFragment : RihlaFragment() {
 
     private fun setUI() {
         binding.withdrawButton.setOnClickListener {
-            // TODO: Redirect to Whatsapp
             mixpanel.track("Agent Withdraw Balance")
+            val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+            val id = preferences.getString("id", "ID")
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(getString(R.string.withdraw_credit_whatsapp_link) + "\n\n$id")
+                )
+            )
         }
 
         binding.retryButton.setOnClickListener {

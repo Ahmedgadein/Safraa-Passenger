@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.preference.PreferenceManager
 import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.common.RihlaFragment
 import com.dinder.rihla.rider.data.model.Role
@@ -86,6 +87,11 @@ class SignupFragment : RihlaFragment() {
                     }
 
                     if (state.navigateToHome) {
+                        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                        preferences.edit().apply {
+                            putString("id", state.user?.id)
+                            apply()
+                        }
                         navigateToHome(state.user)
                     }
                 }
@@ -93,7 +99,7 @@ class SignupFragment : RihlaFragment() {
         }
     }
 
-    fun getSelectedRole(): Role = when (binding.radioGroupPlus.checkedRadioButtonId) {
+    private fun getSelectedRole(): Role = when (binding.radioGroupPlus.checkedRadioButtonId) {
         R.id.travler_radio_button -> Role.PASSENGER
         else -> Role.AGENT
     }
