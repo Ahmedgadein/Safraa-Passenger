@@ -65,7 +65,7 @@ class RihlaPreferences : PreferenceFragmentCompat() {
 
     private fun setClickListeners() {
         findPreference<Preference>("language")?.setOnPreferenceClickListener {
-            val currentLanguage = preferences.getString("language", "en")
+            val currentLanguage = preferences.getString("language", "ar")
             preferences.edit().apply {
                 putString("language", if (currentLanguage == "ar") "en" else "ar")
                 apply()
@@ -104,7 +104,7 @@ class RihlaPreferences : PreferenceFragmentCompat() {
             preferences.getString("phone", "NA")
 
         findPreference<Preference>("language")?.summary =
-            getLanguage(preferences.getString("language", "en"))
+            getLanguage(preferences.getString("language", "ar"))
 
         if (user?.role == Role.PASSENGER) {
             findPreference<Preference>("points")?.apply {
