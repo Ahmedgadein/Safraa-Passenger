@@ -58,7 +58,7 @@ class LoginFragment : RihlaFragment() {
 
         val preferences =
             PreferenceManager.getDefaultSharedPreferences(requireContext().applicationContext)
-        val language = preferences.getString("language", null) ?: "en"
+        val language = preferences.getString("language", "ar")
 
         setBackground(binding.english, language == "en")
         setBackground(binding.arabic, language == "ar")
