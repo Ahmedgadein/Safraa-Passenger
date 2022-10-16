@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.dinder.rihla.rider.common.Message
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Seat
+import com.dinder.rihla.rider.data.remote.rates.RateRepository
 import com.dinder.rihla.rider.data.remote.trip.TripRepository
 import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TripDetailViewModel @Inject constructor(
-    private val repository: TripRepository,
+    private val tripRepository: TripRepository,
+    private val rateRepository: RateRepository,
     private val mixpanel: MixpanelAPI,
 ) :
     ViewModel() {
@@ -33,15 +35,21 @@ class TripDetailViewModel @Inject constructor(
 
     private fun observeTrip(id: String) {
         viewModelScope.launch {
-            repository.observeTrip(id).collect { result ->
-                when (result) {
-                    Result.Loading -> _state.update { it.copy(loading = true) }
-                    is Result.Error -> showUserMessage(result.message)
-                    is Result.Success -> _state.update {
-                        it.copy(
-                            trip = result.value,
-                            loading = false
-                        )
+            rateRepository.getRates().collect { rates ->
+                when (rates) {
+                    Result.Loading -> Unit
+                    is Result.Error -> showUserMessage(rates.message)
+                    is Result.Success -> tripRepository.observeTrip(id).collect { result ->
+                        when (result) {
+                            Result.Loading -> _state.update { it.copy(loading = true) }
+                            is Result.Error -> showUserMessage(result.message)
+                            is Result.Success -> _state.update {
+                                it.copy(
+                                    trip = result.value.copy(rate = rates.value.passenger),
+                                    loading = false
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -51,7 +59,7 @@ class TripDetailViewModel @Inject constructor(
     fun reserveSeats(tripId: String, seats: List<Seat>) {
         val seats = seats.map { it.number.toString() }
         viewModelScope.launch {
-            repository.reserveSeats(tripId, seats).collect { result ->
+            tripRepository.reserveSeats(tripId, seats).collect { result ->
                 when (result) {
                     Result.Loading -> _state.update { it.copy(loading = true) }
                     is Result.Error -> showUserMessage(result.message)

@@ -28,6 +28,7 @@ import com.dinder.rihla.rider.databinding.ConfirmPaymentBottomsheetDialogBinding
 import com.dinder.rihla.rider.databinding.FragmentPaymentBinding
 import com.dinder.rihla.rider.databinding.RedeemPromoCodeBottomsheetDialogBinding
 import com.dinder.rihla.rider.utils.NetworkUtils
+import com.dinder.rihla.rider.utils.PriceUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +36,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class PaymentFragment : RihlaFragment() {
@@ -238,10 +238,7 @@ class PaymentFragment : RihlaFragment() {
                 binding.discountPrice.isVisible = false
                 return
             } else {
-                val count = ticket.seats.size
-                val price =
-                    (ticket.price * count * (1 + ticket.rate * ticket.discountFactor)).roundToInt()
-                        .toString()
+                val price = PriceUtils.getPrice(ticket)
                 binding.discountPrice.isVisible = true
                 binding.discountPrice.text =
                     resources.getString(R.string.price_sdg, price)
@@ -255,7 +252,7 @@ class PaymentFragment : RihlaFragment() {
     private fun setBasePrice(ticket: Ticket?) {
         ticket?.let {
             val count = ticket.seats.size
-            val price = ((1.0 + ticket.rate) * ticket.price * count).roundToInt().toString()
+            val price = PriceUtils.getBasePrice(ticket)
             binding.basePrice.text = resources.getString(R.string.price_sdg, price)
         }
     }
@@ -263,7 +260,7 @@ class PaymentFragment : RihlaFragment() {
     private fun setSeatsTimesPrice(ticket: Ticket?) {
         ticket?.let {
             val count = ticket.seats.size
-            val price = ((1 + ticket.rate) * ticket.price).roundToInt().toString()
+            val price = PriceUtils.getPrice(ticket)
             binding.seatsTimePrice.text =
                 resources.getString(R.string.seat_times_price, count, price)
         }
