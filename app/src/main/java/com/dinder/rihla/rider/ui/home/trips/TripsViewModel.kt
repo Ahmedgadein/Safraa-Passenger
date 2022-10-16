@@ -6,6 +6,7 @@ import com.dinder.rihla.rider.common.Message
 import com.dinder.rihla.rider.common.Result
 import com.dinder.rihla.rider.data.model.Destination
 import com.dinder.rihla.rider.data.remote.destination.DestinationRepository
+import com.dinder.rihla.rider.data.remote.rates.RateRepository
 import com.dinder.rihla.rider.data.remote.trip.TripRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TripsViewModel @Inject constructor(
     private val tripRepo: TripRepository,
-    private val destinationRepo: DestinationRepository
+    private val destinationRepo: DestinationRepository,
+    private val rateRepo: RateRepository,
 ) : ViewModel() {
     private val _state = MutableStateFlow(TripsUiState())
     val state = _state.asStateFlow()
@@ -31,12 +33,12 @@ class TripsViewModel @Inject constructor(
 
     private fun getTrips() {
         viewModelScope.launch {
-            tripRepo.getTrips().collect { result ->
-                when (result) {
-                    Result.Loading -> _state.update { it.copy(loading = true) }
-                    is Result.Error -> showUserMessage(result.message)
+            rateRepo.observeRates().collect { rates ->
+                when (rates) {
+                    Result.Loading -> Unit
+                    is Result.Error -> showUserMessage(rates.message)
                     is Result.Success -> {
-                        _state.update { it.copy(loading = false, trips = result.value) }
+                        queryTrips()
                     }
                 }
             }
@@ -88,12 +90,19 @@ class TripsViewModel @Inject constructor(
                 when (result) {
                     Result.Loading -> _state.update { it.copy(loading = true) }
                     is Result.Error -> showUserMessage(result.message)
-                    is Result.Success -> _state.update {
-                        it.copy(
-                            trips = result.value,
-                            loading = false
-                        )
-                    }
+                    is Result.Success ->
+                        rateRepo.getRates().collect { rates ->
+                            when (rates) {
+                                Result.Loading -> Unit
+                                is Result.Error -> showUserMessage(rates.message)
+                                is Result.Success -> _state.update {
+                                    it.copy(
+                                        loading = false,
+                                        trips = result.value.map { it.copy(rate = rates.value.passenger) }
+                                    )
+                                }
+                            }
+                        }
                 }
             }
         }

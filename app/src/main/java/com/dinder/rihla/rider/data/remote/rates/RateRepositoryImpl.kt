@@ -28,7 +28,7 @@ class RateRepositoryImpl @Inject constructor(private val ioDispatcher: Coroutine
                     if (it.exists()) {
                         val rates = Rates.fromJson(it.data!!)
                         trySend(Result.Success(rates))
-                        Timber.i("getRates: SUCCESS: $rates")
+                        Timber.d("getRates: SUCCESS: $rates")
                     } else {
                         trySend(Result.Error("Failed to load rate"))
                         Timber.e("Couldn't find rates: ", it)
@@ -37,6 +37,32 @@ class RateRepositoryImpl @Inject constructor(private val ioDispatcher: Coroutine
                 .addOnFailureListener {
                     trySend(Result.Error("Failed to load rate"))
                     Timber.e("FAILED to get rates: ", it)
+                }
+        }
+        awaitClose()
+    }
+
+    override fun observeRates(): Flow<Result<Rates>> = callbackFlow {
+        withContext(ioDispatcher) {
+            trySend(Result.Loading)
+            _ref
+                .document(Collections.RATES)
+                .addSnapshotListener { snapshot, error ->
+                    if (error != null) {
+                        // TODO: Show meaningful error message
+                        trySend(Result.Error("error"))
+                        return@addSnapshotListener
+                    }
+
+                    if (snapshot != null && snapshot.exists()) {
+                        val rates = Rates.fromJson(snapshot.data!!)
+                        trySend(Result.Success(rates))
+                        Timber.i("Observing rates: $rates")
+                    } else {
+                        // TODO: Show meaningful error message
+                        trySend(Result.Error("error"))
+                        Timber.e("Observing empty rates")
+                    }
                 }
         }
         awaitClose()

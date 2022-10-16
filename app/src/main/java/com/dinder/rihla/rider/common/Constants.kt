@@ -25,7 +25,6 @@ object Collections {
 object Fields {
     const val PHONE_NUMBER = "phoneNumber"
     const val PASSENGER_ID = "passengerId"
-    const val SEATS = "seats"
     const val DEPARTURE = "departure"
     const val ID = "id"
     const val FROM = "from"
@@ -33,4 +32,5 @@ object Fields {
     const val VERSION = "passenger"
     const val UPDATE_REQUIRED = "passenger_require_update"
     const val AGENT = "AGENT"
+    const val PASSENGER = "PASSENGER"
 }

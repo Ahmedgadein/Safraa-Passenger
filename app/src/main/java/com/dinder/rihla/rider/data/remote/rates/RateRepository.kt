@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface RateRepository {
     fun getRates(): Flow<Result<Rates>>
+    fun observeRates(): Flow<Result<Rates>>
 }

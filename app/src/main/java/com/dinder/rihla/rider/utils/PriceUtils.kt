@@ -5,10 +5,13 @@ import com.dinder.rihla.rider.data.model.Trip
 import kotlin.math.roundToInt
 
 object PriceUtils {
-    fun getPrice(ticket: Ticket): String = if (ticket.promoCode.isNullOrEmpty()) {
+    fun getBasePrice(ticket: Ticket) =
         ((1.0 + ticket.rate) * ticket.price * ticket.seats.size).roundToInt().toString()
+
+    fun getPrice(ticket: Ticket): String = if (ticket.promoCode.isNullOrEmpty()) {
+        getBasePrice(ticket)
     } else {
-        (ticket.price * ticket.seats.size * (1 + ticket.rate * ticket.discountFactor)).roundToInt()
+        (ticket.price * ticket.seats.size * ticket.discountFactor).roundToInt()
             .toString()
     }
 

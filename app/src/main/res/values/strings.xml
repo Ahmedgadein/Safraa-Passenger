@@ -128,4 +128,5 @@
     <string name="phone_call">Phone Call</string>
 
     <string name="withdraw_credit_whatsapp_link">"https://wa.me/249117427796?text=Credit%20withdraw%20for%20account:%20"</string>
+    <string name="enter_code">Enter code</string>
 </resources>
