@@ -17,8 +17,14 @@ import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.data.model.Role
 import com.dinder.rihla.rider.data.model.User
 import com.dinder.rihla.rider.databinding.ContactOptionsBottomsheetDialogBinding
+import com.dinder.rihla.rider.utils.DynamicLinkUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.dynamiclinks.ktx.androidParameters
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
+import com.google.firebase.dynamiclinks.ktx.socialMetaTagParameters
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -56,14 +62,14 @@ class RihlaPreferences : PreferenceFragmentCompat() {
                             apply()
                         }
                         displayPreferences(it)
-                        setClickListeners()
+                        setClickListeners(it)
                     }
                 }
             }
         }
     }
 
-    private fun setClickListeners() {
+    private fun setClickListeners(user: User) {
         findPreference<Preference>("language")?.setOnPreferenceClickListener {
             val currentLanguage = preferences.getString("language", "ar")
             preferences.edit().apply {
@@ -92,6 +98,34 @@ class RihlaPreferences : PreferenceFragmentCompat() {
 
         findPreference<Preference>("contact_us")?.setOnPreferenceClickListener {
             showContactBottomSheet()
+            true
+        }
+
+        findPreference<Preference>("invite")?.setOnPreferenceClickListener {
+            val invitationLink = DynamicLinkUtils.invitationLink(user.id)
+            Firebase.dynamicLinks.shortLinkAsync {
+                link = invitationLink
+                domainUriPrefix = DynamicLinkUtils.getAppPrefix()
+                androidParameters("com.dinder.rihla.rider.release") {
+                    minimumVersion = 1005
+                }
+                socialMetaTagParameters {
+                    title = getString(R.string.join_safraa)
+                    description = getString(R.string.join_safraa_detail)
+                    imageUrl = Uri.parse(getString(R.string.invite_link_image_url))
+                }
+            }.addOnSuccessListener { shortDynamicLink ->
+                val mInvitationUrl = shortDynamicLink.shortLink
+
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, getString(R.string.invitation_link, mInvitationUrl))
+                    type = "text/plain"
+                }
+
+                val shareIntent = Intent.createChooser(sendIntent, getString(R.string.invite_a_friend))
+                startActivity(shareIntent)
+            }
             true
         }
     }

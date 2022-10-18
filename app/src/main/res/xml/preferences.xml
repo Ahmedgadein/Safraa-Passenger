@@ -17,11 +17,23 @@
             app:key="phone"
             app:title="@string/mobile_number" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:allowDividerBelow="true"
+        app:key="referral">
+
+        <Preference
+            app:icon="@drawable/ic_share"
+            app:key="invite"
+            app:summary="@string/invite_a_friend_info"
+            app:title="@string/invite_a_friend" />
+
         <Preference
             app:defaultValue="NA"
+            app:icon="@drawable/ic_points"
             app:isPreferenceVisible="false"
             app:key="points"
-            app:icon="@drawable/ic_points"
             app:title="@string/points" />
     </PreferenceCategory>
 
@@ -48,5 +60,4 @@
             app:key="contact_us"
             app:title="@string/contact_us" />
     </PreferenceCategory>
-
 </PreferenceScreen>

@@ -1,7 +1,9 @@
 package com.dinder.rihla.rider.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Resources
+import androidx.preference.PreferenceManager
 import com.dinder.rihla.rider.data.local.UserDao
 import com.dinder.rihla.rider.data.local.db.RihlaDatabase
 import com.dinder.rihla.rider.data.remote.auth.AuthRepository
@@ -41,6 +43,10 @@ object AppModule {
     fun provideResources(@ApplicationContext context: Context): Resources = context.resources
 
     @Provides
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
+
+    @Provides
     fun provideDatabase(@ApplicationContext context: Context): RihlaDatabase =
         RihlaDatabase.getInstance(context)
 
@@ -58,9 +64,10 @@ object AppModule {
         auth: FirebaseAuth,
         dispatcher: CoroutineDispatcher,
         errorMessages: ErrorMessages,
+        preferences: SharedPreferences
     ):
         AuthRepository =
-            FirebaseAuthRepository(auth, dispatcher, errorMessages)
+            FirebaseAuthRepository(auth, dispatcher, errorMessages, preferences)
 
     @Provides
     fun provideUserRepository(
