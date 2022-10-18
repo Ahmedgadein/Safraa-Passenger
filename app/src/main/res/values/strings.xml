@@ -130,8 +130,12 @@
     <string name="withdraw_credit_whatsapp_link">"https://wa.me/249117427796?text=Credit%20withdraw%20for%20account:%20"</string>
     <string name="enter_code">Enter code</string>
     <string name="invite_a_friend">Invite a friend</string>
-    <string name="invite_a_friend_info">Get points on every registered invited friend</string>
+    <string name="invite_a_friend_info">Share Safraa with friends and family</string>
     <string name="join_safraa">Try Safraa</string>
     <string name="join_safraa_detail">Book travel bus tickets safely and easily</string>
     <string name="invitation_link">Join Safraa and book a travel bus ticket anywhere, anytime \n\n %s </string>
+    <string name="social_media">Social Media</string>
+    <string name="instagram">Instagram</string>
+    <string name="twitter">Twitter</string>
+    <string name="facebook">Facebook</string>
 </resources>
