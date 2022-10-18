@@ -17,6 +17,7 @@ import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.data.model.Role
 import com.dinder.rihla.rider.data.model.User
 import com.dinder.rihla.rider.databinding.ContactOptionsBottomsheetDialogBinding
+import com.dinder.rihla.rider.databinding.SocialMediaBottomsheetDialogBinding
 import com.dinder.rihla.rider.utils.DynamicLinkUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -101,6 +102,11 @@ class RihlaPreferences : PreferenceFragmentCompat() {
             true
         }
 
+        findPreference<Preference>("social_media")?.setOnPreferenceClickListener {
+            showSocialMediaBottomSheet()
+            true
+        }
+
         findPreference<Preference>("invite")?.setOnPreferenceClickListener {
             val invitationLink = DynamicLinkUtils.invitationLink(user.id)
             Firebase.dynamicLinks.shortLinkAsync {
@@ -123,7 +129,8 @@ class RihlaPreferences : PreferenceFragmentCompat() {
                     type = "text/plain"
                 }
 
-                val shareIntent = Intent.createChooser(sendIntent, getString(R.string.invite_a_friend))
+                val shareIntent =
+                    Intent.createChooser(sendIntent, getString(R.string.invite_a_friend))
                 startActivity(shareIntent)
             }
             true
@@ -175,6 +182,42 @@ class RihlaPreferences : PreferenceFragmentCompat() {
         dialogBinding.phoneCall.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:+249117427796"))
             startActivity(intent)
+        }
+    }
+
+    private fun showSocialMediaBottomSheet() {
+        val dialogBinding =
+            SocialMediaBottomsheetDialogBinding.inflate(layoutInflater, null, false)
+
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(dialogBinding.root)
+        bottomSheetDialog.show()
+
+        dialogBinding.facebook.setOnClickListener {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.facebook.com/profile.php?id=100084529210329")
+                )
+            )
+        }
+
+        dialogBinding.instagram.setOnClickListener {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://instagram.com/safraa_sd?igshid=YmMyMTA2M2Y=")
+                )
+            )
+        }
+
+        dialogBinding.twitter.setOnClickListener {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://twitter.com/Safraa_sd?t=ldRpeyVmN6vQBQNvdHVCuA&s=09")
+                )
+            )
         }
     }
 }

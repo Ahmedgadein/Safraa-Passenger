@@ -59,5 +59,10 @@
             app:icon="@drawable/ic_agent"
             app:key="contact_us"
             app:title="@string/contact_us" />
+
+        <Preference
+            app:icon="@drawable/ic_facebook"
+            app:key="social_media"
+            app:title="@string/social_media" />
     </PreferenceCategory>
 </PreferenceScreen>
