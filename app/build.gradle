@@ -100,6 +100,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:23.0.7'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
     implementation("com.google.firebase:firebase-functions-ktx")
+    implementation 'com.google.firebase:firebase-dynamic-links-ktx'
     // Room
     implementation("androidx.room:room-runtime:2.4.2")
     annotationProcessor("androidx.room:room-compiler:2.4.2")

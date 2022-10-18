@@ -1,5 +1,6 @@
 package com.dinder.rihla.rider.data.remote.auth
 
+import android.content.SharedPreferences
 import android.util.Log
 import com.dinder.rihla.rider.common.Collections
 import com.dinder.rihla.rider.common.Fields
@@ -28,6 +29,7 @@ class FirebaseAuthRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val ioDispatcher: CoroutineDispatcher,
     private val errorMessages: ErrorMessages,
+    private val preferences: SharedPreferences,
 ) : AuthRepository {
     private val _ref = Firebase.firestore.collection(Collections.USERS)
 
@@ -56,7 +58,9 @@ class FirebaseAuthRepository @Inject constructor(
             trySend(Result.Loading)
             FirebaseMessaging.getInstance().token
                 .addOnSuccessListener { token ->
-                    _ref.document(auth.currentUser?.uid!!).set(user.copy(token = token).toJson())
+                    val userMap = user.copy(token = token).toJson().toMutableMap()
+                    userMap["invitedBy"] = preferences.getString("referrerId", null)
+                    _ref.document(auth.currentUser?.uid!!).set(userMap)
                         .addOnSuccessListener {
                             Timber.i("User registration successful")
                             trySend(Result.Success(true))

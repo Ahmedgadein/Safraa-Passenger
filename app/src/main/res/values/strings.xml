@@ -25,6 +25,7 @@
     <!--    Error Messages-->
 
     <string name="app_name" translatable="false">Safraa</string>
+    <string name="invite_link_image_url" translatable="false">https://firebasestorage.googleapis.com/v0/b/safraa-production.appspot.com/o/ahmedSafraa%20FB%20Logo%40200x-100.jpg?alt=media&amp;token=5df8f1e2-77de-44cb-824d-a86220b9b578</string>
     <string name="seat_times_price" translatable="false">%1$s×%2$s</string>
     <string name="login">Login</string>
     <string name="mobile">Mobile</string>
@@ -126,7 +127,11 @@
     <string name="contact_options">Contact Options</string>
     <string name="whatsapp">Whatsapp</string>
     <string name="phone_call">Phone Call</string>
-
     <string name="withdraw_credit_whatsapp_link">"https://wa.me/249117427796?text=Credit%20withdraw%20for%20account:%20"</string>
     <string name="enter_code">Enter code</string>
+    <string name="invite_a_friend">Invite a friend</string>
+    <string name="invite_a_friend_info">Get points on every registered invited friend</string>
+    <string name="join_safraa">Try Safraa</string>
+    <string name="join_safraa_detail">Book travel bus tickets safely and easily</string>
+    <string name="invitation_link">Join Safraa and book a travel bus ticket anywhere, anytime \n\n %s </string>
 </resources>
