@@ -109,18 +109,18 @@ class TripDetailFragment : RihlaFragment() {
             .show()
         dialog.setCanceledOnTouchOutside(false)
         binding.payNowButton.setOnClickListener {
-            dialog.dismiss()
             findNavController().navigateUp()
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToPaymentFragment(
                     ticketId
                 )
             )
+            dialog.dismiss()
         }
 
         binding.payLaterButton.setOnClickListener {
-            dialog.dismiss()
             findNavController().navigateUp()
+            dialog.dismiss()
         }
     }
 
