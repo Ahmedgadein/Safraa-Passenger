@@ -62,7 +62,7 @@
     <string name="seats_selected">%1$d Seat Selected </string>
     <string name="price_sdg">%s SDG</string>
     <string name="settings">Settings</string>
-    <string name="please_confirm_the_seats_you_want_to_book">Please confirm the seats you want to book</string>
+    <string name="please_confirm_the_seats_you_want_to_book">Please confirm the name and seats you want to book</string>
     <string name="confirm">Confirm</string>
     <string name="confirm_seats">Confirm Seats</string>
     <string name="prebooking_successful">Prebooking Successful</string>

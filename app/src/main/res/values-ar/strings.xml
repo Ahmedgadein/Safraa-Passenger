@@ -59,7 +59,7 @@
     <string name="seats_selected">تم إختيار %1$d مقعد</string>
     <string name="price_sdg">%s جنيه</string>
     <string name="settings">الحساب</string>
-    <string name="please_confirm_the_seats_you_want_to_book">رجاء تأكد من المقاعد التي تود حجزها</string>
+    <string name="please_confirm_the_seats_you_want_to_book">رجاء بتأكيد الإسم و المقاعد التي تود حجزها</string>
     <string name="confirm">تأكيد</string>
     <string name="confirm_seats">تأكيد المقاعد</string>
     <string name="prebooking_successful">تم الحجز المبدئي بنجاح</string>

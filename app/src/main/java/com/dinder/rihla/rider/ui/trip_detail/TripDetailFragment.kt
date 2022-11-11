@@ -1,6 +1,7 @@
 package com.dinder.rihla.rider.ui.trip_detail // ktlint-disable experimental:package-name
 
 import android.app.AlertDialog
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,9 +23,11 @@ import com.dinder.rihla.rider.data.model.Seat
 import com.dinder.rihla.rider.databinding.PrebookSuccessfulDialogBinding
 import com.dinder.rihla.rider.databinding.TripDetailFragmentBinding
 import com.dinder.rihla.rider.ui.home.HomeFragmentDirections
+import com.dinder.rihla.rider.utils.NameValidator
 import com.dinder.rihla.rider.utils.NetworkUtils
 import com.dinder.rihla.rider.utils.SeatUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputLayout
 import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -40,6 +43,9 @@ class TripDetailFragment : RihlaFragment() {
 
     @Inject
     lateinit var mixpanel: MixpanelAPI
+
+    @Inject
+    lateinit var preferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -129,6 +135,10 @@ class TripDetailFragment : RihlaFragment() {
         val bottomSheetDialog = BottomSheetDialog(requireContext())
         bottomSheetDialog.setContentView(R.layout.confirm_seats_bottomsheet_dialog)
 
+        // Name EditText
+        val reservationName = bottomSheetDialog.findViewById<TextInputLayout>(R.id.name)
+        reservationName?.editText?.setText(preferences.getString("name", null))
+
         // Seats RecyclerView
         val seatAdapter = StringItemsAdapter()
         bottomSheetDialog.findViewById<RecyclerView>(R.id.confirmSeatsRecyclerView)?.apply {
@@ -147,6 +157,11 @@ class TripDetailFragment : RihlaFragment() {
                 return@setOnClickListener
             }
 
+            reservationName?.helperText =
+                NameValidator.validate(reservationName?.editText?.text.toString(), requireContext())
+            if (reservationName?.helperText != null)
+                return@setOnClickListener
+
             // Track event
             val props = JSONObject().apply {
                 put("Seats: ", result)
@@ -154,7 +169,7 @@ class TripDetailFragment : RihlaFragment() {
                 put("Trip ID: ", args.tripID)
             }
             mixpanel.track("Reservation Attempt", props)
-            viewModel.reserveSeats(args.tripID, seats)
+            viewModel.reserveSeats(args.tripID, reservationName?.editText?.text.toString(), seats)
             bottomSheetDialog.dismiss()
         }
 

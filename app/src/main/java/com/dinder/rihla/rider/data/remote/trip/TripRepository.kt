@@ -10,5 +10,5 @@ interface TripRepository {
     fun queryTrips(from: Destination?, to: Destination?): Flow<Result<List<Trip>>>
     fun observeTrip(id: String): Flow<Result<Trip>>
     fun getTrip(id: String): Flow<Result<Trip>>
-    fun reserveSeats(tripId: String, seats: List<String>): Flow<Result<String>>
+    fun reserveSeats(tripId: String, name: String, seats: List<String>): Flow<Result<String>>
 }
