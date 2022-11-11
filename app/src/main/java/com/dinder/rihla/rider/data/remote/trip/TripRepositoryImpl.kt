@@ -23,7 +23,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class TripRepositoryImpl @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher,
-    private val errorMessages: ErrorMessages
+    private val errorMessages: ErrorMessages,
 ) :
     TripRepository {
     private val _ref = Firebase.firestore.collection(Collections.TRIPS)
@@ -109,14 +109,19 @@ class TripRepositoryImpl @Inject constructor(
         awaitClose()
     }
 
-    override fun reserveSeats(tripId: String, seats: List<String>): Flow<Result<String>> =
+    override fun reserveSeats(
+        tripId: String,
+        name: String,
+        seats: List<String>,
+    ): Flow<Result<String>> =
         callbackFlow {
             withContext(ioDispatcher) {
                 trySend(Result.Loading)
                 // Create the arguments to the callable function.
                 val data = mapOf(
                     "tripId" to tripId,
-                    "seats" to seats
+                    "seats" to seats,
+                    "name" to name
                 )
 
                 FirebaseFunctions.getInstance()

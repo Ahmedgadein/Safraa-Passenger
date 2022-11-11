@@ -56,10 +56,10 @@ class TripDetailViewModel @Inject constructor(
         }
     }
 
-    fun reserveSeats(tripId: String, seats: List<Seat>) {
+    fun reserveSeats(tripId: String, name: String, seats: List<Seat>) {
         val seats = seats.map { it.number.toString() }
         viewModelScope.launch {
-            tripRepository.reserveSeats(tripId, seats).collect { result ->
+            tripRepository.reserveSeats(tripId, name, seats).collect { result ->
                 when (result) {
                     Result.Loading -> _state.update { it.copy(loading = true) }
                     is Result.Error -> showUserMessage(result.message)
