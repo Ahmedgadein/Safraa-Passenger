@@ -1,6 +1,8 @@
 package com.dinder.rihla.rider.ui.signup
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -29,7 +31,7 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -136,7 +138,12 @@ class SignupFragment : RihlaFragment() {
             }
 
             override fun onClick(widget: View) {
-                showToast("Terms And Conditions")
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://ahmedgadein0.wixsite.com/safraa-terms-and-con")
+                    )
+                )
                 view?.invalidateOutline()
             }
         }
