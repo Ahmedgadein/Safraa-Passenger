@@ -93,7 +93,12 @@ class RihlaPreferences : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("terms_and_conditions")?.setOnPreferenceClickListener {
-            showSnackbar("Terms And Conditions")
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://ahmedgadein0.wixsite.com/safraa-terms-and-con")
+                )
+            )
             true
         }
 
