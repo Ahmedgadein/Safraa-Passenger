@@ -29,7 +29,7 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.Locale
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -87,7 +87,8 @@ class SignupFragment : RihlaFragment() {
                     }
 
                     if (state.navigateToHome) {
-                        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                        val preferences =
+                            PreferenceManager.getDefaultSharedPreferences(requireContext())
                         preferences.edit().apply {
                             putString("id", state.user?.id)
                             apply()
@@ -99,10 +100,12 @@ class SignupFragment : RihlaFragment() {
         }
     }
 
-    private fun getSelectedRole(): Role = when (binding.radioGroupPlus.checkedRadioButtonId) {
-        R.id.travler_radio_button -> Role.PASSENGER
-        else -> Role.AGENT
-    }
+    private fun getSelectedRole(): Role =
+//        when (binding.radioGroupPlus.checkedRadioButtonId) {
+//        R.id.travler_radio_button -> Role.PASSENGER
+//        else -> Role.AGENT
+//    }
+        Role.PASSENGER
 
     private fun setRadioButtons() {
         binding.radioGroupPlus.setOnCheckedChangeListener { radioGroupPlus, id ->
