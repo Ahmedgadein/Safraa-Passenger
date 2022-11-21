@@ -60,15 +60,40 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <LinearLayout
+                    android:id="@+id/nameContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView6">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/name"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:gravity="start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{ticket.passengerName}"
+                        android:textColor="@color/teal_700"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/textView15"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/seats"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                    app:layout_constraintTop_toBottomOf="@+id/nameContainer" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/seatsRecyclerView"
@@ -139,6 +164,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/linearLayoutTo"
                     app:layout_constraintTop_toTopOf="@id/linearLayoutTo">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -158,8 +184,8 @@
                     android:id="@+id/linearLayoutDepartDate"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="16dp"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/linearLayoutDepartTime"
                     app:layout_constraintEnd_toEndOf="@+id/linearLayoutFrom"
                     app:layout_constraintStart_toStartOf="@+id/linearLayoutFrom"
