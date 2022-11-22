@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.dinder.rihla.rider.R
 import com.dinder.rihla.rider.databinding.FragmentUpdateAppBinding
 
 class UpdateAppFragment : Fragment() {
