@@ -220,7 +220,7 @@ class RihlaPreferences : PreferenceFragmentCompat() {
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse("https://twitter.com/Safraa_sd?t=ldRpeyVmN6vQBQNvdHVCuA&s=09")
+                    Uri.parse("https://twitter.com/safraa_sd?t=tyWC841op58-TBjNVdZccQ&s=09")
                 )
             )
         }
