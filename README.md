@@ -6,7 +6,7 @@ The product consists of two integrated applications, namely:
 - **Safraa Bus**, where bus company agents manage trips, review bookings, and confirm payments.
 
 # Safraa Passenger
-<img src="https://github.com/Ahmedgadein/Safraa-Passenger/blob/master/screenshots/1.png" width="220"> <img src="https://github.com/Ahmedgadein/Safraa-Passenger/blob/master/screenshots/2.png" width="220"> <img src="https://github.com/Ahmedgadein/Safraa-Passenger/blob/master/screenshots/3.png" width="220"> <img src="https://github.com/Ahmedgadein/Safraa-Passenger/blob/master/screenshots/4.png" width="220">
+<img src="https://github.com/Ahmedgadein/Safraa-Passenger/blob/master/screenshots/1.png" width="200"> <img src="https://github.com/Ahmedgadein/Safraa-Passenger/blob/master/screenshots/2.png" width="200"> <img src="https://github.com/Ahmedgadein/Safraa-Passenger/blob/master/screenshots/3.png" width="200"> <img src="https://github.com/Ahmedgadein/Safraa-Passenger/blob/master/screenshots/4.png" width="200">
 
 ## App Features
 
