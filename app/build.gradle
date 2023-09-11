@@ -17,15 +17,15 @@ android {
     signingConfigs {
         debug {
             storeFile file('/home/ahmed/Documents/keystore/upload-keystore.jks')
-            storePassword 'Sudan2468!'
+            storePassword 'password'
             keyAlias 'upload'
-            keyPassword 'Sudan2468!'
+            keyPassword 'password'
         }
         release {
             storeFile file('/home/ahmed/Documents/keystore/upload-keystore.jks')
-            storePassword 'Sudan2468!'
+            storePassword 'password'
             keyAlias 'upload'
-            keyPassword 'Sudan2468!'
+            keyPassword 'password'
         }
     }
     compileSdk 32
