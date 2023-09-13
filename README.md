@@ -17,7 +17,7 @@ The product consists of two integrated applications, namely:
 ## App architecture
 
 The app adopts a MVVM (Model-View-Viewmodel) clean architecture with unidirectional data flow. Model layer consists of data repositories and use-cases when needed. 
-Viewmodels are utlilized per app screen screen. Presentation (View) layer incorporates a single Activity scheme with multiple fragment management using navigational components.
+Viewmodels are utlilized per app screen. Presentation (View) layer incorporates a single Activity scheme with multiple fragment management using navigational components.
 
 ## Components, Libraries, and Tools:
 - Android Navigation.
